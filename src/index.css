@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-gradient {
+  background: linear-gradient(
+    106deg,
+    #ffc700 3.98%,
+    #ff003d 40.34%,
+    #9e00ff 75.58%,
+    #00d1ff 95.68%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* font-family: Outfit; */
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+/* .border-gradient {
+    border-image: linear-gradient(131deg, #FFC700 0%, #FF003D 31.5%, #9E00FF 66%, #00D1FF 100%);
+    border-image-slice: 1;
+    border-radius: 73px;
+    border-style:solid;
+    border-width: 10px;
+  }
+  */
+
+  .border-gradient {
+  position: relative;
+  border-radius: 73px;
+
+} 
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 73px;
+  max-width:637px; 
+  margin: 0 auto;
+  width:100%;
+  background: linear-gradient(
+    131deg,
+    #ffc700 0%,
+    #ff003d 31.5%,
+    #9e00ff 66%,
+    #00d1ff 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.border-gradient:first-child::before{
+  padding: 5px;
+
+}
+.border-gradient:nth-child(2)::before{
+  padding: 3px;
+
+}
+
+
+.backnavdrop {
+  -webkit-backdrop-filter: saturate(180%) blur(5px);
+  backdrop-filter: blur(15px);
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform: translateZ(0);
+  /* @apply backdrop-saturate-100; */
+}
