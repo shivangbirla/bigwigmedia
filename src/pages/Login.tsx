@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import SideImg from "../assets/image 7.png";
 import One from "../assets/image 5.png";
 import Two from "../assets/image 6.png";
@@ -15,9 +15,10 @@ import { useAuth } from "@clerk/clerk-react";
 // type Props = {};
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const { userId } = useAuth();
   console.log("userId", userId);
   return (
     <div className="flex  gap-2 w-screen h-screen bg-black">

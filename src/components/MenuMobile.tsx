@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import Cards from "./Cards";
 
-type Props = {};
+// type Props = {};
 
 const acc = [
   {
@@ -24,7 +24,7 @@ const acc = [
   },
 ];
 
-const MenuMobile = (props: Props) => {
+const MenuMobile = () => {
   return (
     <div className="my-14 z-40">
       <Accordion
