@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import logo from "../assets/Logo.png";
 import {
   DropdownMenu,
@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
-import { ModeToggle } from "./ui/mode-toggle";
+// import { ModeToggle } from "./ui/mode-toggle";
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,12 @@ const Nav = () => {
             <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
               <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
                 Select Language
-                <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform duration-200",isOpen&&"rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    "h-4 w-4 shrink-0 transition-transform duration-200",
+                    isOpen && "rotate-180"
+                  )}
+                />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Languages</DropdownMenuLabel>
@@ -82,9 +87,13 @@ const Nav = () => {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem onClick={()=>{
-                navigate("/login")
-              }}>Sign In</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Sign In
+              </DropdownMenuItem>
               <DropdownMenuItem>Sign Up</DropdownMenuItem>
               <DropdownMenuItem></DropdownMenuItem>
             </DropdownMenuContent>

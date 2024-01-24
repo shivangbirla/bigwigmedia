@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SideImg from "../assets/image 7.png";
 import One from "../assets/image 5.png";
 import Two from "../assets/image 6.png";
-import logo from "../assets/Logo.png";
-import { Button, Input, Modal, ModalContent } from "@nextui-org/react";
+// import logo from "../assets/Logo.png";
+// import { Button, Input, Modal, ModalContent } from "@nextui-org/react";
 import {
-  SignOutButton,
-  SignInButton,
+  // SignOutButton,
+  // SignInButton,
   SignIn,
-  SignedOut,
+  // SignedOut,
 } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/clerk-react";
 
-type Props = {};
+// type Props = {};
 
-const Login = (props: Props) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();

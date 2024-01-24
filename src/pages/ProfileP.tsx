@@ -1,14 +1,12 @@
 import Profile from "@/components/Profile";
 
-type Props = {};
+// type Props = {};
 
-const ProfileP = (props: Props) => {
+const ProfileP = () => {
   return (
     <div>
-      <Profile/>
-
+      <Profile />
     </div>
-      
   );
 };
 

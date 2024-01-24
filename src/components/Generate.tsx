@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,24 +11,27 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-type Props = {};
+// type Props = {};
 
 const acc = [
   {
     title: "What exactly is Facebook bio?",
-    content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum bdsfadsfsdlanditiis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
+    content:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum bdsfadsfsdlanditiis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
   },
   {
     title: "What exactly is Facebook Bio Generator?",
-    content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditiis suscipit numquam, consectetur quasi? Hic, facilis eum similsdfadsfdasfdasfdasfique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
+    content:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditiis suscipit numquam, consectetur quasi? Hic, facilis eum similsdfadsfdasfdasfdasfique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
   },
   {
     title: "What is the Facebook Bio Generator and how does it work?",
-    content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditisdfasdfdasis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
+    content:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditisdfasdfdasis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
   },
 ];
 
-const Generate = (props: Props) => {
+const Generate = () => {
   return (
     <div className="flex flex-col  gap-8 min-h-screen">
       <Nav />
@@ -412,17 +415,19 @@ const Generate = (props: Props) => {
           type="single"
           collapsible
           className="w-full flex flex-col gap-2"
-          
         >
           {acc.map((ac) => (
             <AccordionItem value="item-1">
-              <AccordionTrigger className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit" key={ac.title}>
+              <AccordionTrigger
+                className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit"
+                key={ac.title}
+              >
                 {ac.title}
               </AccordionTrigger>
               <AccordionContent>{ac.content}</AccordionContent>
             </AccordionItem>
           ))}
-        </Accordion> 
+        </Accordion>
       </div>
 
       <Footer />
