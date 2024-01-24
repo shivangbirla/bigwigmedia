@@ -1,5 +1,5 @@
 import logo from "../assets/Logo.png";
-import { ModeToggle } from "./ui/mode-toggle";
+// import { ModeToggle } from "./ui/mode-toggle";
 
 const Footer = () => {
   return (
@@ -193,7 +193,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <ModeToggle />
+      {/* <ModeToggle /> */}
 
       <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
         © 2024 Bigwigmedia.ai. All rights reserved.

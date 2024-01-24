@@ -201,7 +201,7 @@ const Generate = () => {
           Choose a tone :
         </p>
         {/* TODO: convert to aray */}
-        <div className="flex flex-row  self-start gap-2">
+        <div className="flex flex-wrap sm:flex-row self-start gap-2">
           <button className="border-gradient-1 px-7 py-2">Professional</button>
           <button className="border rounded-full px-7 py-2">Informal</button>
           <button className="border  rounded-full px-7 py-2">Humorous</button>

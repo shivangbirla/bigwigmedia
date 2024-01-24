@@ -16,7 +16,7 @@ const Hero = () => {
 
   return (
     <div className="flex flex-col justify-center space-y-4">
-      <div className="flex mt-6 justify-end">
+      <div className="sm:hidden flex mt-6 justify-end">
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
             Select Language
@@ -67,4 +67,4 @@ const Hero = () => {
   );
 };
 export default Hero;
-7
+7;
