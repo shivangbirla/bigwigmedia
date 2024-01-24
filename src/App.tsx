@@ -1,21 +1,25 @@
-import React from'react';
-import Nav from './Components/Nav';
-import Hero from './Components/Hero';
-import Menu from './Components/Menu';
-import Cards from './Components/Cards';
+import { Route, Routes } from 'react-router-dom';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+
+import ProfileP from './pages/ProfileP';
+
+import Generate from './components/Generate';
+
 
 const App =()=>{
-  return(
-      <div className="min-w-screern min-h-screen bg-white ">
-        <Nav/>
-        <div className="px-5">
+  return (
+    <div className=" min-w-screern min-h-screen bg-white dark:bg-[#1E1E1E]">
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
 
-        <Hero/>
-        <Menu/>
-        <Cards/>
-        </div>
+        <Route path="/profile" element={<ProfileP />} />
 
-      </div>
+        <Route path="/generate" element={<Generate />} />
+
+      </Routes>
+    </div>
   );
 };
 
