@@ -9,20 +9,20 @@ import Cards from "./Cards";
 
 // type Props = {};
 
-const acc = [
-  {
-    title: "All Tools",
-    content: <Cards />,
-  },
-  {
-    title: "In Demand Tools",
-    content: <Cards />,
-  },
-  {
-    title: "Social Media Tools",
-    content: <Cards />,
-  },
-];
+// const acc = [
+//   {
+//     title: "All Tools",
+//     content: <Cards />,
+//   },
+//   {
+//     title: "In Demand Tools",
+//     content: <Cards />,
+//   },
+//   {
+//     title: "Social Media Tools",
+//     content: <Cards />,
+//   },
+// ];
 
 const MenuMobile = () => {
   return (
@@ -32,14 +32,14 @@ const MenuMobile = () => {
         collapsible
         className="w-full flex flex-col gap-2"
       >
-        {acc.map((ac) => (
-          <AccordionItem value="item-1">
+        {/* {acc.map((ac,id) => (
+          <AccordionItem value="item-1" key={id}>
             <AccordionTrigger className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit">
               {ac.title}
             </AccordionTrigger>
             <AccordionContent>{ac.content}</AccordionContent>
           </AccordionItem>
-        ))}
+        ))} */}
       </Accordion>
     </div>
   );

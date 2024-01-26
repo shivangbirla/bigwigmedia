@@ -10,6 +10,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "@/utils/funcitons";
 
 // type Props = {};
 
@@ -31,19 +34,56 @@ const acc = [
   },
 ];
 
+interface Tool {
+  _id: String;
+  name: String;
+  description: String;
+  logo: string;
+  labels: String[];
+}
+
 const Generate = () => {
+  const [description, setDescription] = useState<Tool | undefined>();
+  const [text, settext] = useState("");
+  const [output, setOutput] = useState("");
+  const [hashTag, setHashTag] = useState(false)
+  const [icons, setIcons] = useState(false)
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+
+  const getData = async () => {
+    const res = await axios.get(`${BASE_URL}/templates/get/${id}`);
+    setDescription(res.data.data);
+  };
+
+
+  const handleSubmit = async (
+    
+  ) => {
+    //@ts-ignore
+    e.preventDefault();
+    const res = await axios.post(`${BASE_URL}/templates/generate/${id}`, {
+      text,
+      hashTag,
+      icons,
+    });
+    setOutput(res.data.data);
+  };
+
+  useEffect(() => {
+    if (!id) return;
+    getData();
+  }, [id]);
+
   return (
     <div className="flex flex-col  gap-8 min-h-screen">
       <Nav />
       <div className="flex flex-col justify-center items-center gap-4">
         <h1 className="  dark:text-white text-black text-center font-outfit text-2xl md:text-3xl lg:text-4xl  font-medium">
-          AI Facebook Bio Generator
+          {description?.name}
         </h1>
         <p className="  dark:text-white text-black text-center font-outfit max-w-[844px] text-base px-6 lg:text-lg font-base">
-          Elevate your Facebook presence effortlessly with our AI Facebook Bio
-          Generator. Craft personalized and engaging bios in seconds, making a
-          lasting impression on your profile. Upgrade your social media game
-          effortlessly!
+          {description?.description}
         </p>
         <div className="flex flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500">
           <svg
@@ -195,6 +235,8 @@ const Generate = () => {
         <Textarea
           placeholder="Example : Experience Social Media Marketing Strategist Businesses."
           className="w-full bg-transparent"
+          value={text}
+          onChange={(e)=>settext(e.target.value)}
         />
 
         <p className="  dark:text-white self-start text-black text-left font-outfit   text-xl font-semibold">
@@ -212,6 +254,8 @@ const Generate = () => {
           <Switch
             id="emoji"
             className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
+            // value={hashTag}
+            
           />
           <Label htmlFor="emoji">Use Emoji</Label>
           <Switch
@@ -221,7 +265,9 @@ const Generate = () => {
           <Label htmlFor="hashtag">Use Hashtags</Label>
         </div>
       </div>
-      <button className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  py-3  px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto">
+      <button className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  py-3  px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
+      onClick={void handleSubmit()}
+      >
         Generate
       </button>
 
@@ -230,10 +276,7 @@ const Generate = () => {
           <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
         </div>
         <p className="p-5 text-base md:text-xl font-medium">
-          Lorem ipsum dolor sit amet consectetur. Amet pellentesque sed proin
-          cursus mus congue. Turpis nunc tincidunt imperdiet mauris aenean enim
-          risus vitae mi. Ultrices quam lobortis sagittis habitasse mauris sed
-          pellentesque nunc. Pretium orci nibh nulla feugiat congue.
+          {output}
         </p>
       </div>
 
@@ -416,8 +459,8 @@ const Generate = () => {
           collapsible
           className="w-full flex flex-col gap-2"
         >
-          {acc.map((ac) => (
-            <AccordionItem value="item-1">
+          {acc.map((ac,id) => (
+            <AccordionItem value="item-1" key={id}>
               <AccordionTrigger
                 className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit"
                 key={ac.title}
