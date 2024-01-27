@@ -11,7 +11,15 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-const Hero = () => {
+const Hero = ({
+  search,
+  setSearch,
+  onClick,
+}: {
+  search: string;
+  setSearch: Function;
+  onClick: Function;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -55,8 +63,15 @@ const Hero = () => {
             <input
               placeholder="Social Media"
               className="w-full  border-none z-50 rounded-l-[73px] outline-none px-4 py-1 md:py-4 placeholder:text-black dark:placeholder:text-white dark:text-white bg-transparent"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <button className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  p-3 md:p-5 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80">
+            <button
+              className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  p-3 md:p-5 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80"
+              onClick={() => {
+                onClick();
+              }}
+            >
               Search Ai tools
             </button>
           </div>

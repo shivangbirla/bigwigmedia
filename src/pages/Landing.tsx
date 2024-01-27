@@ -26,6 +26,7 @@ const Landing = () => {
   const [selectedButton, setSelectedButton] =
     useState<String>("Article Creator");
   const [cards, setCards] = useState<Card[]>([]);
+  const [search, setSearch] = useState("")
 
   const getButtons = async () => {
     // const
@@ -49,11 +50,17 @@ const Landing = () => {
     getTemplates();
   }, [selectedButton]);
 
+  const handleSearch = async()=>{
+    const res = await axios.get(`${BASE_URL}/templates/search?search=${search}`);
+    console.log(res.data.data)
+    setCards(res.data.data);
+  }
+
   return (
     <div className="bg-white dark:bg-[#1E1E1E]">
       <Nav />
       <div className="px-5 min-h-screen">
-        <Hero />
+        <Hero search={search} setSearch={setSearch} onClick={handleSearch} />
 
         <div className="hidden md:block">
           <Menu
@@ -64,7 +71,12 @@ const Landing = () => {
           <Cards cards={cards} />
         </div>
         <div className="md:hidden">
-          <MenuMobile />
+          <MenuMobile
+            buttons={buttons}
+            selectedButton={selectedButton}
+            setSelectedButton={setSelectedButton}
+            cards={cards}
+          />
         </div>
       </div>
       <Footer />

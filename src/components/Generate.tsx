@@ -72,6 +72,7 @@ const Generate = () => {
 
   useEffect(() => {
     if (!id) return;
+    window.scrollTo(0,0)
     getData();
   }, [id]);
 

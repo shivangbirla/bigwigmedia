@@ -6,6 +6,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Cards from "./Cards";
+import { Card } from "@/pages/Landing";
+import { button } from "@nextui-org/react";
 
 // type Props = {};
 
@@ -24,7 +26,14 @@ import Cards from "./Cards";
 //   },
 // ];
 
-const MenuMobile = () => {
+interface MenuProps {
+  buttons: String[];
+  selectedButton: String;
+  setSelectedButton: Function;
+  cards: Card[];
+}
+
+const MenuMobile = ({buttons,selectedButton,setSelectedButton,cards}:MenuProps) => {
   return (
     <div className="my-14 z-40">
       <Accordion
@@ -32,14 +41,16 @@ const MenuMobile = () => {
         collapsible
         className="w-full flex flex-col gap-2"
       >
-        {/* {acc.map((ac,id) => (
+        {buttons.map((ac, id) => (
           <AccordionItem value="item-1" key={id}>
             <AccordionTrigger className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit">
-              {ac.title}
+              {ac}
             </AccordionTrigger>
-            <AccordionContent>{ac.content}</AccordionContent>
+            <AccordionContent>
+              <Cards cards={cards}/>
+            </AccordionContent>
           </AccordionItem>
-        ))} */}
+        ))}
       </Accordion>
     </div>
   );
