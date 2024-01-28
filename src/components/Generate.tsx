@@ -57,16 +57,25 @@ const Generate = () => {
   };
 
 
+
+
   const handleSubmit = async (
     
   ) => {
     //@ts-ignore
-    e.preventDefault();
-    const res = await axios.post(`${BASE_URL}/templates/generate/${id}`, {
-      text,
-      hashTag,
-      icons,
+    console.log("click")
+    // e.preventDefault();
+    const res = await axios.post(`${BASE_URL}/response`, {  
+      prompt: text,
+      tone: "Creative",
+      useEmoji: icons,
+      useHashTags: hashTag,
+      templateId: id,
+     
     });
+
+    // const data = await res.json()
+    // console.log(data)
     setOutput(res.data.data);
   };
 
