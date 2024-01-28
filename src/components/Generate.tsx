@@ -13,6 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
+import { useAuth } from "@clerk/clerk-react";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // type Props = {};
 
@@ -50,6 +52,9 @@ const Generate = () => {
   const [icons, setIcons] = useState(false)
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
+  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+
+  const navigate = useNavigate()
 
   const getData = async () => {
     const res = await axios.get(`${BASE_URL}/templates/get/${id}`);
@@ -65,6 +70,9 @@ const Generate = () => {
     //@ts-ignore
     console.log("click");
     e.preventDefault();
+    if(!isSignedIn) {
+      navigate("/login")
+    }
     const res = await axios.post(`${BASE_URL}/response`, {
       prompt: text,
       tone: "Creative",
