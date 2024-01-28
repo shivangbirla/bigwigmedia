@@ -60,18 +60,17 @@ const Generate = () => {
 
 
   const handleSubmit = async (
-    
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     //@ts-ignore
-    console.log("click")
-    // e.preventDefault();
-    const res = await axios.post(`${BASE_URL}/response`, {  
+    console.log("click");
+    e.preventDefault();
+    const res = await axios.post(`${BASE_URL}/response`, {
       prompt: text,
       tone: "Creative",
       useEmoji: icons,
       useHashTags: hashTag,
       templateId: id,
-     
     });
 
     // const data = await res.json()
@@ -276,7 +275,7 @@ const Generate = () => {
         </div>
       </div>
       <button className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  py-3  px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
-      onClick={void handleSubmit()}
+      onClick={(e)=>void handleSubmit(e)}
       >
         Generate
       </button>
