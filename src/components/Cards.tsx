@@ -13,10 +13,16 @@ const Cards = ({ cards, isLoading }: { cards: Card[]; isLoading: Boolean }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center flex-wrap mt-5   gap-10">
-      {cards.map((card, id) => {
-        return <CardComponent card={card} key={id} />;
-      })}
+    <div className="flex justify-center mx-auto flex-wrap md:mt-5 lg:mt-14 gap-3 xl:max-w-[90%]  md:gap-10">
+      {!isLoading ? (
+        cards.map((card, id) => {
+          return <CardComponent card={card} key={id} />;
+        })
+      ) : (
+        <div className="w-full h-full flex items-center justify-center">
+          <Loader2 className="animate-spin w-20 h-20 mt-20" />
+        </div>
+      )}
     </div>
   );
 };
@@ -25,18 +31,28 @@ export default Cards;
 
 const CardComponent = ({ card }: { card: Card }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(card.isBookmarked);
   const navigate = useNavigate();
+  const { user, isSignedIn, isLoaded } = useUser();
+
+  const handleBookmarkToggle = async () => {
+    if (!isSignedIn) {
+      toast.error("Please sign in to bookmark this template");
+      return navigate("/login");
+    }
+
+    const res = await axios.post(
+      `${BASE_URL}/bookmarks/add-remove/${card._id}?clerkId=${user.id}`,
+      {}
+    );
+    if(res.status===200){
+      setIsBookmarked(!isBookmarked)
+    }
+    console.log(res);
+  };
 
   return (
-    <div
-      className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-xl rounded-xl max-w-80  bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full"
-      onClick={() =>
-        navigate({
-          pathname: "/generate",
-          search: `?id=${card._id}`,
-        })
-      }
-    >
+    <div className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl max-w-80    bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full">
       <div className="flex flex-row gap-8  justify-center items-center ">
         {!imageLoaded && (
           <svg
@@ -69,28 +85,38 @@ const CardComponent = ({ card }: { card: Card }) => {
         {card.description}
       </div>
       <div className="flex items-start justify-center  pt-0 gap-5">
-        <button className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto">
+        <button
+          className="dark:bg-white dark:text-gray-900 flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto"
+          onClick={() =>
+            navigate({
+              pathname: "/generate",
+              search: `?id=${card._id}`,
+            })
+          }
+        >
           Generate
         </button>
-        <button className="flex w-[40px] h-[40px] gap-2 rounded-full border-2 dark:bg-white border-gray-800 p-1 justify-end">
-          <span className="w-22.599 h-22.599 flex-shrink-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="23"
-              height="24"
-              viewBox="0 0 23 24"
-              fill="none"
-              className="w-6 h-6 text-gray-700 dark:text-gray-300"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M3.77765 5.56119C3.77765 4.81199 4.07527 4.09347 4.60503 3.56371C5.13479 3.03395 5.85331 2.73633 6.60251 2.73633H16.0187C16.7679 2.73633 17.4864 3.03395 18.0162 3.56371C18.5459 4.09347 18.8436 4.81199 18.8436 5.56119V20.6535C18.8436 21.8022 17.5441 22.4708 16.61 21.8032L11.3106 18.0179L6.01117 21.8032C5.07614 22.4717 3.77765 21.8032 3.77765 20.6544V5.56119ZM6.60251 4.61957C6.35277 4.61957 6.11327 4.71877 5.93668 4.89536C5.76009 5.07195 5.66089 5.31145 5.66089 5.56119V19.7392L10.4895 16.29C10.7291 16.1188 11.0162 16.0268 11.3106 16.0268C11.605 16.0268 11.8921 16.1188 12.1317 16.29L16.9603 19.7392V5.56119C16.9603 5.31145 16.8611 5.07195 16.6845 4.89536C16.5079 4.71877 16.2684 4.61957 16.0187 4.61957H6.60251Z"
-                fill="#1E1E1E"
-              />
-            </svg>
-          </span>
-        </button>
+        <div
+          className={cn(
+            "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900",
+            isBookmarked && "invert hover:invert-0"
+          )}
+          onClick={handleBookmarkToggle}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="self-center w-4 h-4"
+            viewBox="0 0 17 16"
+            fill="none"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M2.83362 3.48541C2.83362 2.961 3.04194 2.45807 3.41275 2.08725C3.78357 1.71644 4.2865 1.50812 4.81091 1.50812H11.4019C11.9263 1.50812 12.4292 1.71644 12.8 2.08725C13.1708 2.45807 13.3792 2.961 13.3792 3.48541V14.0494C13.3792 14.8535 12.4696 15.3215 11.8158 14.8542L8.10639 12.2046L4.39699 14.8542C3.74251 15.3221 2.83362 14.8541 2.83362 14.0501V3.48541Z"
+              fill="#1E1E1E"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );
