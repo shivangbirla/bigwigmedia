@@ -76,6 +76,10 @@
   }
 }
 
+.shadow-accordian{
+  box-shadow: 0px 1px 30px 0px rgba(0, 0, 0, 0.10);
+}
+
 .bt-gradient {
   background: linear-gradient(
     160deg,
@@ -102,6 +106,7 @@
   font-weight: 600;
   line-height: normal;
 }
+
 
 /* .border-gradient {
     border-image: linear-gradient(131deg, #FFC700 0%, #FF003D 31.5%, #9E00FF 66%, #00D1FF 100%);
