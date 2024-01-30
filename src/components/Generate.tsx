@@ -88,7 +88,7 @@ const Generate = () => {
     if(!isSignedIn) {
       navigate("/login")
     }
-    const res = await axios.post(`${BASE_URL}/response`, {
+    const res = await axios.post(`${BASE_URL}/response?clerkId=${1112}`, {
       prompt: text,
       tone: selectedButton,
       useEmoji: icons,
