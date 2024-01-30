@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from "react-router-dom";
 
 // type Props = {};
 
@@ -48,8 +48,8 @@ const Generate = () => {
   const [description, setDescription] = useState<Tool | undefined>();
   const [text, settext] = useState("");
   const [output, setOutput] = useState("");
-  const [hashTag, setHashTag] = useState(false)
-  const [icons, setIcons] = useState(false)
+  const [hashTag, setHashTag] = useState(false);
+  const [icons, setIcons] = useState(false);
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
@@ -65,19 +65,16 @@ const Generate = () => {
   ];
 
   // Function to handle button click
-  const handleButtonClick = (selected:string) => {
+  const handleButtonClick = (selected: string) => {
     setSelectedButton(selected);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getData = async () => {
     const res = await axios.get(`${BASE_URL}/templates/get/${id}`);
     setDescription(res.data.data);
   };
-
-
-
 
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -85,10 +82,10 @@ const Generate = () => {
     //@ts-ignore
     console.log("click");
     e.preventDefault();
-    if(!isSignedIn) {
-      navigate("/login")
+    if (!isSignedIn) {
+      navigate("/login");
     }
-    const res = await axios.post(`${BASE_URL}/response`, {
+    const res = await axios.post(`${BASE_URL}/response?clerkId=${1112}`, {
       prompt: text,
       tone: selectedButton,
       useEmoji: icons,
@@ -103,7 +100,7 @@ const Generate = () => {
 
   useEffect(() => {
     if (!id) return;
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     getData();
   }, [id]);
 
