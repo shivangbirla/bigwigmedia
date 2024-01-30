@@ -75,6 +75,10 @@
     @apply bg-background text-foreground;
   }
 }
+.shadow-accordian{
+  box-shadow: 0px 1px 30px 0px rgba(0, 0, 0, 0.10);
+
+}
 
 .bt-gradient {
   background: linear-gradient(
@@ -139,6 +143,7 @@
   /* border-radius: 13px; */
   /* background: transparent; */
 }
+
 [class^="cl-internal-"] {
   display: none;
 }

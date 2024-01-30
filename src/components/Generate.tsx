@@ -13,8 +13,10 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Loader2 } from "lucide-react";
+
 
 // type Props = {};
 
@@ -51,8 +53,9 @@ const Generate = () => {
   const [hashTag, setHashTag] = useState(false)
   const [icons, setIcons] = useState(false)
   const urlParams = new URLSearchParams(window.location.search);
+const [isLoading, setIsLoading] = useState(false);  
   const id = urlParams.get("id");
-  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const {  isLoaded, isSignedIn, user } = useUser();
 
   const navigate = useNavigate()
 
@@ -68,12 +71,12 @@ const Generate = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     //@ts-ignore
-    console.log("click");
+    setIsLoading(true)
     e.preventDefault();
     if(!isSignedIn) {
       navigate("/login")
     }
-    const res = await axios.post(`${BASE_URL}/response`, {
+    const res = await axios.post(`${BASE_URL}/response?clerkId=${user?.id }`, {
       prompt: text,
       tone: "Creative",
       useEmoji: icons,
@@ -84,6 +87,8 @@ const Generate = () => {
     // const data = await res.json()
     // console.log(data)
     setOutput(res.data.data);
+    setIsLoading(false);
+    
   };
 
   useEffect(() => {
@@ -288,14 +293,16 @@ const Generate = () => {
         Generate
       </button>
 
-      <div className="flex flex-col border px-5  w-full mx-auto max-w-[1084px] pb-8 rounded-xl">
+      {(output|| isLoading)&& <div className="flex flex-col border   w-full mx-auto max-w-[1084px] pb-8 rounded-xl">
         <div className="w-full border p-5 rounded-xl flex flex-row  justify-between">
           <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
         </div>
-        <p className="p-5 text-base md:text-xl font-medium">
+        {isLoading?<p className="p-5 text-base md:text-xl font-medium">
           {output}
-        </p>
-      </div>
+        </p>:<div className="w-full h-full flex items-center justify-center">
+          <Loader2 className="animate-spin w-20 h-20 mt-20" />
+        </div>}
+      </div>}
 
       <div className="flex flex-col gap-6 w-fit mx-auto">
         <h1 className="text-3xl text-center font-semibold">Share This</h1>

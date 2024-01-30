@@ -18,17 +18,19 @@ import { cn } from "@/lib/utils";
 import {
   SignOutButton,
   // SignInButton,
-  
   SignIn,
   useAuth,
   SignedOut,
+  useUser,
+  useSession,
 } from "@clerk/clerk-react";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
-  console.log(isSignedIn,"isSignedIn")
+  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
+  const {session} = useSession()
 
   return (
     <nav className="sticky top-0 z-50 backnavdrop">
@@ -84,11 +86,8 @@ const Nav = () => {
                 Login
               </button>
             ) : (
-              <button
-                className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
-                
-              >
-                <SignOutButton  />
+              <button className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
+                <SignOutButton />
               </button>
             )}
           </div>

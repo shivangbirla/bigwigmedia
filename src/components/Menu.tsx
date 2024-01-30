@@ -12,10 +12,10 @@ const Menu = ({ buttons, selectedButton, setSelectedButton }: MenuProps) => {
   if (buttons.length === 0) return;
 
   return (
-    <div className="relative flex flex-row mt-14 justify-end gap-3 my-4 z-10  w-5/6 mx-auto transition-all duration-1000">
+    <div className="relative flex flex-row mt-14    justify-end gap-3 my-4 z-10  w-5/6 mx-auto transition-all duration-1000">
       <div
         className={cn(
-          " absolute left-0 z-40  w-[calc(100%-68px)] mx-w-[240] md:auto lg:[644px]  h-16 py-2 px-10   rounded-md bg-white dark:bg-[#1E1E1E] shadow-md transition-all border border-gray-700   duration-1000 delay-1000",
+          " absolute left-0 z-40  w-[calc(100%-68px)] mx-w-[240] md:auto lg:[644px]   h-16 py-2 px-10   rounded-md bg-white dark:bg-[#1E1E1E] shadow-md transition-all border border-gray-700   duration-1000 delay-1000",
           isOpen && "h-fit overflow-auto "
         )}
       >
