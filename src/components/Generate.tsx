@@ -53,6 +53,21 @@ const Generate = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const [selectedButton, setSelectedButton] = useState("Professional");
+
+  // Define the array of button labels
+  const buttonLabels = [
+    "Professional",
+    "Informal",
+    "Humorous",
+    "Creative",
+    "Minimal",
+  ];
+
+  // Function to handle button click
+  const handleButtonClick = (selected:string) => {
+    setSelectedButton(selected);
+  };
 
   const navigate = useNavigate()
 
@@ -75,7 +90,7 @@ const Generate = () => {
     }
     const res = await axios.post(`${BASE_URL}/response`, {
       prompt: text,
-      tone: "Creative",
+      tone: selectedButton,
       useEmoji: icons,
       useHashTags: hashTag,
       templateId: id,
@@ -253,7 +268,7 @@ const Generate = () => {
           placeholder="Example : Experience Social Media Marketing Strategist Businesses."
           className="w-full bg-transparent"
           value={text}
-          onChange={(e)=>settext(e.target.value)}
+          onChange={(e) => settext(e.target.value)}
         />
 
         <p className="  dark:text-white self-start text-black text-left font-outfit   text-xl font-semibold">
@@ -261,18 +276,23 @@ const Generate = () => {
         </p>
         {/* TODO: convert to aray */}
         <div className="flex flex-wrap sm:flex-row self-start gap-2">
-          <button className="border-gradient-1 px-7 py-2">Professional</button>
-          <button className="border rounded-full px-7 py-2">Informal</button>
-          <button className="border  rounded-full px-7 py-2">Humorous</button>
-          <button className="border  rounded-full px-7 py-2">Creative</button>
-          <button className="border  rounded-full px-7 py-2">Minimal</button>
+          {buttonLabels.map((label, index) => (
+            <button
+              key={index}
+              className={`border rounded-full px-7 py-2 ${
+                selectedButton === label ? "border-gradient-1" : ""
+              }`}
+              onClick={() => handleButtonClick(label)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
         <div className="flex items-center space-x-2">
           <Switch
             id="emoji"
             className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
             // value={hashTag}
-            
           />
           <Label htmlFor="emoji">Use Emoji</Label>
           <Switch
@@ -282,8 +302,9 @@ const Generate = () => {
           <Label htmlFor="hashtag">Use Hashtags</Label>
         </div>
       </div>
-      <button className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  py-3  px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
-      onClick={(e)=>void handleSubmit(e)}
+      <button
+        className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  py-3  px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
+        onClick={(e) => void handleSubmit(e)}
       >
         Generate
       </button>
@@ -292,9 +313,7 @@ const Generate = () => {
         <div className="w-full border p-5 rounded-xl flex flex-row  justify-between">
           <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
         </div>
-        <p className="p-5 text-base md:text-xl font-medium">
-          {output}
-        </p>
+        <p className="p-5 text-base md:text-xl font-medium">{output}</p>
       </div>
 
       <div className="flex flex-col gap-6 w-fit mx-auto">
@@ -476,7 +495,7 @@ const Generate = () => {
           collapsible
           className="w-full flex flex-col gap-2"
         >
-          {acc.map((ac,id) => (
+          {acc.map((ac, id) => (
             <AccordionItem value="item-1" key={id}>
               <AccordionTrigger
                 className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit"
