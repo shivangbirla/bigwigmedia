@@ -45,8 +45,8 @@ const CardComponent = ({ card }: { card: Card }) => {
       `${BASE_URL}/bookmarks/add-remove/${card._id}?clerkId=${user.id}`,
       {}
     );
-    if(res.status===200){
-      setIsBookmarked(!isBookmarked)
+    if (res.status === 200) {
+      setIsBookmarked(!isBookmarked);
     }
     console.log(res);
   };
@@ -86,7 +86,7 @@ const CardComponent = ({ card }: { card: Card }) => {
       </div>
       <div className="flex items-start justify-center  pt-0 gap-5">
         <button
-          className="dark:bg-white dark:text-gray-900 flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto"
+          className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto"
           onClick={() =>
             navigate({
               pathname: "/generate",
