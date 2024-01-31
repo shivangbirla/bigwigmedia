@@ -68,8 +68,8 @@
 
 @layer base {
   * {
-    @apply border-border ;
-    font-family:  sans-serif !important;
+    @apply border-border;
+    font-family: sans-serif !important;
   }
   body {
     @apply bg-background text-foreground;
@@ -170,6 +170,25 @@
   padding: 10px; /* Adjust padding as needed */
   border-radius: 12px; /* Adjust border radius to fit the textarea */
 }
+#google_translate_element span {
+  display: none;
+}
+#google_translate_element {
+  color: transaprent;
+}
+#google_translate_element select {
+  @apply bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3 w-[150px] h-full; 
+}
+#google_translate_element select:hover {
+  @apply outline-none ;
+}
+#google_translate_element option {
+  @apply bg-black !p-2 text-white font-outfit;
+}
+.skiptranslate,
+.goog-te-gadget {
+  font-size: 0px !important;
+}
 
 .text-gradient::before {
   content: "";
@@ -198,7 +217,6 @@
 .text-gradient textarea:focus-visible + ::before {
   opacity: 1; /* Show the border gradient when focused or focus-visible */
 }
-
 
 .border-gradient-1::before {
   content: "";
