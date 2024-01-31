@@ -28,12 +28,11 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
-  console.log(isSignedIn,"isSignedIn")
 
   return (
     <nav className="sticky top-0 z-50 backnavdrop">
       <div className="h-10vh flex justify-between z-50 text-black dark:text-white lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b ">
-        <div className="flex items-center gap-4 cursor-pointer">
+        <div className="flex items-center gap-4 cursor-pointer" onClick={()=>navigate("/")}>
           <img src={logo} alt="" />
           <span className="text-gray-900 hidden md:block dark:text-white font-outfit text-2xl font-semibold">
             BigWigMedia.ai

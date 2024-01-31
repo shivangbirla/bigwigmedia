@@ -19,7 +19,6 @@ const Login = () => {
   // const [password, setPassword] = useState("");
   // const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const { userId } = useAuth();
-  console.log("userId", userId);
   return (
     <div className="flex  gap-2 w-screen h-screen bg-black">
       <img

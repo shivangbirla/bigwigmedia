@@ -4,10 +4,10 @@ import { useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 import { Loader2 } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
-import { toast } from "sonner";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { cn } from "@/lib/utils";
+import { toast } from 'sonner';
 
 const Cards = ({ cards, isLoading }: { cards: Card[]; isLoading: Boolean }) => {
   const navigate = useNavigate();
@@ -46,9 +46,9 @@ const CardComponent = ({ card }: { card: Card }) => {
       {}
     );
     if (res.status === 200) {
+      toast.success("Bookmark " + (!isBookmarked ? "removed!" : "added!"));
       setIsBookmarked(!isBookmarked);
     }
-    console.log(res);
   };
 
   return (

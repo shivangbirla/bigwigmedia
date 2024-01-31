@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/Logo.png";
 // import { ModeToggle } from "./ui/mode-toggle";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col relative items-center gap-[25px] shrink-0 mt-14 pb-4 border-t pt-8 px-8 justify-center w-full min-h-285">
       <svg
@@ -146,10 +149,26 @@ const Footer = () => {
             Top Tools
           </div>
           <div className="flex flex-col items-start gap-[5px]">
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
+            <div
+              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal cursor-pointer"
+              onClick={() =>
+                navigate({
+                  pathname: "/generate",
+                  search: `?id=65b3ceecfecc1dc59cb3de29`,
+                })
+              }
+            >
               X (Twitter) Bio Generator
             </div>
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
+            <div
+              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal cursor-pointer"
+              onClick={() =>
+                navigate({
+                  pathname: "/generate",
+                  search: `?id=65b3d1b2fecc1dc59cb3de35`,
+                })
+              }
+            >
               Instagram Bio Generator
             </div>
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
