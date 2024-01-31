@@ -37,7 +37,7 @@ const Landing = () => {
     // const
     const res = await axios.get(`${BASE_URL}/templates/labels`);
     const bookmarked = [...res.data.data];
-    if (isSignedIn) bookmarked.push("My Tools");
+    // if (isSignedIn) bookmarked.push("My Tools");
     setButtons(bookmarked);
     setSelectedButton(res.data.data[0]);
   };

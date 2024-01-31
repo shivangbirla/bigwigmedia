@@ -46,7 +46,7 @@ const CardComponent = ({ card }: { card: Card }) => {
       {}
     );
     if (res.status === 200) {
-      toast.success("Bookmark " + (!isBookmarked ? "removed!" : "added!"));
+      toast.success("Bookmark " + (isBookmarked ? "removed!" : "added!"));
       setIsBookmarked(!isBookmarked);
     }
   };
