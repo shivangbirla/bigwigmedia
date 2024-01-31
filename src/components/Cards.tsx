@@ -52,7 +52,7 @@ const CardComponent = ({ card }: { card: Card }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl max-w-80    bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full">
+    <div className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl max-w-80 h-[234px]   bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full">
       <div className="flex flex-row gap-8  justify-center items-center ">
         {!imageLoaded && (
           <svg
@@ -81,7 +81,7 @@ const CardComponent = ({ card }: { card: Card }) => {
           {card.name}
         </div>
       </div>
-      <div className="w-full  text-sm dark:text-white  font-normal">
+      <div className="w-full line-clamp-3   text-sm dark:text-white  font-normal">
         {card.description}
       </div>
       <div className="flex items-start justify-center  pt-0 gap-5">

@@ -37,7 +37,7 @@ const Landing = () => {
     // const
     const res = await axios.get(`${BASE_URL}/templates/labels`);
     const bookmarked = [...res.data.data];
-    // if (isSignedIn) bookmarked.push("My Tools");
+    if (isSignedIn) bookmarked.splice(1, 0, "My Tools");
     setButtons(bookmarked);
     setSelectedButton(res.data.data[0]);
   };
@@ -94,14 +94,14 @@ const Landing = () => {
       <div className="px-5 min-h-screen">
         <Hero search={search} setSearch={setSearch} onClick={handleSearch} />
 
-        {isSignedIn && (
+        {/* {isSignedIn && (
           <div className="flex flex-col my-10 gap-3">
             <h1 className="text-3xl text-center md:text-4xl font-bold text-gray-700">
               My Tools
             </h1>
             <Cards cards={cardsBookmark} isLoading={!cardsBookmark} />
           </div>
-        )}
+        )} */}
 
         <div className="hidden md:block">
           {buttons.length > 0 && (

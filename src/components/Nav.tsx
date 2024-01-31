@@ -30,7 +30,7 @@ const Nav = () => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-50 backnavdrop">
+    <nav className="sticky top-0 z-50 backnavdrop shadow-md dark:shadow-black">
       <div className="h-10vh flex justify-between z-50 text-black dark:text-white lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b ">
         <div
           className="flex items-center gap-4 cursor-pointer"
@@ -46,7 +46,7 @@ const Nav = () => {
             <div className="flex justify-center">
               <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                 <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
-                  Select Language
+                  Language
                   <ChevronDown
                     className={cn(
                       "h-4 w-4 shrink-0 transition-transform duration-200",
