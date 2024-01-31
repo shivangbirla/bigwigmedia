@@ -70,7 +70,7 @@ const CardComponent = ({ card }: { card: Card }) => {
           </svg>
         )}
         <img
-          src={card.logo}
+          src={card.logo.replace("http://localhost:4000", "https://social-media-ai-content-api.onrender.com")}
           alt=""
           className="m-3"
           onLoad={() => setImageLoaded(true)}
