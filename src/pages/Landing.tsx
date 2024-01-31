@@ -103,7 +103,7 @@ const Landing = () => {
           </div>
         )} */}
 
-        <div className="hidden md:block">
+        <div className="hidden md:block mt-10">
           {buttons.length > 0 && (
             <Menu
               buttons={buttons}
