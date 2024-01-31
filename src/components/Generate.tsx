@@ -227,8 +227,8 @@ const Generate = () => {
   const [description, setDescription] = useState<Tool | undefined>();
   const [text, settext] = useState("");
   const [output, setOutput] = useState("");
-  const [hashTag, setHashTag] = useState(false);
-  const [icons, setIcons] = useState(false);
+  const [hashTag, setHashTag] = useState(true);
+  const [icons, setIcons] = useState(true);
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
@@ -267,16 +267,31 @@ const Generate = () => {
       toast.error("Please Signin to continue");
       return;
     }
-    const res = await axios.post(`${BASE_URL}/response?clerkId=${111}`, {
-      prompt: text,
-      tone: selectedButton,
-      useEmoji: icons,
-      useHashTags: hashTag,
-      templateId: id,
-    });
+    try {
+      const res = await axios.post(`${BASE_URL}/response?clerkId=${userId}`, {
+        prompt: text,
+        tone: selectedButton,
+        useEmoji: icons,
+        useHashTags: hashTag,
+        templateId: id,
+      });
+  
+      console.log(res)
+  
+      if(res.status===200){
+  
+        setOutput(res.data.data);
+        setIsLoading(false);
+      }
+      else{
+        toast.error(res.data.error);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      // toast.error(error);
+      console.log(error)
+    }
 
-    setOutput(res.data.data);
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -345,12 +360,15 @@ const Generate = () => {
           <Switch
             id="emoji"
             className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
-            // value={hashTag}
+            checked={icons}
+            onCheckedChange={setIcons}
           />
           <Label htmlFor="emoji">Use Emoji</Label>
           <Switch
             id="hashtag"
             className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
+            checked={hashTag}
+            onCheckedChange={setHashTag}
           />
           <Label htmlFor="hashtag">Use Hashtags</Label>
         </div>

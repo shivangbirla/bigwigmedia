@@ -8,6 +8,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BigWigMedia</title>
+
+
+    <style>
+      body > .skiptranslate {
+        display: none;
+      }
+
+      .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+      }
+      body {
+        top: 0px !important;
+      }
+      @media print {
+        #google_translate_element {
+          display: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

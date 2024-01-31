@@ -157,6 +157,49 @@
   border-radius: 73px;
 }
 
+.text-gradient {
+  position: relative;
+  border-radius: 12px;
+}
+
+.text-gradient textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 10px; /* Adjust padding as needed */
+  border-radius: 12px; /* Adjust border radius to fit the textarea */
+}
+
+.text-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  /* max-width: 637px; */
+  margin: 0 auto;
+  width: 100%;
+  background: linear-gradient(
+    131deg,
+    #ffc700 0%,
+    #ff003d 31.5%,
+    #9e00ff 66%,
+    #00d1ff 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  /* opacity: 0; Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.text-gradient textarea:focus + ::before,
+.text-gradient textarea:focus-visible + ::before {
+  opacity: 1; /* Show the border gradient when focused or focus-visible */
+}
+
+
 .border-gradient-1::before {
   content: "";
   position: absolute;
@@ -165,6 +208,7 @@
   max-width: 637px;
   margin: 0 auto;
   width: 100%;
+  z-index: -10;
   background: linear-gradient(
     131deg,
     #ffc700 0%,

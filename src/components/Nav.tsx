@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/Logo.png";
 import { ModeToggle } from "./ui/mode-toggle";
 
@@ -18,16 +18,37 @@ import { cn } from "@/lib/utils";
 import {
   SignOutButton,
   // SignInButton,
-  
   SignIn,
   useAuth,
   SignedOut,
 } from "@clerk/clerk-react";
+import { Globe } from "lucide-react";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const googleTranslateElementInit = () => {
+    // @ts-ignore
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false,
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    // @ts-ignore
+
+    window.googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 backnavdrop shadow-md dark:shadow-black">
@@ -41,18 +62,24 @@ const Nav = () => {
             BigWigMedia.ai
           </span>
         </div>
+        <div id="google_translate_element"></div>
         <div className="flex flex-row items-center">
-          <div className="hidden md:flex lg: gap-4 items center justify-end front-normal ">
+          <div className=" flex  gap-4 items center justify-end front-normal ">
             <div className="flex justify-center">
               <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                 <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
-                  Language
-                  <ChevronDown
-                    className={cn(
-                      "h-4 w-4 shrink-0 transition-transform duration-200",
-                      isOpen && "rotate-180"
-                    )}
-                  />
+                  <div className="hidden md:flex gap-2">
+                    Language
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 shrink-0 my-auto transition-transform duration-200",
+                        isOpen && "rotate-180"
+                      )}
+                    />
+                  </div>
+                  <div className="block md:hidden">
+                    <Globe />
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Languages</DropdownMenuLabel>
@@ -64,21 +91,10 @@ const Nav = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {/* <button
-            className="text-gray-900 font-outfit text-base font-semibold dark:text-gray-200 hover:text-gray-700 hover:drop-shadow-2xl "
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            Login
-          </button> */}
 
-            {/* <button className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
-            Sign Up
-          </button> */}
             {!isSignedIn ? (
               <button
-                className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
+                className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
                 onClick={() => {
                   navigate("/login");
                 }}
@@ -86,12 +102,15 @@ const Nav = () => {
                 Login
               </button>
             ) : (
-              <button className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
+              <button className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
                 <SignOutButton />
               </button>
             )}
           </div>
 
+          <div className="ml-4">
+            <ModeToggle />
+          </div>
           <div className="md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -118,9 +137,7 @@ const Nav = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem
-                 
-                >
+                <DropdownMenuItem>
                   {!isSignedIn ? (
                     <button
                       className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
@@ -140,9 +157,6 @@ const Nav = () => {
                 <DropdownMenuItem></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
-          <div className="ml-4">
-            <ModeToggle />
           </div>
         </div>
       </div>

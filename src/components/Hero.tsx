@@ -24,27 +24,7 @@ const Hero = ({
 
   return (
     <div className="flex flex-col justify-center space-y-4">
-      <div className="sm:hidden flex mt-6 justify-end">
-        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
-            Select Language
-            <ChevronDown
-              className={cn(
-                "h-4 w-4 shrink-0 transition-transform duration-200",
-                isOpen && "rotate-180"
-              )}
-            />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Languages</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>English</DropdownMenuItem>
-            <DropdownMenuItem>Hindi</DropdownMenuItem>
-            <DropdownMenuItem>Telugu</DropdownMenuItem>
-            <DropdownMenuItem></DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+      
       <div className=" py-4 text-black dark:text-white text-center font-outfit text-[40px] md:text-[45px] lg:text-[50px] font-normal flex flex-col md:block">
         Unlock the
         <span className="bg-gradient text-transparent bg-clip-text font-outfit font-semibold">
