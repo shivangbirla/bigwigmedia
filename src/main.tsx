@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <NextUIProvider>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <Toaster />
+          <Toaster position="top-center" />
           <App />
         </ThemeProvider>
       </ClerkProvider>

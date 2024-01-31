@@ -32,7 +32,10 @@ const Nav = () => {
   return (
     <nav className="sticky top-0 z-50 backnavdrop">
       <div className="h-10vh flex justify-between z-50 text-black dark:text-white lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b ">
-        <div className="flex items-center gap-4 cursor-pointer" onClick={()=>navigate("/")}>
+        <div
+          className="flex items-center gap-4 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <img src={logo} alt="" />
           <span className="text-gray-900 hidden md:block dark:text-white font-outfit text-2xl font-semibold">
             BigWigMedia.ai
@@ -83,11 +86,8 @@ const Nav = () => {
                 Login
               </button>
             ) : (
-              <button
-                className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
-                
-              >
-                <SignOutButton  />
+              <button className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
+                <SignOutButton />
               </button>
             )}
           </div>
@@ -119,11 +119,22 @@ const Nav = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => {
-                    navigate("/login");
-                  }}
+                 
                 >
-                  Sign In
+                  {!isSignedIn ? (
+                    <button
+                      className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
+                      onClick={() => {
+                        navigate("/login");
+                      }}
+                    >
+                      Login
+                    </button>
+                  ) : (
+                    <button className="flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
+                      <SignOutButton />
+                    </button>
+                  )}
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem>Sign Up</DropdownMenuItem> */}
                 <DropdownMenuItem></DropdownMenuItem>
