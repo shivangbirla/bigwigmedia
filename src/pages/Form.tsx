@@ -3,6 +3,7 @@ import { BASE_URL } from "@/utils/funcitons";
 import { Select, SelectItem, select } from "@nextui-org/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Form = () => {
   // State for form fields
@@ -14,7 +15,11 @@ const Form = () => {
   const [labels, setLabels] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [faqs, setFaqs] = useState([]); // State for FAQs
+  const urlParams = new URLSearchParams(window.location.search);
 
+  const id = urlParams.get("id");
+
+  console.log(id);
   console.log("selectedImage", selectedImage);
 
   const getButtons = async () => {
@@ -27,12 +32,14 @@ const Form = () => {
     // const
     const res = await axios.get(`${BASE_URL}/templates/all/logo`);
     let bookmarked = [...res.data.data];
-    bookmarked = bookmarked.map((item: any) =>
-      item.replace(
-        "http://localhost:4000",
-        "https://social-media-ai-content-api.onrender.com"
-      )
-    );
+    bookmarked = bookmarked
+      .filter((item: any) => item !== null)
+      .map((item: any) =>
+        item.replace(
+          "http://localhost:4000",
+          "https://social-media-ai-content-api.onrender.com"
+        )
+      );
     setImages(bookmarked);
   };
 
@@ -41,8 +48,31 @@ const Form = () => {
     getImages();
   }, []);
 
+  const getData = async () => {
+    const res = await axios.get(`${BASE_URL}/templates/get/${id}`);
+    console.log("data", res.data.data);
+    const data = res.data.data;
+    setName(data.name);
+    setDescription(data.description);
+    setTemplate(data.templete);
+    setSelectedLabel(data.labels);
+    setSelectedImage(
+      data.logo.replace(
+        "http://localhost:4000",
+        "https://social-media-ai-content-api.onrender.com"
+      )
+    );
+    setFaqs(data.faq);
+  };
+
+  useEffect(() => {
+    if (!id) return;
+    window.scrollTo(0, 0);
+    getData();
+  }, [id]);
+
   // Handle form submission
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Perform form submission logic here
     console.log("Form submitted:", {
@@ -54,21 +84,25 @@ const Form = () => {
       faqs,
     });
 
-     try {
-       const res = await axios.post(`${BASE_URL}/templates/add`, {
-         name,
-         description,
-         templete:template,
-         selectedLabel,
-         selectedImage,
-         faq:faqs,
-       });
-       console.log("POST request successful:", res.data);
-     } catch (error) {
-       console.error("Error making POST request:", error);
-     }
+    try {
+      let url = `${BASE_URL}/templates/add`;
+      if(!!id) url = `${BASE_URL}/templates/update/${id}`;
+      const res = await axios.post(url, {
+        name,
+        description,
+        templete: template,
+        labels: selectedLabel,
+        logo: selectedImage,
+        faq: faqs,
+      });
+      if(res.status===200){
+        toast.success(" success");
+      }
+      console.log("POST request successful:", res.data);
+    } catch (error) {
+      console.error("Error making POST request:", error);
+    }
 
-    
     // Reset form fields
     // setName("");
     // setDescription("");
@@ -76,6 +110,16 @@ const Form = () => {
     // setSelectedLabel([]);
     // //@ts-ignore
     // setSelectedImage([]);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/templates/delete/${id}`);
+      console.log("DELETE request successful:", res.data);
+      // Perform any additional logic after deletion
+    } catch (error) {
+      console.error("Error making DELETE request:", error);
+    }
   };
 
   //@ts-ignore
@@ -178,11 +222,12 @@ const Form = () => {
             id="image"
             value={selectedImage}
             selectionMode="single"
-            onSelectionChange={(e:any) => {
+            onSelectionChange={(e: any) => {
               // console.log(e)
               setSelectedImage(e.currentKey);
             }}
           >
+            {/* @ts-ignore */}
             {/* Dropdown options for images */}
             {images.map((image, index) => (
               <SelectItem key={image} value={image}>
@@ -196,7 +241,7 @@ const Form = () => {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             FAQs
           </label>
-          {faqs.map((faq:any, index) => (
+          {faqs.map((faq: any, index) => (
             <div key={index} className="mb-2">
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -240,6 +285,13 @@ const Form = () => {
           </button>
         </div>
       </form>
+          {(id&&<button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+            onClick={()=>handleDelete()}
+          >
+            Delete
+          </button>)}
     </div>
   );
 };

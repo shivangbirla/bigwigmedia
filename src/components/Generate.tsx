@@ -221,6 +221,10 @@ interface Tool {
   description: String;
   logo: string;
   labels: String[];
+  faq:{
+    question:string,
+    answer:string,
+  }[]
 }
 
 const Generate = () => {
@@ -574,15 +578,15 @@ const Generate = () => {
           collapsible
           className="w-full flex flex-col gap-2"
         >
-          {acc.map((ac, id) => (
+          {description?.faq?.map((ac, id) => (
             <AccordionItem value="item-1" key={id}>
               <AccordionTrigger
                 className="dark:text-white dark:border dark:border-white  py-4 z-40 items-center rounded-md shadow-md px-5 font-outfit"
-                key={ac.title}
+                key={ac.question}
               >
-                {ac.title}
+                {ac.question}
               </AccordionTrigger>
-              <AccordionContent>{ac.content}</AccordionContent>
+              <AccordionContent>{ac.answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
