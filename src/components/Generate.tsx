@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { button } from "@nextui-org/react";
@@ -291,9 +291,11 @@ const Generate = () => {
         toast.error(res.data.error);
         setIsLoading(false);
       }
-    } catch (error) {
+    } catch (error:any) {
       // toast.error(error);
-      console.log(error)
+      toast.error(error.response.data.error)
+        setIsLoading(false);
+
     }
 
   };
@@ -534,7 +536,7 @@ const Generate = () => {
         <h1 className="text-3xl text-center font-semibold">More Tools</h1>
         <div className="flex px-4 justify-center flex-row flex-wrap gap-3">
           <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            Freestyle Fmail Generator
+            Freestyle Email Generator
           </button>
           <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
             Blog Titles
@@ -549,10 +551,10 @@ const Generate = () => {
             LinkedIn Company Summary
           </button>
           <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            Freestyle Fmail Generator
+            Freestyle Email Generator
           </button>
         </div>
-        <button className="text-gray-400 w-fit text-lg mx-auto bg-transparent flex gap-2">
+        <Link to="/" className="text-gray-400 w-fit text-lg mx-auto bg-transparent flex gap-2">
           See all Tools
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -567,7 +569,7 @@ const Generate = () => {
               fill-opacity="0.6"
             />
           </svg>
-        </button>
+        </Link>
       </div>
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">
         <h1 className="text-3xl text-center font-semibold">
