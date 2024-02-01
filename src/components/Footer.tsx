@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/Logo.png";
+// import logo from "../assets/Logo.png";
+import logo from "../assets/bigwig-img.jpg";
 // import { ModeToggle } from "./ui/mode-toggle";
 
 const Footer = () => {
@@ -130,7 +131,11 @@ const Footer = () => {
       <div className="flex flex-wrap items-start gap-5 md:gap-[83px]">
         <div className="flex flex-col items-start justify-center gap-[18px] w-[303px] h-[167px]">
           <div className="flex flex-row items-center gap-[24px]">
-            <img src={logo} alt="" />
+            <img
+              src={logo}
+              alt=""
+              className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+            />
             <div className="text-gray-900 font-Outfit text-30.699 font-semibold dark:text-white leading-normal">
               BigWigMedia.ai
             </div>

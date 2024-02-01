@@ -7,7 +7,7 @@ import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { cn } from "@/lib/utils";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
 const Cards = ({ cards, isLoading }: { cards: Card[]; isLoading: Boolean }) => {
   const navigate = useNavigate();
@@ -70,7 +70,10 @@ const CardComponent = ({ card }: { card: Card }) => {
           </svg>
         )}
         <img
-          src={card.logo.replace("http://localhost:4000", "https://social-media-ai-content-api.onrender.com")}
+          src={card.logo.replace(
+            "http://localhost:4000",
+            "https://social-media-ai-content-api.onrender.com"
+          )}
           alt=""
           className="m-3"
           onLoad={() => setImageLoaded(true)}
