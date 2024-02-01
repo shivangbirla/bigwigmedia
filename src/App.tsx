@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import ProfileP from './pages/ProfileP';
 
 import Generate from './components/Generate';
+import Form from './pages/Form';
 
 
 const App =()=>{
@@ -17,6 +18,7 @@ const App =()=>{
         <Route path="/profile" element={<ProfileP />} />
 
         <Route path="/generate" element={<Generate />} />
+        <Route path="/form" element={<Form />} />
 
       </Routes>
     </div>
