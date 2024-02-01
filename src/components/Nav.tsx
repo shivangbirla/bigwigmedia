@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "../assets/Logo.png";
+import logo from "../assets/bigwig-img.jpg";
 import { ModeToggle } from "./ui/mode-toggle";
 
 import {
@@ -28,6 +28,7 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+
   const googleTranslateElementInit = () => {
     // @ts-ignore
     new window.google.translate.TranslateElement(
@@ -38,33 +39,40 @@ const Nav = () => {
       "google_translate_element"
     );
   };
-  useEffect(() => {
-    var addScript = document.createElement("script");
-    addScript.setAttribute(
-      "src",
-      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    );
-    document.body.appendChild(addScript);
-    // @ts-ignore
 
-    window.googleTranslateElementInit = googleTranslateElementInit;
+  useEffect(() => {
+    // Check if the script has already been added
+    if (!window.googleTranslateElementInit) {
+      var addScript = document.createElement("script");
+      addScript.setAttribute(
+        "src",
+        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      );
+      document.body.appendChild(addScript);
+      // @ts-ignore
+      window.googleTranslateElementInit = googleTranslateElementInit;
+    }
   }, []);
 
   return (
     <nav className="sticky top-0 z-50 backnavdrop shadow-md dark:shadow-black">
-      <div className="h-10vh flex justify-between z-50 text-black dark:text-white lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b ">
+      <div className="h-10vh flex justify-between z-50 text-black dark:text-white lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b items-center">
         <div
           className="flex items-center gap-4 cursor-pointer"
           onClick={() => navigate("/")}
         >
-          <img src={logo} alt="" />
+          <img
+            src={logo}
+            alt="bigwig-logo"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+          />
           <span className="text-gray-900 hidden md:block dark:text-white font-outfit text-2xl font-semibold">
             BigWigMedia.ai
           </span>
         </div>
         <div id="google_translate_element"></div>
         <div className="flex flex-row items-center">
-          <div className=" flex  gap-4 items center justify-end front-normal ">
+          <div className="flex  gap-4 items center justify-end front-normal ">
             <div className="flex justify-center">
               {/* <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                 <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
@@ -111,7 +119,7 @@ const Nav = () => {
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className="md:hidden">
+          <div className="md:hidden ml-2">
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button className="p-0 bg-transparent">
