@@ -179,7 +179,12 @@ const Footer = () => {
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
               All Blog Writer
             </div>
-            <div className="bg-gradient-to-br from-yellow-400 via-red-600 to-purple-600 bg-clip-text text-transparent">
+            <div
+              className="bg-gradient-to-br from-yellow-400 via-red-600 to-purple-600 bg-clip-text text-transparent cursor-pointer"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               View All Tools{" "}
             </div>
           </div>
