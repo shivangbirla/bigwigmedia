@@ -12,9 +12,26 @@ const Form = () => {
   const [template, setTemplate] = useState("");
   const [selectedLabel, setSelectedLabel] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");
-  const [labels, setLabels] = useState<string[]>([]);
+  const [labels, setLabels] = useState<string[]>([
+    "All Tools",
+    "My Tools",
+    "Facebook Tools",
+    "Instagram Tools",
+    "TikTok Tools",
+    "LinkedIn Tools",
+    "YouTube Tools",
+    "SEO Tools",
+    "Website Tools",
+    "Paid Ads Tools",
+    "Image Tools",
+    "Video Tools",
+    "Social Media Tools",
+    "Email Tools",
+    "Product Tools",
+  ]);
   const [images, setImages] = useState<string[]>([]);
   const [faqs, setFaqs] = useState([]); // State for FAQs
+  const [newLink, setNewLink] = useState<String>()
   const urlParams = new URLSearchParams(window.location.search);
 
   const id = urlParams.get("id");
@@ -22,12 +39,12 @@ const Form = () => {
   console.log(id);
   console.log("selectedImage", selectedImage);
 
-  const getButtons = async () => {
-    // const
-    const res = await axios.get(`${BASE_URL}/templates/labels`);
-    const bookmarked = [...res.data.data];
-    setLabels(bookmarked);
-  };
+  // const getButtons = async () => {
+  //   // const
+  //   const res = await axios.get(`${BASE_URL}/templates/labels`);
+  //   const bookmarked = [...res.data.data];
+  //   setLabels(bookmarked);
+  // };
   const getImages = async () => {
     // const
     const res = await axios.get(`${BASE_URL}/templates/all/logo`);
@@ -44,7 +61,7 @@ const Form = () => {
   };
 
   useEffect(() => {
-    getButtons();
+    // getButtons();
     getImages();
   }, []);
 
@@ -236,6 +253,32 @@ const Form = () => {
             ))}
           </Select>
         </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="image"
+          >
+            Or Add New Image Url
+          </label>
+          {/* @ts-ignore */}
+          <input
+            type="text"
+            value={newLink as string}
+            onChange={(e) => setNewLink(e.target.value)}
+            className="bg-gray-100 p-2"
+          />
+          <button
+            className="bg-blue-400 p-1 text-white rounded-lg ml-2"
+            onClick={() => {
+              {/* @ts-ignore */}
+              setSelectedImage(newLink);
+              {/* @ts-ignore */}
+              setImages([...images, newLink]);
+            }}
+          >
+            Add
+          </button>
+        </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -285,13 +328,15 @@ const Form = () => {
           </button>
         </div>
       </form>
-          {(id&&<button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            onClick={()=>handleDelete()}
-          >
-            Delete
-          </button>)}
+      {id && (
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          onClick={() => handleDelete()}
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 };

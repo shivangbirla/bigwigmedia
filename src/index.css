@@ -157,7 +157,29 @@
   border-radius: 73px;
 }
 
-.text-gradient {
+.border-gradient-1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 73px;
+  max-width: 637px;
+  margin: 0 auto;
+  width: 100%;
+  /* z-index: -10; */
+  background: linear-gradient(
+    131deg,
+    #ffc700 0%,
+    #ff003d 31.5%,
+    #9e00ff 66%,
+    #00d1ff 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+}
+
+/* .text-gradient {
   position: relative;
   border-radius: 12px;
 }
@@ -167,9 +189,9 @@
   height: 100%;
   border: none;
   outline: none;
-  padding: 10px; /* Adjust padding as needed */
-  border-radius: 12px; /* Adjust border radius to fit the textarea */
-}
+  padding: 10px; 
+  border-radius: 12px; 
+} */
 #google_translate_element span {
   display: none;
 }
@@ -189,13 +211,12 @@
 .goog-te-gadget {
   font-size: 0px !important;
 }
-
+/* 
 .text-gradient::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 12px;
-  /* max-width: 637px; */
   margin: 0 auto;
   width: 100%;
   background: linear-gradient(
@@ -209,36 +230,15 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   padding: 2px;
-  /* opacity: 0; Initially hidden */
-  transition: opacity 0.3s ease; /* Smooth transition */
+  transition: opacity 0.3s ease; 
 }
 
 .text-gradient textarea:focus + ::before,
 .text-gradient textarea:focus-visible + ::before {
-  opacity: 1; /* Show the border gradient when focused or focus-visible */
-}
+  opacity: 1;
+} */
 
-.border-gradient-1::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 73px;
-  max-width: 637px;
-  margin: 0 auto;
-  width: 100%;
-  z-index: -10;
-  background: linear-gradient(
-    131deg,
-    #ffc700 0%,
-    #ff003d 31.5%,
-    #9e00ff 66%,
-    #00d1ff 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 2px;
-}
+
 
 .backnavdrop {
   -webkit-backdrop-filter: saturate(180%) blur(5px);

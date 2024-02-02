@@ -248,8 +248,11 @@ const Generate = () => {
     "Minimal",
   ];
 
+  console.log(selectedButton)
+
   // Function to handle button click
   const handleButtonClick = (selected: string) => {
+    console.log(selected)
     setSelectedButton(selected);
   };
 
@@ -403,7 +406,11 @@ const Generate = () => {
 
       <div className="flex flex-col gap-6 w-fit mx-auto">
         <h1 className="text-3xl text-center font-semibold">Share This</h1>
-        <div className="flex flex-row gap-3">
+        <div
+          className="elfsight-app-41c0aaf1-c9af-4d02-bf17-6ae8306f8500"
+          data-elfsight-app-lazy
+        ></div>
+        {/* <div className="flex flex-row gap-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="63"
@@ -530,7 +537,7 @@ const Generate = () => {
           <button className="w-14 h-14 rounded-full flex items-center justify-center bg-transparent border">
             ...
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="flex  flex-col gap-6 max-w-[1084px] w-fit mx-auto">
         <h1 className="text-3xl text-center font-semibold">More Tools</h1>
@@ -554,7 +561,10 @@ const Generate = () => {
             Freestyle Email Generator
           </button>
         </div>
-        <Link to="/" className="text-gray-400 w-fit text-lg mx-auto bg-transparent flex gap-2">
+        <Link
+          to="/"
+          className="text-gray-400 w-fit text-lg mx-auto bg-transparent flex gap-2"
+        >
           See all Tools
           <svg
             xmlns="http://www.w3.org/2000/svg"
