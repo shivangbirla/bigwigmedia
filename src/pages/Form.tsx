@@ -46,19 +46,34 @@ const Form = () => {
   //   setLabels(bookmarked);
   // };
   const getImages = async () => {
-    // const
-    const res = await axios.get(`${BASE_URL}/templates/all/logo`);
-    let bookmarked = [...res.data.data];
-    bookmarked = bookmarked
-      .filter((item: any) => item !== null)
-      .map((item: any) =>
-        item.replace(
-          "http://localhost:4000",
-          "https://social-media-ai-content-api.onrender.com"
-        )
-      );
-    setImages(bookmarked);
+    try {
+      const res = await axios.get(`${BASE_URL}/templates/all/logo`);
+      let bookmarked = [...res.data.data];
+      // Create a Set to store unique images
+      const uniqueImages = new Set();
+
+      bookmarked.forEach((item) => {
+        // Check if the item is not null and is a string
+        if (item !== null && typeof item === "string") {
+          // Replace the base URL
+          const modifiedItem = item.replace(
+            "http://localhost:4000",
+            "https://social-media-ai-content-api.onrender.com"
+          );
+          // Add the modified item to the Set
+          uniqueImages.add(modifiedItem);
+        }
+      });
+
+      // Convert the Set back to an array
+      const uniqueImagesArray = [...uniqueImages];
+
+      setImages(uniqueImagesArray as string[]);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
   };
+
 
   useEffect(() => {
     // getButtons();
