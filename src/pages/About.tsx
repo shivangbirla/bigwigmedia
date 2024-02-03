@@ -5,9 +5,9 @@ import Nav from "@/components/Nav";
 import React, { useEffect } from "react";
 
 const AboutUs: React.FC = () => {
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="bg-white dark:bg-[#1E1E1E]">
       <Nav />
@@ -15,7 +15,7 @@ const AboutUs: React.FC = () => {
         <h1 className="bg-gradient text-transparent bg-clip-text  text-3xl font-bold mb-4">
           About Us
         </h1>
-        <p className="text-lg text-justify mb-4">
+        <p className="text-xl my-4 lg:mx-[20vh] text-center ">
           Welcome to BigWigMedia.ai – your go-to hub for comprehensive AI
           solutions. We offer a range of cutting-edge tools designed to elevate
           efficiency and productivity across industries. At BigWigMedia.ai,
@@ -23,11 +23,11 @@ const AboutUs: React.FC = () => {
           you stay ahead in the rapidly evolving digital landscape. Join us in
           transforming possibilities into realities.
         </p>
-        <p className="text-lg">
+        {/* <p className="text-xl text-justify mt-[10vh] lg:mx-[20vh]">
           At BigWigMedia.ai, we're committed to simplifying your AI integration
           journey, ensuring you stay ahead in the rapidly evolving digital
           landscape. Join us in transforming possibilities into realities.
-        </p>
+        </p> */}
       </div>
       <Footer />
     </div>
