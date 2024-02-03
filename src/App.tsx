@@ -6,6 +6,8 @@ import ProfileP from './pages/ProfileP';
 
 import Generate from './components/Generate';
 import Form from './pages/Form';
+import Contact from './pages/Contact';
+import About from './pages/About';
 
 
 const App =()=>{
@@ -19,6 +21,8 @@ const App =()=>{
 
         <Route path="/generate" element={<Generate />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
 
       </Routes>
     </div>
