@@ -11,13 +11,17 @@ const AboutUs: React.FC = () => {
       <div className="p-10 min-h-screen">
         <h1 className="text-3xl font-bold mb-4">About Us</h1>
         <p className="text-lg mb-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod
-          sem vitae nunc eleifend, eu gravida mi vestibulum. Nullam congue
-          auctor quam a iaculis.
+          Welcome to BigWigMedia.ai – your go-to hub for comprehensive AI
+          solutions. We offer a range of cutting-edge tools designed to elevate
+          efficiency and productivity across industries. At BigWigMedia.ai,
+          we're committed to simplifying your AI integration journey, ensuring
+          you stay ahead in the rapidly evolving digital landscape. Join us in
+          transforming possibilities into realities.
         </p>
         <p className="text-lg">
-          Vestibulum sit amet eros viverra, suscipit massa ut, facilisis nisi.
-          Cras pharetra tincidunt arcu, ac posuere sapien dignissim at.
+          At BigWigMedia.ai, we're committed to simplifying your AI integration
+          journey, ensuring you stay ahead in the rapidly evolving digital
+          landscape. Join us in transforming possibilities into realities.
         </p>
       </div>
       <Footer />

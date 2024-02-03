@@ -195,7 +195,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col items-start gap-[5px]">
             <div
-              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal"
+              className="text-black cursor-pointer dark:text-white font-Outfit text-base font-medium leading-normal"
               onClick={() => {
                 navigate("/about");
               }}
@@ -203,7 +203,7 @@ const Footer = () => {
               About Us
             </div>
             <div
-              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal"
+              className="text-black cursor-pointer dark:text-white font-Outfit text-base font-medium leading-normal"
               onClick={() => {
                 navigate("/contact");
               }}
