@@ -47,7 +47,7 @@ const Landing = () => {
     isSignedIn && getBookMarks();
   }, [isLoaded, isSignedIn]);
 
-  const getBookMarks = async () => {
+  const getBookMarks = async (bool=false) => {
     if (!isSignedIn) {
       setCards([]);
       toast.error("Please sign in to view your bookmarks");
@@ -60,6 +60,7 @@ const Landing = () => {
     }));
     // setCards(cards);
     setCardsBookmark(cards);
+    if(bool) setCards(cards);
     setIsLoading(false);
   };
 
@@ -75,10 +76,10 @@ const Landing = () => {
 
   useEffect(() => {
     if (buttons.length === 0) return;
+    setIsLoading(true);
     if (selectedButton !== "My Tools") {
-      setIsLoading(true);
       getTemplates();
-    } else if (isSignedIn) setCards(cardsBookmark);
+    } else if (isSignedIn) getBookMarks(true);
   }, [selectedButton, isLoaded]);
 
   const handleSearch = async () => {
