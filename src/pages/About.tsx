@@ -2,15 +2,20 @@
 
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
-import React from "react";
+import React, { useEffect } from "react";
 
 const AboutUs: React.FC = () => {
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
   return (
     <div className="bg-white dark:bg-[#1E1E1E]">
       <Nav />
-      <div className="p-10 min-h-screen">
-        <h1 className="text-3xl font-bold mb-4">About Us</h1>
-        <p className="text-lg mb-4">
+      <div className="p-10 text-center min-h-screen">
+        <h1 className="bg-gradient text-transparent bg-clip-text  text-3xl font-bold mb-4">
+          About Us
+        </h1>
+        <p className="text-lg text-justify mb-4">
           Welcome to BigWigMedia.ai – your go-to hub for comprehensive AI
           solutions. We offer a range of cutting-edge tools designed to elevate
           efficiency and productivity across industries. At BigWigMedia.ai,

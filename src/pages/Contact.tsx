@@ -22,8 +22,10 @@ const ContactUs: React.FC = () => {
   return (
     <div className="bg-white dark:bg-[#1E1E1E]">
       <Nav />
-      <div className="p-10 min-h-screen">
-        <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
+      <div className="p-10 flex flex-col justify-start items-center text-center min-h-screen">
+        <h1 className="bg-gradient text-transparent bg-clip-text  text-3xl font-bold mb-4">
+          Contact Us
+        </h1>
         <div className="mb-4">
           <p className="text-lg mb-2">
             Feel free to reach out to us via the form below or through our
@@ -35,18 +37,18 @@ const ContactUs: React.FC = () => {
             Address: 1234 Street Name, City, Country
           </p>
         </div>
-        <form onSubmit={handleFormSubmit} className="max-w-md">
+        <form onSubmit={handleFormSubmit} className="w-full mt-5 max-w-[500px] ">
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-gray-700 font-semibold mb-2"
+              className="block text-gray-700 dark:text-gray-200 font-semibold mb-2"
             >
               Name
             </label>
             <input
               type="text"
               id="name"
-              className="form-input w-full rounded-md"
+              className="form-input p-2 w-full rounded-md"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -55,14 +57,14 @@ const ContactUs: React.FC = () => {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-gray-700 font-semibold mb-2"
+              className="block text-gray-700 dark:text-gray-200 font-semibold mb-2"
             >
               Email
             </label>
             <input
               type="email"
               id="email"
-              className="form-input w-full rounded-md"
+              className="form-input p-2 w-full rounded-md"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -71,13 +73,13 @@ const ContactUs: React.FC = () => {
           <div className="mb-4">
             <label
               htmlFor="message"
-              className="block text-gray-700 font-semibold mb-2"
+              className="block text-gray-700 dark:text-gray-200 font-semibold mb-2"
             >
               Message
             </label>
             <textarea
               id="message"
-              className="form-textarea w-full rounded-md"
+              className="form-textarea p-2 w-full rounded-md"
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
