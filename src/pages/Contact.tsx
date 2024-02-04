@@ -27,17 +27,22 @@ const ContactUs: React.FC = () => {
           Contact Us
         </h1>
         <div className="mb-4">
-          <p className="text-lg mb-2">
-            Feel free to reach out to us via the form below or through our
-            contact information:
+          <p className="text-xl text-center my-4 lg:mx-[20vh]">
+            Thank you for considering BigWigMedia.ai for your AI needs. Our team
+            is dedicated to providing innovative solutions under one roof.
+            Whether you have questions, need assistance, or want to explore our
+            AI tools, we're here to help.
           </p>
-          <p className="text-lg mb-2">Email: example@example.com</p>
-          <p className="text-lg mb-2">Phone: 123-456-7890</p>
-          <p className="text-lg mb-2">
-            Address: 1234 Street Name, City, Country
+          <p className="text-xl mb-2">Email: enquiry@bigwigmedia.ai</p>
+          <p className="text-xl mb-2">Phone: 123-456-7890</p>
+          <p className="text-xl mb-2">
+            S-1, 3rd Floor, Janta Market, Rajouri Garden, New Delhi, 110027
           </p>
         </div>
-        <form onSubmit={handleFormSubmit} className="w-full mt-5 max-w-[500px] ">
+        <form
+          onSubmit={handleFormSubmit}
+          className="w-full mt-5 max-w-[500px] "
+        >
           <div className="mb-4">
             <label
               htmlFor="name"
