@@ -91,7 +91,7 @@ const CardComponent = ({
             "https://social-media-ai-content-api.onrender.com"
           )}
           alt=""
-          className="m-3"
+          className="m-3 max-w-9 max-h-9"
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageLoaded(false)}
           style={{ display: imageLoaded ? "initial" : "none" }}
