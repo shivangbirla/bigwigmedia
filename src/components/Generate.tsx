@@ -232,6 +232,30 @@ interface Icon {
   logo: String;
 }
 
+function manipulate(bio:string) {
+  // Convert the bio to lowercase for case-insensitive matching
+  const lowerCaseBio = bio?.toLowerCase();
+
+  // Check if "ai" is present in the bio
+  const containsAI = lowerCaseBio?.includes("ai");
+
+  // Check if "generator" is present in the bio
+  const containsGenerator = lowerCaseBio?.includes("generator");
+
+  // Remove "ai" from the bio
+  const bioWithoutAI = containsAI ? bio.replace(/ai/gi, "") : bio;
+
+  // Remove "Generator!" from the bio (if present)
+  const bioWithoutGenerator = containsGenerator
+    ? bioWithoutAI.replace(/generator[!]?/gi, "")
+    : bioWithoutAI;
+
+  // Trim any extra spaces resulting from the removals
+  const finalBio = bioWithoutGenerator?.trim();
+
+  return finalBio;
+}
+
 const Generate = () => {
   const [description, setDescription] = useState<Tool | undefined>();
   const [text, settext] = useState("");
@@ -364,7 +388,8 @@ const Generate = () => {
       </div>
       <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-4">
         <p className="  dark:text-white self-start text-black text-left font-outfit   text-xl font-semibold">
-          Paste your current bio or write just few keywords :
+          Paste your current {manipulate(description?.name as string)} or write just few
+          keywords :
         </p>
 
         <Textarea

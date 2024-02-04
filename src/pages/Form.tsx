@@ -96,8 +96,7 @@ const Form = () => {
   };
 
   useEffect(() => {
-    // getButtons();
-    // getImages();
+    document.documentElement.classList.remove("dark");
   }, []);
 
   const getData = async () => {
