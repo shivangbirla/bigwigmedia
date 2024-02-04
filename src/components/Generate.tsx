@@ -226,6 +226,12 @@ interface Tool {
   }[];
 }
 
+interface Icon {
+  _id: String;
+  name: String;
+  logo: String;
+}
+
 const Generate = () => {
   const [description, setDescription] = useState<Tool | undefined>();
   const [text, settext] = useState("");
@@ -237,6 +243,7 @@ const Generate = () => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const [selectedButton, setSelectedButton] = useState("Professional");
   const [isLoading, setIsLoading] = useState(false);
+  const [relatedTemplates, setrelatedTemplates] = useState<Icon[]>([]);
 
   // Define the array of button labels
   const buttonLabels = [
@@ -259,6 +266,7 @@ const Generate = () => {
 
   const getData = async () => {
     const res = await axios.get(`${BASE_URL}/templates/get/${id}`);
+    setrelatedTemplates(res.data.relatedTempletes);
     setDescription(res.data.data);
   };
 
@@ -310,8 +318,7 @@ const Generate = () => {
     } catch (error) {
       toast.error("Failed to copy");
     }
-  
-  }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -330,18 +337,27 @@ const Generate = () => {
           {description?.description}
         </p>
         <div className="flex flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500">
-          {buttonIcons.map((icon, index) => (
+          {relatedTemplates?.slice(0, 5).map((icon, index) => (
             <button
               key={index}
               className="p-2  rounded-full shadow-md"
               onClick={() =>
                 navigate({
                   pathname: "/generate",
-                  search: `?id=${icon.id}`,
+                  //@ts-ignore
+                  search: `?id=${icon._id}`,
                 })
               }
             >
-              {icon.icon}
+              <img
+                src={
+                  icon.logo.replace(
+                    "http://localhost:4000",
+                    "https://social-media-ai-content-api.onrender.com"
+                  ) as string
+                }
+                alt=""
+              />
             </button>
           ))}
         </div>
