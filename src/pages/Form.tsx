@@ -14,24 +14,37 @@ const Form = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [labels, setLabels] = useState<string[]>([
     "All Tools",
+    "In Demand Tools",
+    "Social Media Bio's",
     "My Tools",
-    "Facebook Tools",
-    "Instagram Tools",
-    "TikTok Tools",
-    "LinkedIn Tools",
-    "YouTube Tools",
+    "Social Media Posts",
     "SEO Tools",
     "Website Tools",
-    "Paid Ads Tools",
-    "Image Tools",
-    "Video Tools",
-    "Social Media Tools",
+    "Paid Ad Tools",
+    "Image Generator",
+    "Image Resizers",
+    "Language Translator",
+    "Video Downloaders",
     "Email Tools",
-    "Product Tools",
+    "Paraphrase Tools",
+    "Blog Creator",
+    "Audio Tools",
+    "Article Creator",
+    "Newsletters",
+    "Press Releases",
+    "Facebook Post Caption Generator",
+    "Facebook Group Post Generator",
+    "Facebook Group Description Generator",
+    "Instagram Post Caption Generator",
+    "Instagram Reel Caption Generator",
+    "Instagram Story Caption Generator",
+    "Youtube Post Title Generator",
+    "Youtube Post Description Generator",
+    "Threads Post Caption Generator",
   ]);
   const [images, setImages] = useState<string[]>([]);
   const [faqs, setFaqs] = useState([]); // State for FAQs
-  const [newLink, setNewLink] = useState<String>()
+  const [newLink, setNewLink] = useState<String>();
   const urlParams = new URLSearchParams(window.location.search);
 
   const id = urlParams.get("id");
@@ -73,7 +86,6 @@ const Form = () => {
       console.error("Error fetching images:", error);
     }
   };
-
 
   useEffect(() => {
     // getButtons();
@@ -118,7 +130,7 @@ const Form = () => {
 
     try {
       let url = `${BASE_URL}/templates/add`;
-      if(!!id) url = `${BASE_URL}/templates/update/${id}`;
+      if (!!id) url = `${BASE_URL}/templates/update/${id}`;
       const res = await axios.post(url, {
         name,
         description,
@@ -127,7 +139,7 @@ const Form = () => {
         logo: selectedImage,
         faq: faqs,
       });
-      if(res.status===200){
+      if (res.status === 200) {
         toast.success(" success");
       }
       console.log("POST request successful:", res.data);
@@ -285,9 +297,13 @@ const Form = () => {
           <button
             className="bg-blue-400 p-1 text-white rounded-lg ml-2"
             onClick={() => {
-              {/* @ts-ignore */}
+              {
+                /* @ts-ignore */
+              }
               setSelectedImage(newLink);
-              {/* @ts-ignore */}
+              {
+                /* @ts-ignore */
+              }
               setImages([...images, newLink]);
             }}
           >
