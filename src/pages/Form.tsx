@@ -11,27 +11,54 @@ const Form = () => {
   const [description, setDescription] = useState("");
   const [template, setTemplate] = useState("");
   const [selectedLabel, setSelectedLabel] = useState([]);
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string>("");
   const [labels, setLabels] = useState<string[]>([
     "All Tools",
+    "In Demand Tools",
+    "Social Media Bio's",
     "My Tools",
-    "Facebook Tools",
-    "Instagram Tools",
-    "TikTok Tools",
-    "LinkedIn Tools",
-    "YouTube Tools",
+    "Social Media Posts",
     "SEO Tools",
     "Website Tools",
-    "Paid Ads Tools",
-    "Image Tools",
-    "Video Tools",
-    "Social Media Tools",
+    "Paid Ad Tools",
+    "Image Generator",
+    "Image Resizers",
+    "Language Translator",
+    "Video Downloaders",
     "Email Tools",
-    "Product Tools",
+    "Paraphrase Tools",
+    "Blog Creator",
+    "Audio Tools",
+    "Article Creator",
+    "Newsletters",
+    "Press Releases",
+    "Facebook Post Caption Generator",
+    "Facebook Group Post Generator",
+    "Facebook Group Description Generator",
+    "Instagram Post Caption Generator",
+    "Instagram Reel Caption Generator",
+    "Instagram Story Caption Generator",
+    "Youtube Post Title Generator",
+    "Youtube Post Description Generator",
+    "Threads Post Caption Generator",
   ]);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512589c982265fa7120a132_ico-X.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512c9ab339d227090291504_ico-Facebook.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512c9f5bcb88ff4f70e0862_ico-Insta.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512ca25c32768a723b2d855_ico-TikTok.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512d8dd24a0261059ca0b40_logo-threads.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512cabdd40cdffceaac8fd7_ico-LinkedIn.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512cd892a8bf792f30f0f9e_ico-Blog.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512ce3eeacee2651ee85725_ico-SEO-n-site.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512cefade02f68397df8c82_ico-Pintrest.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512cfc26e3ee8ff26a2185b_ico-YouTube.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512d0a70d6cfa37db7e93fd_ico-Email.svg",
+    "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512d2e9bcb88ff4f718f8cf_ico-Marketing.svg",
+  ]);
+
   const [faqs, setFaqs] = useState([]); // State for FAQs
-  const [newLink, setNewLink] = useState<String>()
+  const [newLink, setNewLink] = useState<String>();
   const urlParams = new URLSearchParams(window.location.search);
 
   const id = urlParams.get("id");
@@ -39,12 +66,6 @@ const Form = () => {
   console.log(id);
   console.log("selectedImage", selectedImage);
 
-  // const getButtons = async () => {
-  //   // const
-  //   const res = await axios.get(`${BASE_URL}/templates/labels`);
-  //   const bookmarked = [...res.data.data];
-  //   setLabels(bookmarked);
-  // };
   const getImages = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/templates/all/logo`);
@@ -74,10 +95,9 @@ const Form = () => {
     }
   };
 
-
   useEffect(() => {
     // getButtons();
-    getImages();
+    // getImages();
   }, []);
 
   const getData = async () => {
@@ -118,7 +138,7 @@ const Form = () => {
 
     try {
       let url = `${BASE_URL}/templates/add`;
-      if(!!id) url = `${BASE_URL}/templates/update/${id}`;
+      if (!!id) url = `${BASE_URL}/templates/update/${id}`;
       const res = await axios.post(url, {
         name,
         description,
@@ -127,7 +147,7 @@ const Form = () => {
         logo: selectedImage,
         faq: faqs,
       });
-      if(res.status===200){
+      if (res.status === 200) {
         toast.success(" success");
       }
       console.log("POST request successful:", res.data);
@@ -285,10 +305,14 @@ const Form = () => {
           <button
             className="bg-blue-400 p-1 text-white rounded-lg ml-2"
             onClick={() => {
-              {/* @ts-ignore */}
-              setSelectedImage(newLink);
-              {/* @ts-ignore */}
-              setImages([...images, newLink]);
+              {
+                /* @ts-ignore */
+              }
+              setSelectedImage(newLink as string);
+              {
+                /* @ts-ignore */
+              }
+              setImages([...images, newLink as string]);
             }}
           >
             Add
