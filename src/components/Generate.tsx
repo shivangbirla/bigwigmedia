@@ -18,7 +18,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { button } from "@nextui-org/react";
-
+import { ClipboardList } from "lucide-react";
 // type Props = {};
 
 const acc = [
@@ -38,7 +38,6 @@ const acc = [
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditisdfasdfdasis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
   },
 ];
-
 
 const buttonIcons = [
   {
@@ -221,10 +220,10 @@ interface Tool {
   description: String;
   logo: string;
   labels: String[];
-  faq:{
-    question:string,
-    answer:string,
-  }[]
+  faq: {
+    question: string;
+    answer: string;
+  }[];
 }
 
 const Generate = () => {
@@ -248,11 +247,11 @@ const Generate = () => {
     "Minimal",
   ];
 
-  console.log(selectedButton)
+  console.log(selectedButton);
 
   // Function to handle button click
   const handleButtonClick = (selected: string) => {
-    console.log(selected)
+    console.log(selected);
     setSelectedButton(selected);
   };
 
@@ -274,8 +273,8 @@ const Generate = () => {
       toast.error("Please Signin to continue");
       return;
     }
-    if(!text){
-      toast.error("Please enter the text to generate")
+    if (!text) {
+      toast.error("Please enter the text to generate");
       setIsLoading(false);
       return;
     }
@@ -287,26 +286,32 @@ const Generate = () => {
         useHashTags: hashTag,
         templateId: id,
       });
-  
-      console.log(res)
-  
-      if(res.status===200){
-  
+
+      console.log(res);
+
+      if (res.status === 200) {
         setOutput(res.data.data);
         setIsLoading(false);
-      }
-      else{
+      } else {
         toast.error(res.data.error);
         setIsLoading(false);
       }
-    } catch (error:any) {
+    } catch (error: any) {
       // toast.error(error);
-      toast.error(error.response.data.error)
-        setIsLoading(false);
-
+      toast.error(error.response.data.error);
+      setIsLoading(false);
     }
-
   };
+
+  const handleCopy = () => {
+    try {
+      navigator.clipboard.writeText(output);
+      toast.success("Copied to Clipboard");
+    } catch (error) {
+      toast.error("Failed to copy");
+    }
+  
+  }
 
   useEffect(() => {
     if (!id) return;
@@ -398,6 +403,11 @@ const Generate = () => {
         <div className="flex flex-col border   w-full mx-auto max-w-[1084px] pb-8 rounded-xl">
           <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between">
             <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
+            {output && (
+              <button onClick={handleCopy}>
+                <ClipboardList className="w-5 h-5" />
+              </button>
+            )}
           </div>
           {!isLoading ? (
             <p className="p-5 text-base md:text-xl font-medium">{output}</p>
