@@ -41,6 +41,7 @@ const Form = () => {
     "Youtube Post Title Generator",
     "Youtube Post Description Generator",
     "Threads Post Caption Generator",
+    "Upcoming Tools",
   ]);
   const [images, setImages] = useState<string[]>([
     "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512589c982265fa7120a132_ico-X.svg",
