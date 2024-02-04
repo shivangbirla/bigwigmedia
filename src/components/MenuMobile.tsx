@@ -17,9 +17,10 @@ interface MenuProps {
   setSelectedButton: Function;
   cards: Card[];
   isLoading:Boolean;
+  setChange:Function;
 }
 
-const MenuMobile = ({buttons,selectedButton,setSelectedButton,cards,isLoading}:MenuProps) => {
+const MenuMobile = ({buttons,selectedButton,setSelectedButton,cards,isLoading,setChange}:MenuProps) => {
   return (
     <div className="my-14 z-50">
       <Accordion
@@ -34,7 +35,7 @@ const MenuMobile = ({buttons,selectedButton,setSelectedButton,cards,isLoading}:M
               {ac}
             </AccordionTrigger>
             <AccordionContent >
-              <Cards cards={cards} isLoading={isLoading}/>
+              <Cards cards={cards} isLoading={isLoading} setChange={setChange}/>
             </AccordionContent>
           </AccordionItem>
         ))}

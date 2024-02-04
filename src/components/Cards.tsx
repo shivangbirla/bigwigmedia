@@ -9,14 +9,22 @@ import { BASE_URL } from "@/utils/funcitons";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-const Cards = ({ cards, isLoading }: { cards: Card[]; isLoading: Boolean }) => {
+const Cards = ({
+  cards,
+  isLoading,
+  setChange,
+}: {
+  cards: Card[];
+  isLoading: Boolean;
+  setChange: Function;
+}) => {
   const navigate = useNavigate();
 
   return (
     <div className="flex justify-center mx-auto flex-wrap md:mt-5 lg:mt-14 gap-3 xl:max-w-[90%]  md:gap-10">
       {!isLoading ? (
         cards.map((card, id) => {
-          return <CardComponent card={card} key={id} />;
+          return <CardComponent card={card} key={id} setChange={setChange} />;
         })
       ) : (
         <div className="w-full h-full flex items-center justify-center">
@@ -29,7 +37,13 @@ const Cards = ({ cards, isLoading }: { cards: Card[]; isLoading: Boolean }) => {
 
 export default Cards;
 
-const CardComponent = ({ card }: { card: Card }) => {
+const CardComponent = ({
+  card,
+  setChange,
+}: {
+  card: Card;
+  setChange: Function;
+}) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(card.isBookmarked);
   const navigate = useNavigate();
@@ -46,6 +60,8 @@ const CardComponent = ({ card }: { card: Card }) => {
       {}
     );
     if (res.status === 200) {
+      // setIsBookmarked(res.data.data.includes(card._id));
+      setChange((prev: number) => prev + 1);
       toast.success("Bookmark " + (isBookmarked ? "removed!" : "added!"));
       setIsBookmarked(!isBookmarked);
     }

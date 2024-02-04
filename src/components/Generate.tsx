@@ -274,6 +274,11 @@ const Generate = () => {
       toast.error("Please Signin to continue");
       return;
     }
+    if(!text){
+      toast.error("Please enter the text to generate")
+      setIsLoading(false);
+      return;
+    }
     try {
       const res = await axios.post(`${BASE_URL}/response?clerkId=${userId}`, {
         prompt: text,
@@ -342,7 +347,7 @@ const Generate = () => {
         </p>
 
         <Textarea
-          placeholder="Example : Experience Social Media Marketing Strategist Businesses."
+          placeholder="Enter Prompt to generate response"
           className="w-full bg-transparent"
           value={text}
           onChange={(e) => settext(e.target.value)}

@@ -20,12 +20,14 @@ export interface Card {
   description: String;
   logo: string;
   isBookmarked: Boolean;
+  // setChange: Function;
 }
 
 const Landing = () => {
   const [buttons, setButtons] = useState<String[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, isSignedIn, isLoaded } = useUser();
+  const [change, setChange] = useState(0)
 
   const [selectedButton, setSelectedButton] =
     useState<String>("Article Creator");
@@ -80,7 +82,7 @@ const Landing = () => {
     if (selectedButton !== "My Tools") {
       getTemplates();
     } else if (isSignedIn) getBookMarks(true);
-  }, [selectedButton, isLoaded]);
+  }, [selectedButton, isLoaded,change]);
 
   const handleSearch = async () => {
     const res = await axios.get(
@@ -95,14 +97,7 @@ const Landing = () => {
       <div className="px-5 min-h-screen">
         <Hero search={search} setSearch={setSearch} onClick={handleSearch} />
 
-        {/* {isSignedIn && (
-          <div className="flex flex-col my-10 gap-3">
-            <h1 className="text-3xl text-center md:text-4xl font-bold text-gray-700">
-              My Tools
-            </h1>
-            <Cards cards={cardsBookmark} isLoading={!cardsBookmark} />
-          </div>
-        )} */}
+        
 
         <div className="hidden md:block mt-10">
           {buttons.length > 0 && (
@@ -112,7 +107,7 @@ const Landing = () => {
               setSelectedButton={setSelectedButton}
             />
           )}
-          <Cards cards={cards} isLoading={isLoading} />
+          <Cards cards={cards} isLoading={isLoading} setChange={setChange} />
         </div>
 
         <div className="md:hidden">
@@ -122,6 +117,7 @@ const Landing = () => {
             setSelectedButton={setSelectedButton}
             cards={cards}
             isLoading={isLoading}
+            setChange={setChange}
           />
         </div>
       </div>
