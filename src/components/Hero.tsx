@@ -24,6 +24,7 @@ const Hero = ({
 
   return (
     <div className="flex flex-col justify-center space-y-4">
+      
       <div className=" py-4 text-black dark:text-white text-center font-outfit text-[40px] md:text-[45px] lg:text-[50px] font-normal flex flex-col md:block">
         Unlock the
         <span className="bg-gradient text-transparent bg-clip-text font-outfit font-semibold">
@@ -32,7 +33,7 @@ const Hero = ({
         </span>
         with BigWig Media
       </div>
-      <div className="content-center py-4 text-center font-outfit z-10 w-full max-w-[320] md:auto lg:844px mx-auto text-black dark:text-white font-Outfit text-base font-medium leading-normal cursor-pointer">
+      <div className="  sm:text-[14px] md:text-[17px] lg:text-[20px] content-center py-4  text-center font-outfit text-black dark:text-white   z-10 w-full max-w-[320] md:auto lg:844px mx-auto font-normal">
         Stay at the forefront of innovation by harnessing cutting-edge AI tools,
         ensuring our solutions remain ahead of the curve with daily updates
       </div>
