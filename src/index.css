@@ -138,6 +138,38 @@
   mask-composite: exclude;
   padding: 5px;
 }
+.border-gradient-2 {
+  position: relative;
+  border-radius: 13px;
+}
+.border-gradient-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  margin: 0 auto;
+  background: linear-gradient(
+    131deg,
+    #ffc700 0%,
+    #ff003d 31.5%,
+    #9e00ff 66%,
+    #00d1ff 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 3px;
+}
+.background-gradient {
+   background: linear-gradient(
+    131deg,
+    #ffc700 0%,
+    #ff003d 31.5%,
+    #9e00ff 66%,
+    #00d1ff 100%
+  );
+  /* -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); */
+}
 .cl-card {
   margin: 0;
   /* border-radius: 13px; */

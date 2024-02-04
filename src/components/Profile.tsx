@@ -2,40 +2,17 @@
 // import { useNavigate } from "react-router-dom";
 import logo from "../assets/Logo.png";
 import Ellipse51 from "../assets/Ellipse51.png";
+import Nav from "./Nav";
 
 const Profile = () => {
   // const [isOpen, setIsOpen] = useState(false);
   // const navigate = useNavigate()
   return (
-    <div>
-      <nav className="sticky top-0 z-50 backnavdrop">
-        <div className="h-10vh flex justify-between z-50 text-black lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b ">
-          <div className="flex items-center gap-4 cursor-pointer">
-            <img src={logo} alt="" />
-            <span className="text-gray-900 hidden md:block  font-outfit text-2xl font-semibold">
-              BigWigMedia.ai
-            </span>
-          </div>
-          <div className="hidden md:flex lg: gap-4 items center justify-end front-normal ">
-            <div className="flex justify-center">
-              <button className="text-black font-Outfit text-base font-semibold leading-normal">
-                Select Language
-              </button>
-            </div>
-            <div className="w-[56px] h-[56px] rounded-full  bg-center bg-cover bg-lightgray">
-              <img src={Ellipse51} alt="" />
-            </div>
-            {/* <button className="text-gray-900 font-outfit text-base font-semibold hover:text-gray-700 hover:drop-shadow-2xl " onClick={()=>{
-                      navigate("/login")
-                    }}>
-                      Login
-                    </button> */}
-          </div>
-        </div>
-      </nav>
-      <div className="flex flex-col w-full h-full items-center my-[10px]">
-        <div className="flex flex-col w-[867px] h-[498px] justify-start  gap-[10px] ">
-          <div className="text-black font-Outfit text-lg font-semibold leading-normal">
+    <>
+      <Nav />
+      <div className="flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
+        <div className="w-full h-full flex flex-col justify center max-w-[867px] ">
+          <div className="text-black text-left self-start font-Outfit text-lg font-semibold leading-normal">
             Your Profile
           </div>
           <div className="flex flex-row gap-[14px] ">
@@ -54,8 +31,11 @@ const Profile = () => {
                   noelalverez@gmail.com
                 </div>
               </div>
-              <div className="flex w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 rounded-md border-2 border-var(--gradient, #FFC700) bg-white shadow-md">
-                <div className="text-black font-Outfit text-lg font-semibold leading-normal">
+              <div
+                className=" relative  flex border-gradient-2 dark:bg-[#262626
+] z-10 w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 "
+              >
+                <div className="text-black  font-Outfit text-lg font-semibold leading-normal">
                   PREMIUIM PLAN
                 </div>
                 <div className="text-black font-Outfit text-sm font-medium leading-normal">
@@ -66,6 +46,10 @@ const Profile = () => {
                     Buy Premium
                   </span>
                 </button>
+                <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
+                <div
+                  className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"
+                ></div>
               </div>
             </div>
             <div className="flex flex-col items-start gap-[14px]">
@@ -77,7 +61,7 @@ const Profile = () => {
                   View All
                 </div>
               </div>
-              <div className="flex flex-row">
+              {/* <div className="flex flex-row">
                 <div className="flex flex-col gap-5 px-3 py-4 text-gray-700 shadow-xl rounded-xl  max-w-80 max-h-[227px] bg-white  w-full">
                   <div className="flex flex-row gap-8 w-[224px] h-[103px] justify-center items-center ">
                     <svg
@@ -346,7 +330,7 @@ const Profile = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="w-[528px] h-[124px] flex shrink-0 flex-col">
                 <div className="w-[79px] h-[28px] flex shrink-0 text-black font-Outfit text-xl font-semibold leading-normal">
                   Credits
@@ -381,7 +365,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
