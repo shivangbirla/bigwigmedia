@@ -82,7 +82,7 @@ const ImageGenerator = (props: Props) => {
     <div className="m-auto w-full max-w-[1000px] rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       {/* text area */}
       <Textarea
-        className="mb-4 h-96 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
+        className="mb-4 h-48 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
         placeholder="Enter Prompt to generate image"
         value={text}
         onChange={(e) => setText(e.target.value)}
