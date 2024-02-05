@@ -67,6 +67,8 @@ const CardComponent = ({
     }
   };
 
+  const bool = card.labels.includes("Upcoming Tools");
+
   return (
     <div className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl max-w-80 h-[234px]   bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full">
       <div className="flex flex-row gap-8  justify-center items-center ">
@@ -105,13 +107,18 @@ const CardComponent = ({
       </div>
       <div className="flex items-start justify-center  pt-0 gap-5">
         <button
-          className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto"
-          onClick={() =>
+          className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto "
+          onClick={() => {
+            if(bool){
+              toast("Coming Soon...")
+              return;
+            }
             navigate({
               pathname: "/generate",
               search: `?id=${card._id}`,
-            })
-          }
+            });
+          }}
+          // disabled={bool}
         >
           Generate
         </button>

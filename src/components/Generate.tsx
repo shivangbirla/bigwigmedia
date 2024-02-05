@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { button } from "@nextui-org/react";
 import { ClipboardList } from "lucide-react";
+import { Paraphrase } from "./paraphrase";
 // type Props = {};
 
 const acc = [
@@ -398,6 +399,8 @@ const Generate = () => {
           value={text}
           onChange={(e) => settext(e.target.value)}
         />
+
+        {/* <Paraphrase /> */}
 
         <p className="  dark:text-white self-start text-black text-left font-outfit   text-xl font-semibold">
           Choose a tone :

@@ -32,6 +32,7 @@ const Nav = () => {
   const googleTranslateElementInit = () => {
     // @ts-ignore
     new window.google.translate.TranslateElement(
+
       {
         pageLanguage: "en",
         autoDisplay: false,
@@ -70,10 +71,11 @@ const Nav = () => {
             BigWigMedia.ai
           </span>
         </div>
-        <div id="google_translate_element"></div>
+
         <div className="flex flex-row items-center">
           <div className="flex  gap-4 items center justify-end front-normal ">
             <div className="flex justify-center">
+              <div id="google_translate_element"></div>
               {/* <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                 <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
                   <div className="hidden md:flex gap-2">

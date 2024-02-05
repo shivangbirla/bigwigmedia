@@ -20,6 +20,7 @@ export interface Card {
   description: String;
   logo: string;
   isBookmarked: Boolean;
+  labels:string[]
   // setChange: Function;
 }
 
