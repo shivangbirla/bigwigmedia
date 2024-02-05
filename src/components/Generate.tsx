@@ -20,6 +20,7 @@ import { Loader2 } from "lucide-react";
 import { button } from "@nextui-org/react";
 import { ClipboardList } from "lucide-react";
 import { Paraphrase } from "./paraphrase";
+import ImageGenerator from "./ImageGenerator";
 // type Props = {};
 
 const acc = [
@@ -387,65 +388,68 @@ const Generate = () => {
           ))}
         </div>
       </div>
-      {id === "65c08738e31efb40ed5c4213" ? (
-        <Paraphrase />
-      ) : (
-        <>
-          <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-4">
-            <p className="  dark:text-white self-start text-black text-left font-outfit   text-xl font-semibold">
-              Paste your current {manipulate(description?.name as string)} or
-              write just few keywords :
-            </p>
+      {
+  id === "65c08738e31efb40ed5c4213" ? (
+    <Paraphrase />
+  ) : id === "65c08894e31efb40ed5c4227" ? (
+    <ImageGenerator />
+  ) : (
+    <>
+      <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-4">
+        <p className="dark:text-white self-start text-black text-left font-outfit text-xl font-semibold">
+          Paste your current {manipulate(description?.name as string)} or write just a few keywords:
+        </p>
 
-            <Textarea
-              placeholder="Enter Prompt to generate response"
-              className="w-full bg-transparent"
-              value={text}
-              onChange={(e) => settext(e.target.value)}
-            />
+        <Textarea
+          placeholder="Enter Prompt to generate response"
+          className="w-full bg-transparent"
+          value={text}
+          onChange={(e) => settext(e.target.value)}
+        />
 
-            <p className="  dark:text-white self-start text-black text-left font-outfit   text-xl font-semibold">
-              Choose a tone :
-            </p>
-            {/* TODO: convert to aray */}
-            <div className="flex flex-wrap sm:flex-row self-start gap-2">
-              {buttonLabels.map((label, index) => (
-                <button
-                  key={index}
-                  className={`border rounded-full px-7 py-2 ${
-                    selectedButton === label ? "border-gradient-1" : ""
-                  }`}
-                  onClick={() => handleButtonClick(label)}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="emoji"
-                className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
-                checked={icons}
-                onCheckedChange={setIcons}
-              />
-              <Label htmlFor="emoji">Use Emoji</Label>
-              <Switch
-                id="hashtag"
-                className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
-                checked={hashTag}
-                onCheckedChange={setHashTag}
-              />
-              <Label htmlFor="hashtag">Use Hashtags</Label>
-            </div>
-          </div>
-          <button
-            className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  py-3  px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
-            onClick={(e) => void handleSubmit(e)}
-          >
-            Generate
-          </button>
-        </>
-      )}
+        <p className="dark:text-white self-start text-black text-left font-outfit text-xl font-semibold">
+          Choose a tone:
+        </p>
+        {/* TODO: convert to array */}
+        <div className="flex flex-wrap sm:flex-row self-start gap-2">
+          {buttonLabels.map((label, index) => (
+            <button
+              key={index}
+              className={`border rounded-full px-7 py-2 ${
+                selectedButton === label ? "border-gradient-1" : ""
+              }`}
+              onClick={() => handleButtonClick(label)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="emoji"
+            className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
+            checked={icons}
+            onCheckedChange={setIcons}
+          />
+          <Label htmlFor="emoji">Use Emoji</Label>
+          <Switch
+            id="hashtag"
+            className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-gray-400"
+            checked={hashTag}
+            onCheckedChange={setHashTag}
+          />
+          <Label htmlFor="hashtag">Use Hashtags</Label>
+        </div>
+      </div>
+      <button
+        className="text-white text-center font-outfit md:text-lg font-semibold flex relative text-xs py-3 px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
+        onClick={(e) => void handleSubmit(e)}
+      >
+        Generate
+      </button>
+    </>
+  )
+}
 
       {(!!output || isLoading) && (
         <div className="flex flex-col border   w-full mx-auto max-w-[1084px] pb-8 rounded-xl">

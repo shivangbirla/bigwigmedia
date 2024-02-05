@@ -76,7 +76,6 @@ export function Paraphrase() {
    };
   return (
     <div className="m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
-      <div className="mb-4 flex items-center space-x-2"></div>
       <div className="flex">
         <div className="w-1/2 pr-2">
           <Textarea
