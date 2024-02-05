@@ -20,7 +20,7 @@ export interface Card {
   description: String;
   logo: string;
   isBookmarked: Boolean;
-  labels:string[]
+  labels: string[];
   // setChange: Function;
 }
 
@@ -28,7 +28,7 @@ const Landing = () => {
   const [buttons, setButtons] = useState<String[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, isSignedIn, isLoaded } = useUser();
-  const [change, setChange] = useState(0)
+  const [change, setChange] = useState(0);
 
   const [selectedButton, setSelectedButton] =
     useState<String>("Article Creator");
@@ -50,7 +50,7 @@ const Landing = () => {
     isSignedIn && getBookMarks();
   }, [isLoaded, isSignedIn]);
 
-  const getBookMarks = async (bool=false) => {
+  const getBookMarks = async (bool = false) => {
     if (!isSignedIn) {
       setCards([]);
       toast.error("Please sign in to view your bookmarks");
@@ -63,7 +63,7 @@ const Landing = () => {
     }));
     // setCards(cards);
     setCardsBookmark(cards);
-    if(bool) setCards(cards);
+    if (bool) setCards(cards);
     setIsLoading(false);
   };
 
@@ -79,11 +79,22 @@ const Landing = () => {
 
   useEffect(() => {
     if (buttons.length === 0) return;
+    if(!isLoaded) return;
     setIsLoading(true);
     if (selectedButton !== "My Tools") {
       getTemplates();
     } else if (isSignedIn) getBookMarks(true);
-  }, [selectedButton, isLoaded,change]);
+  }, [selectedButton, isLoaded]);
+  useEffect(() => {
+    if (buttons.length === 0) return;
+    if (selectedButton !== "My Tools") {
+      // getTemplates();
+    } else if (isSignedIn) {
+      setIsLoading(true);
+
+      getBookMarks(true);
+    }
+  }, [isLoaded, change]);
 
   const handleSearch = async () => {
     const res = await axios.get(
@@ -97,8 +108,6 @@ const Landing = () => {
       <Nav />
       <div className="px-5 min-h-screen">
         <Hero search={search} setSearch={setSearch} onClick={handleSearch} />
-
-        
 
         <div className="hidden md:block mt-10">
           {buttons.length > 0 && (
