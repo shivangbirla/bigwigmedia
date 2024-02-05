@@ -79,7 +79,7 @@ const ImageGenerator = (props: Props) => {
      }
    };
   return (
-    <div className="m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
+    <div className="m-auto w-full max-w-[1000px] rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       {/* text area */}
       <Textarea
         className="mb-4 h-96 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
@@ -90,12 +90,11 @@ const ImageGenerator = (props: Props) => {
 
       {/* selects */}
       <div className="flex flex-col md:flex-row w-full gap-5">
-        <Select>
+        <Select onValueChange={setNumber}>
           <SelectTrigger
             className="w-full"
             value={number}
             // @ts-ignore
-            onValueChange={setNumber}
           >
             <SelectValue placeholder="Select a Number of Images" />
           </SelectTrigger>
@@ -108,14 +107,13 @@ const ImageGenerator = (props: Props) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select>
+        <Select onValueChange={setQuality}>
           <SelectTrigger
             className="w-full"
             defaultValue={quality}
             // @ts-ignore
-            onValueChange={setQuality}
           >
-            <SelectValue placeholder="Select a Number of Images" />
+            <SelectValue placeholder="Select a Quality" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -126,14 +124,27 @@ const ImageGenerator = (props: Props) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-
       </div>
-        <button
-          className="text-white text-center font-outfit md:text-lg font-semibold flex relative text-xs mt-10 py-3 px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
-          onClick={(e) => void handleSubmit(e)}
-        >
-          Generate
-        </button>
+      <button
+        className="text-white text-center font-outfit md:text-lg font-semibold flex relative text-xs mt-10 py-3 px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
+        onClick={(e) => void handleSubmit(e)}
+      >
+        Generate
+      </button>
+
+      {isLoading ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <Loader2 className="animate-spin w-20 h-20 mt-20" />
+        </div>
+      ) : (
+        !!output&&(<div className="h-fit w-full mt-20 justify-center rounded-md border-2 border-gray-300  dark:text-gray-200 py-10 flex flex-row flex-wrap gap-5 text-gray-800 p-5 ">
+          {/* @ts-ignore */}
+          {output.map((img: string) => (
+            <img src={img} loading='lazy' alt="generated" className=" shadow-2xl w-full h-full max-w-[400px] max-h-[400px]" />
+          ))}
+        </div>)
+      )}
+     
     </div>
   );
 }
