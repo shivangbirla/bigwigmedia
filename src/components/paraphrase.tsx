@@ -5,68 +5,120 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { BASE_URL } from "@/utils/funcitons";
+import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export function Paraphrase() {
+  const [text, setText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [output, setOutput] = useState("");
+
+  const navigate = useNavigate();
+
+
+
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText();
+    setText(text);
+  };
+  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+
+   const handleSubmit = async (
+     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+   ) => {      
+
+     //@ts-ignore
+     setIsLoading(true);
+     e.preventDefault();
+     if (!isSignedIn) {
+       navigate("/login");
+       toast.error("Please Signin to continue");
+       return;
+     }
+     if (!text) {
+       toast.error("Please enter the text to generate");
+       setIsLoading(false);
+       return;
+     }
+     try {
+       const res = await axios.post(`${BASE_URL}/response/paraphrase?clerkId=${userId}`, {
+         prompt: text,
+       });
+
+
+       if (res.status === 200) {
+         setOutput(res.data.data);
+         setIsLoading(false);
+       } else {
+         toast.error(res.data.error);
+         setIsLoading(false);
+       }
+     } catch (error: any) {
+       // toast.error(error);
+       toast.error(error.response.data.error);
+       setIsLoading(false);
+     }
+   };
+
+
+   const handleCopy = () => {
+     try {
+       navigator.clipboard.writeText(output);
+       toast.success("Copied to Clipboard");
+     } catch (error) {
+       toast.error("Failed to copy");
+     }
+   };
   return (
     <div className="m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
-      <div className="mb-4 flex items-center space-x-2">
-        <Button className="rounded-md px-4 py-2 " variant="secondary">
-          Standard
-        </Button>
-        <Button className="rounded-md px-4 py-2" variant="outline">
-          Fluency
-        </Button>
-        <Button className="rounded-md px-4 py-2" variant="outline">
-          Formal
-        </Button>
-        <Button className="rounded-md px-4 py-2" variant="outline">
-          Academic
-        </Button>
-        <Button className="rounded-md px-4 py-2" variant="outline">
-          Creative
-        </Button>
-        <Button className="rounded-md px-4 py-2" variant="outline">
-          Custom
-        </Button>
-        <Button className="rounded-md px-4 py-2" variant="outline">
-          More
-        </Button>
-        <div className="ml-auto flex items-center">
-          <label className="mr-2" htmlFor="synonyms-toggle">
-            Synonyms:
-          </label>
-          <Switch id="synonyms-toggle" />
-        </div>
-      </div>
+      <div className="mb-4 flex items-center space-x-2"></div>
       <div className="flex">
         <div className="w-1/2 pr-2">
           <Textarea
             className="mb-4 h-96 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
             placeholder="To rewrite text, enter or paste it here and press 'Paraphrase.'"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
           <div className="flex w-full items-center justify-between">
             <Button
               className="rounded-md px-4 py-2 text-gray-600 dark:text-gray-200 hover:bg-gray-100 hover:dark:bg-gray-800"
               variant="ghost"
+              onClick={handlePaste}
             >
               <ClipboardCopyIcon className="mr-2 h-5 w-5" />
               Paste Text
             </Button>
 
-            <Button className="rounded-md bt-gradient bg-green-500 px-6 py-2 text-white hover:bg-green-600">
+            <Button className="rounded-md bt-gradient bg-green-500 px-6 py-2 text-white hover:bg-green-600" onClick={handleSubmit}>
               Paraphrase
             </Button>
           </div>
         </div>
         <div className="w-1/2 pl-2 flex flex-col gap-2 justify-between">
-          <div className="h-96 w-full rounded-md border-2 border-gray-300" />
-          <Button
+          {isLoading ? (
+            <div className="w-full h-full flex items-center justify-center">
+              <Loader2 className="animate-spin w-20 h-20 mt-20" />
+            </div>
+          ) : (
+            <div className="h-96 w-full rounded-md border-2 border-gray-300 dark:text-gray-200 text-gray-800 p-5 "  >
+
+              {output }
+            </div>
+          )}
+          {!!output &&<Button
             className="rounded-md self-end  px-4 py-2 text-gray-600 hover:dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100"
             variant="ghost"
+            onClick={handleCopy}
           >
             <CopyIcon className="mr-2 h-5 w-5" />
             Try Sample Text
-          </Button>
+          </Button>} 
         </div>
       </div>
     </div>
