@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { BASE_URL } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
-import { Loader2 } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -20,69 +20,93 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type Props = {}
+import FileSaver from "file-saver";
+
+type Props = {};
 
 const ImageGenerator = (props: Props) => {
-   const [text, setText] = useState("");
-   const [isLoading, setIsLoading] = useState(false);
-   const [output, setOutput] = useState("");
-   const [number, setNumber] = useState<string>("")
-   const [quality, setQuality] = useState<string>("")
+  const [text, setText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [output, setOutput] = useState("");
+  const [number, setNumber] = useState<string>("");
+  const [quality, setQuality] = useState<string>("");
 
-   console.log(number,quality)
+  console.log(number, quality);
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-   const handlePaste = async () => {
-     const text = await navigator.clipboard.readText();
-     setText(text);
-   };
-   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText();
+    setText(text);
+  };
+  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
 
-   const handleSubmit = async (
-     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-   ) => {
-     //@ts-ignore
-     setIsLoading(true);
-     e.preventDefault();
-     if (!isSignedIn) {
-       navigate("/login");
-       toast.error("Please Signin to continue");
-       return;
-     }
-     if (!text) {
-       toast.error("Please enter the text to generate");
-       setIsLoading(false);
-       return;
-     }
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    //@ts-ignore
+    setIsLoading(true);
+    e.preventDefault();
+    if (!isSignedIn) {
+      navigate("/login");
+      toast.error("Please Signin to continue");
+      return;
+    }
+    if (!text) {
+      toast.error("Please enter the text to generate");
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/response/image?clerkId=${userId}`,
+        {
+          prompt: text,
+          quality,
+          n: parseInt(number),
+        }
+      );
+
+      if (res.status === 200) {
+        setOutput(res.data.data);
+        setIsLoading(false);
+      } else {
+        toast.error(res.data.error);
+        setIsLoading(false);
+      }
+    } catch (error: any) {
+      // toast.error(error);
+      toast.error(error.response.data.error);
+      setIsLoading(false);
+    }
+  };
+
+  const handleDownload = async (imageUrl: string) => {
      try {
-       const res = await axios.post(
-         `${BASE_URL}/response/image?clerkId=${userId}`,
-         {
-           prompt: text,
-           quality,
-           n:parseInt(number)
-         }
-       );
+       const corsProxyUrl = "https://cors-anywhere.herokuapp.com/";
+       const res = await axios.get(corsProxyUrl + imageUrl, {
+         responseType: "arraybuffer",
+         headers: {
+           "Content-Type": "application/json",
+           Accept: "application/pdf",
+         },
+       });
 
-       if (res.status === 200) {
-         setOutput(res.data.data);
-         setIsLoading(false);
-       } else {
-         toast.error(res.data.error);
-         setIsLoading(false);
-       }
-     } catch (error: any) {
-       // toast.error(error);
-       toast.error(error.response.data.error);
-       setIsLoading(false);
+       const url = window.URL.createObjectURL(new Blob([res.data]));
+       const link = document.createElement("a");
+       link.href = url;
+       link.setAttribute("download", "image.jpg"); //or any other extension
+       document.body.appendChild(link);
+       link.click();
+     } catch (error) {
+       console.error("Error downloading image:", error);
      }
-   };
+  };
   return (
     <div className="m-auto w-full max-w-[1000px] rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       {/* text area */}
       <Textarea
-        className="mb-4 h-48 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
+        className="mb-4 h-24 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
         placeholder="Enter Prompt to generate image"
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -137,16 +161,31 @@ const ImageGenerator = (props: Props) => {
           <Loader2 className="animate-spin w-20 h-20 mt-20" />
         </div>
       ) : (
-        !!output&&(<div className="h-fit w-full mt-20 justify-center rounded-md border-2 border-gray-300  dark:text-gray-200 py-10 flex flex-row flex-wrap gap-5 text-gray-800 p-5 ">
-          {/* @ts-ignore */}
-          {output.map((img: string) => (
-            <img src={img} loading='lazy' alt="generated" className=" shadow-2xl w-full h-full max-w-[400px] max-h-[400px]" />
-          ))}
-        </div>)
+        !!output && (
+          <div className="h-fit w-full mt-20 justify-center rounded-md border-2 border-gray-300  dark:text-gray-200 py-10 flex flex-row flex-wrap gap-5 text-gray-800 p-5 ">
+            {/* @ts-ignore */}
+            {output.map((img: string) => (
+              <div className=" relative shadow-2xl w-full h-full max-w-[400px] max-h-[400px]">
+                <img
+                  src={img}
+                  loading="lazy"
+                  alt="generated"
+                  className=" w-full h-full "
+                />
+
+                <button
+                  className="absolute shadow-sm shadow-gray-500 top-4 right-4 opacity-40 hover:opacity-70 text-white bg-gray-800  transition-all duration-300 p-2 rounded-md"
+                  onClick={() => handleDownload(img)}
+                >
+                  <Download />
+                </button>
+              </div>
+            ))}
+          </div>
+        )
       )}
-     
     </div>
   );
-}
+};
 
-export default ImageGenerator
+export default ImageGenerator;

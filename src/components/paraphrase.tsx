@@ -76,15 +76,15 @@ export function Paraphrase() {
    };
   return (
     <div className="m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
-      <div className="flex">
-        <div className="w-1/2 pr-2">
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full  pr-2">
           <Textarea
             className="mb-4 h-96 w-full rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
-            placeholder="To rewrite text, enter or paste it here and press 'Paraphrase.'"
+            placeholder="Enter Text to Paraphrase."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-full my-4 items-center justify-between">
             <Button
               className="rounded-md px-4 py-2 text-gray-600 dark:text-gray-200 hover:bg-gray-100 hover:dark:bg-gray-800"
               variant="ghost"
@@ -99,7 +99,7 @@ export function Paraphrase() {
             </Button>
           </div>
         </div>
-        <div className="w-1/2 pl-2 flex flex-col gap-2 justify-between">
+        <div className="w-full  pl-2 flex flex-col gap-2 justify-between">
           {isLoading ? (
             <div className="w-full h-full flex items-center justify-center">
               <Loader2 className="animate-spin w-20 h-20 mt-20" />
