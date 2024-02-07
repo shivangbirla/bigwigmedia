@@ -84,6 +84,7 @@ const ImageGenerator = (props: Props) => {
   const handleDownload = async (imageUrl: string) => {
     const link = document.createElement("a");
     link.href = imageUrl;
+    link.target = "_blank";
     link.download = "image.jpg"; // You can customize the downloaded filename here
     document.body.appendChild(link);
     link.click();
