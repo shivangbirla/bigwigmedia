@@ -82,25 +82,12 @@ const ImageGenerator = (props: Props) => {
   };
 
   const handleDownload = async (imageUrl: string) => {
-     try {
-       const corsProxyUrl = "https://cors-anywhere.herokuapp.com/";
-       const res = await axios.get(corsProxyUrl + imageUrl, {
-         responseType: "arraybuffer",
-         headers: {
-           "Content-Type": "application/json",
-           Accept: "application/pdf",
-         },
-       });
-
-       const url = window.URL.createObjectURL(new Blob([res.data]));
-       const link = document.createElement("a");
-       link.href = url;
-       link.setAttribute("download", "image.jpg"); //or any other extension
-       document.body.appendChild(link);
-       link.click();
-     } catch (error) {
-       console.error("Error downloading image:", error);
-     }
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "image.jpg"; // You can customize the downloaded filename here
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
   return (
     <div className="m-auto w-full max-w-[1000px] rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
