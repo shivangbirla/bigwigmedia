@@ -153,7 +153,7 @@ const ImageGenerator = (props: Props) => {
           <div className="h-fit w-full mt-20 justify-center rounded-md border-2 border-gray-300  dark:text-gray-200 py-10 flex flex-row flex-wrap gap-5 text-gray-800 p-5 ">
             {/* @ts-ignore */}
             {output.map((img: string) => (
-              <div className=" relative shadow-2xl w-full h-full max-w-[400px] max-h-[400px]">
+              <div className=" relative shadow-2xl w-full h-full min-w-[300px] min-h-[300px] max-w-[400px] max-h-[400px]">
                 <img
                   src={img}
                   loading="lazy"
