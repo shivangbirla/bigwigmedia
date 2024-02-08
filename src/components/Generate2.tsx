@@ -331,18 +331,21 @@ const Generate = () => {
       return;
     }
 
-    groups.forEach((grp: any) =>
-      grp.forEach((ele: any) => {
-       
-        if(ele.required){
-          if(!val[ele.in]){
-            toast.error(`${ele.text} is required`);
-            setIsLoading(false);
-            return;
-          }
-        }
-      })
-    );
+     let isRequiredFieldMissing = false; // Flag to track missing required fields
+
+     groups.forEach((grp: any) =>
+       grp.forEach((ele: any) => {
+         if (ele.required && !(ele.type === "switch" || ele.type === "checkbox") && !val[ele.in]) {
+           toast.error(`${ele.text} is required`);
+           isRequiredFieldMissing = true; // Set flag to true if a required field is missing
+         }
+       })
+     );
+
+     if (isRequiredFieldMissing) {
+       setIsLoading(false);
+       return; // Exit the function if a required field is missing
+     }
  
 
     const keys = Object.keys(val).sort((a, b) => Number(a) - Number(b));
