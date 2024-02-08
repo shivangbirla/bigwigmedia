@@ -588,6 +588,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
   if (element.type === "tone") {
     return (
       <div className="flex flex-wrap sm:flex-row self-start gap-2">
+        <Label htmlFor={element.text}>{element.placeholder}</Label>
         {element.options.map((label, index) => (
           <button
             key={index}
@@ -606,7 +607,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
     return (
       <Select onValueChange={(e) => setVal({ ...val, [element.in]: e })}>
         <SelectTrigger
-          className="w-full min-w-[300px]"
+          className="w-full self-start min-w-[300px] max-w-[500px] "
           value={val[element.in]}
           // @ts-ignore
         >
@@ -625,20 +626,26 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
   }
   if (element.type === "textarea") {
     return (
-      <Textarea
-        className="mb-4 h-24 w-full min-w-[300px] rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
-        placeholder="Enter Prompt to generate image"
-        value={val[element.in]}
-        onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
-      />
+      <div className="flex flex-col   w-full max-w-[844px]  self-start gap-2">
+        <Label htmlFor={element.text}>{element.placeholder}</Label>
+        <Textarea
+          className="mb-4 h-24 w-full min-w-[300px] rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
+          placeholder="Enter Prompt to generate image"
+          value={val[element.in]}
+          onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
+        />
+      </div>
     );
   }
   return (
-    <Input
-      className="w-full min-w-[300px]"
-      placeholder={element.placeholder}
-      value={val[element.in]}
-      onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
-    />
+    <div className="flex flex-col w-full max-w-[844px] self-start gap-2">
+      <Label htmlFor={element.text}>{element.placeholder}</Label>
+      <Input
+        className="w-full min-w-[300px]"
+        placeholder={element.text}
+        value={val[element.in]}
+        onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
+      />
+    </div>
   );
 };
