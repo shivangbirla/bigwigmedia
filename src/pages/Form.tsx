@@ -5,10 +5,25 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+export interface ElementType {
+  text: string;
+  placeholder: string;
+  gpt: string;
+  type: string;
+  options: string[];
+  required: boolean;
+  otherType?: string;
+}
+
+// interface Group{
+
+// }
+
 const Form = () => {
   // State for form fields
-  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [accoName, setaccoName] = useState("");
   const [template, setTemplate] = useState("");
   const [selectedLabel, setSelectedLabel] = useState([]);
   const [selectedImage, setSelectedImage] = useState<string>("");
@@ -57,6 +72,8 @@ const Form = () => {
     "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512d0a70d6cfa37db7e93fd_ico-Email.svg",
     "https://uploads-ssl.webflow.com/64dc619021257128d0687cce/6512d2e9bcb88ff4f718f8cf_ico-Marketing.svg",
   ]);
+  const [groups, setGroups] = useState<ElementType[][]>([]);
+  const [groupBy, setgroupBy] = useState("")
 
   const [faqs, setFaqs] = useState([]); // State for FAQs
   const [newLink, setNewLink] = useState<String>();
@@ -64,37 +81,7 @@ const Form = () => {
 
   const id = urlParams.get("id");
 
-  console.log(id);
-  console.log("selectedImage", selectedImage);
-
-  const getImages = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/templates/all/logo`);
-      let bookmarked = [...res.data.data];
-      // Create a Set to store unique images
-      const uniqueImages = new Set();
-
-      bookmarked.forEach((item) => {
-        // Check if the item is not null and is a string
-        if (item !== null && typeof item === "string") {
-          // Replace the base URL
-          const modifiedItem = item.replace(
-            "http://localhost:4000",
-            "https://social-media-ai-content-api.onrender.com"
-          );
-          // Add the modified item to the Set
-          uniqueImages.add(modifiedItem);
-        }
-      });
-
-      // Convert the Set back to an array
-      const uniqueImagesArray = [...uniqueImages];
-
-      setImages(uniqueImagesArray as string[]);
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
+  console.log("selectedImage", groups);
 
   useEffect(() => {
     document.documentElement.classList.remove("dark");
@@ -127,41 +114,40 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Perform form submission logic here
-    console.log("Form submitted:", {
-      name,
-      description,
-      template,
-      selectedLabel,
-      selectedImage,
-      faqs,
-    });
 
+    const groupsSubmitted = groups.map((group) => {
+      return group.map((element) => {
+        return {
+          ...element,
+          options: element.options.filter((option) => option !== ""),
+          type: element.type === "other" ? element.otherType : element.type,
+        };
+      })});
+    
     try {
-      let url = `${BASE_URL}/templates/add`;
+      let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/addObjectOnce`;
       if (!!id) url = `${BASE_URL}/templates/update/${id}`;
       const res = await axios.post(url, {
         name,
+        accoName,
         description,
         templete: template,
         labels: selectedLabel,
         logo: selectedImage,
+        accoLogo: selectedImage,
         faq: faqs,
+        groups: groupsSubmitted,
+        groupBy,
       });
-      if (res.status === 200) {
-        toast.success(" success");
+      if (res.status === 201) {
+        toast.success(" success: " + res.data.message._id);
+        console.log("success", res.data.message._id);
+        navigator.clipboard.writeText(res.data.message._id);
       }
       console.log("POST request successful:", res.data);
     } catch (error) {
       console.error("Error making POST request:", error);
     }
-
-    // Reset form fields
-    // setName("");
-    // setDescription("");
-    // setTemplate("");
-    // setSelectedLabel([]);
-    // //@ts-ignore
-    // setSelectedImage([]);
   };
 
   const handleDelete = async () => {
@@ -194,6 +180,71 @@ const Form = () => {
     setFaqs(updatedFaqs);
   };
 
+  const handleAddGroup = () => {
+    setGroups([...groups, []]);
+  };
+
+  const addElementToGroup = (groupIndex: number): void => {
+    const updatedGroups = [...groups];
+    updatedGroups[groupIndex] = [
+      ...updatedGroups[groupIndex],
+      {
+        text: "",
+        placeholder: "",
+        gpt: "",
+        type: "",
+        options: [],
+        required: true,
+      },
+    ];
+    setGroups(updatedGroups);
+  };
+  const addOptions = (groupIndex: number, elementIndex: number): void => {
+    const updatedGroups = [...groups];
+    updatedGroups[groupIndex][elementIndex].options.push("");
+    setGroups(updatedGroups);
+  };
+
+  const handleChange = (
+    groupIndex: number,
+    elementIndex: number,
+    key: string,
+    value: string | boolean
+  ) => {
+    const updatedGroups = [...groups];
+    // @ts-ignore
+    updatedGroups[groupIndex][elementIndex][key] = value;
+    setGroups(updatedGroups);
+  };
+  const handleOptionChange = (
+    groupIndex: number,
+    elementIndex: number,
+    optionNumber: number,
+    value: string
+  ) => {
+    const updatedGroups = [...groups];
+    // @ts-ignore
+    updatedGroups[groupIndex][elementIndex].options[optionNumber] = value;
+    setGroups(updatedGroups);
+  };
+
+
+  const removeElementFromGroup = (
+    groupIndex: number,
+    elementIndex: number
+  ): void => {
+    const updatedGroups = [...groups];
+    updatedGroups[groupIndex].splice(elementIndex, 1);
+    setGroups(updatedGroups);
+  };
+
+  // Function to remove a group
+  const removeGroup = (groupIndex: number): void => {
+    const updatedGroups = [...groups];
+    updatedGroups.splice(groupIndex, 1);
+    setGroups(updatedGroups);
+  };
+
   return (
     <div className="max-w-md mx-auto">
       <form
@@ -214,6 +265,22 @@ const Form = () => {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Acco Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Name"
+            value={accoName}
+            onChange={(e) => setaccoName(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -278,12 +345,40 @@ const Form = () => {
               // console.log(e)
               setSelectedImage(e.currentKey);
             }}
+            // label="Select Image"
           >
             {/* @ts-ignore */}
             {/* Dropdown options for images */}
             {images.map((image, index) => (
               <SelectItem key={image} value={image}>
                 <img src={image} />
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="image"
+          >
+            GroupBy
+          </label>
+          <Select
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="image"
+            value={groupBy}
+            selectionMode="single"
+            onSelectionChange={(e: any) => {
+              // console.log(e)
+              setgroupBy(e.currentKey);
+            }}
+            // label="Select Image"
+          >
+            {/* @ts-ignore */}
+            {/* Dropdown options for images */}
+            {selectedLabel.map((label, index) => (
+              <SelectItem key={label} value={label}>
+                {label}
               </SelectItem>
             ))}
           </Select>
@@ -358,6 +453,166 @@ const Form = () => {
             Add FAQ
           </button>
         </div>
+
+        <div className="flex flex-col gap-4 w-full my-4">
+          {groups.map((group, index) => (
+            <div className="flex flex-col gap-4 w-full rounded-md border border-black p-2">
+              <h1>Group:{index + 1}</h1>
+              {group.map((element, elementIndex) => (
+                <div className="flex flex-col gap-4 w-full border border-black p-2 rounded-3">
+                  <h1>Element:{elementIndex + 1}</h1>
+                  <label htmlFor={`text-${index}-${elementIndex}`}>Text:</label>
+                  <input
+                    id={`text-${index}-${elementIndex}`}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Text"
+                    value={element.text}
+                    onChange={(e) =>
+                      handleChange(index, elementIndex, "text", e.target.value)
+                    }
+                  />
+                  <label htmlFor={`placeholder-${index}-${elementIndex}`}>
+                    Placeholder:
+                  </label>
+                  <input
+                    id={`placeholder-${index}-${elementIndex}`}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Placeholder"
+                    value={element.placeholder}
+                    onChange={(e) =>
+                      handleChange(
+                        index,
+                        elementIndex,
+                        "placeholder",
+                        e.target.value
+                      )
+                    }
+                  />
+                  <label htmlFor={`gpt-${index}-${elementIndex}`}>GPT:</label>
+                  <input
+                    id={`gpt-${index}-${elementIndex}`}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="GPT"
+                    value={element.gpt}
+                    onChange={(e) =>
+                      handleChange(index, elementIndex, "gpt", e.target.value)
+                    }
+                  />
+                  <label htmlFor={`type-${index}-${elementIndex}`}>Type:</label>
+                  <select
+                    id={`type-${index}-${elementIndex}`}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={element.type}
+                    onChange={(e) =>
+                      handleChange(index, elementIndex, "type", e.target.value)
+                    }
+                  >
+                    <option value="text">Text</option>
+                    <option value="select">Select</option>
+                    <option value="textarea">Textarea</option>
+                    <option value="switch">switch</option>
+                    <option value="input">input</option>
+                    <option value="tone">tone</option>
+                    <option value="other">Other</option>
+                  </select>
+                  {element.type === "other" && (
+                    <textarea
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="Type"
+                      value={element.otherType} // Use a separate value for the text area
+                      onChange={
+                        (e) =>
+                          handleChange(
+                            index,
+                            elementIndex,
+                            "otherType",
+                            e.target.value
+                          ) // Update otherType instead of type
+                      }
+                    />
+                  )}
+
+                  <div className="flex flex-col gap-4 w-full">
+                    <h1>options:</h1>
+                    {element.options.map((option, optionIndex) => (
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Option"
+                        value={option}
+                        onChange={(e) =>
+                          handleOptionChange(
+                            index,
+                            elementIndex,
+                            optionIndex,
+                            e.target.value
+                          )
+                        }
+                      />
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => addOptions(index, elementIndex)}
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Add Option
+                    </button>
+
+                    <div className="flex flex-row justify-start gap-2">
+                      <label htmlFor={`required-${index}-${elementIndex}`}>
+                        Required:
+                      </label>
+                      <input
+                        type="checkbox"
+                        id={`required-${index}-${elementIndex}`}
+                        checked={element.required}
+                        onChange={() =>
+                          handleChange(
+                            index,
+                            elementIndex,
+                            "required",
+                            !element.required
+                          )
+                        }
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeElementFromGroup(index, elementIndex)
+                      }
+                      className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Remove Element
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addElementToGroup(index)}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Add Element
+              </button>
+              <button
+                type="button"
+                onClick={() => removeGroup(index)}
+                className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Remove Group
+              </button>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={handleAddGroup}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Add Group
+          </button>
+        </div>
+
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

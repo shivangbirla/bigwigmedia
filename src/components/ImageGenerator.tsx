@@ -20,6 +20,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const buttonLabels = [
+  "Professional",
+  "Art",
+  "Drawing",
+  "Photo",
+  "Victorian",
+  "Reflections",
+  "Industrial",
+  
+];
+
 import FileSaver from "file-saver";
 
 type Props = {};
@@ -30,6 +41,7 @@ const ImageGenerator = (props: Props) => {
   const [output, setOutput] = useState("");
   const [number, setNumber] = useState<string>("");
   const [quality, setQuality] = useState<string>("");
+  const [selectedButton, setSelectedButton] = useState("Professional");
 
   console.log(number, quality);
 
@@ -64,6 +76,7 @@ const ImageGenerator = (props: Props) => {
           prompt: text,
           quality,
           n: parseInt(number),
+          style: selectedButton,
         }
       );
 
@@ -89,6 +102,11 @@ const ImageGenerator = (props: Props) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleButtonClick = (selected: string) => {
+    console.log(selected);
+    setSelectedButton(selected);
   };
   return (
     <div className="m-auto w-full max-w-[1000px] rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
@@ -135,8 +153,22 @@ const ImageGenerator = (props: Props) => {
               {/* <SelectItem value={"fine"}>{"Fine"}</SelectItem> */}
             </SelectGroup>
           </SelectContent>
+
         </Select>
       </div>
+          <div className="flex flex-wrap my-6 sm:flex-row justify-center gap-2">
+            {buttonLabels.map((label, index) => (
+              <button
+                key={index}
+                className={`border rounded-full px-7 py-2 ${
+                  selectedButton === label ? "border-gradient-1" : ""
+                }`}
+                onClick={() => handleButtonClick(label)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
       <button
         className="text-white text-center font-outfit md:text-lg font-semibold flex relative text-xs mt-10 py-3 px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
         onClick={(e) => void handleSubmit(e)}
