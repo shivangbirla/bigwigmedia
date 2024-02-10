@@ -15,13 +15,13 @@ const App = () => {
     <div className=" min-w-screern min-h-screen bg-white dark:bg-[#1E1E1E]">
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/2" element={<Landing />} />
+        {/* <Route path="/2" element={<Landing />} /> */}
         <Route path="/login" element={<Login />} />
 
         <Route path="/profile" element={<ProfileP />} />
 
-        <Route path="/generate" element={<Generate />} />
-        <Route path="/generate2" element={<Generate2 />} />
+        {/* <Route path="/generate" element={<Generate />} /> */}
+        <Route path="/generate" element={<Generate2 />} />
         <Route path="/form" element={<Form />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />

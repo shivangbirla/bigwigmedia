@@ -67,7 +67,7 @@ const CardComponent = ({
     }
   };
 
-  const bool = card.labels.includes("Upcoming Tools");
+  const bool = card.labels?.includes("Upcoming Tools");
 
   return (
     <div className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl max-w-80 h-[234px]   bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full">
@@ -109,8 +109,8 @@ const CardComponent = ({
         <button
           className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto "
           onClick={() => {
-            if(bool){
-              toast("Coming Soon...")
+            if (bool) {
+              toast("Coming Soon...");
               return;
             }
             navigate({
@@ -136,8 +136,8 @@ const CardComponent = ({
             fill="none"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M2.83362 3.48541C2.83362 2.961 3.04194 2.45807 3.41275 2.08725C3.78357 1.71644 4.2865 1.50812 4.81091 1.50812H11.4019C11.9263 1.50812 12.4292 1.71644 12.8 2.08725C13.1708 2.45807 13.3792 2.961 13.3792 3.48541V14.0494C13.3792 14.8535 12.4696 15.3215 11.8158 14.8542L8.10639 12.2046L4.39699 14.8542C3.74251 15.3221 2.83362 14.8541 2.83362 14.0501V3.48541Z"
               fill="#1E1E1E"
             />

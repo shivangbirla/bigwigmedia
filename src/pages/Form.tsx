@@ -15,9 +15,7 @@ export interface ElementType {
   otherType?: string;
 }
 
-// interface Group{
 
-// }
 
 const Form = () => {
   // State for form fields
@@ -131,7 +129,7 @@ const Form = () => {
         name,
         accoName,
         description,
-        templete: template,
+        tagLine: template,
         labels: selectedLabel,
         logo: selectedImage,
         accoLogo: selectedImage,
@@ -303,7 +301,7 @@ const Form = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="template"
           >
-            Template
+            Tagline
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

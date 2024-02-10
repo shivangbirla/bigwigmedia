@@ -6,7 +6,7 @@ import Menu from "../components/Menu";
 import Cards from "../components/Cards";
 import MenuMobile from "@/components/MenuMobile";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "@/utils/funcitons";
+import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { toast } from "sonner";
@@ -38,11 +38,11 @@ const Landing = () => {
 
   const getButtons = async () => {
     // const
-    const res = await axios.get(`${BASE_URL}/templates/labels`);
-    const bookmarked = [...res.data.data];
+    const res = await axios.get(`${BASE_URL2}/objects/getCategories`);
+    const bookmarked = [...res.data.message];
     if (isSignedIn) bookmarked.splice(1, 0, "My Tools");
     setButtons(bookmarked);
-    setSelectedButton(res.data.data[0]);
+    setSelectedButton(res.data.message[0]);
   };
 
   useEffect(() => {
@@ -68,12 +68,13 @@ const Landing = () => {
   };
 
   const getTemplates = async () => {
-    let url = `${BASE_URL}/templates/label/${selectedButton}`;
+    let url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}`;
 
     if (isSignedIn)
-      url = `${BASE_URL}/templates/label/${selectedButton}?clerkId=${user.id}`;
+      url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}?clerkId=${user.id}`;
     const res = await axios.get(url);
-    setCards(res.data.data);
+    console.log("resss",res.data.message)
+    setCards(res.data.message);
     setIsLoading(false);
   };
 

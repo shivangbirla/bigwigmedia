@@ -74,32 +74,8 @@ const Nav = () => {
 
         <div className="flex flex-row items-center">
           <div className="flex  gap-4 items center justify-end front-normal ">
-            <div className="flex justify-center">
-              <div id="google_translate_element"></div>
-              {/* <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-                <DropdownMenuTrigger className="bg-transparent text-gray-900 dark:text-white border border-gray-900 dark:border-white px-2 rounded-full py-1 flex flex-row font-bold justify-center items-center gap-3">
-                  <div className="hidden md:flex gap-2">
-                    Language
-                    <ChevronDown
-                      className={cn(
-                        "h-4 w-4 shrink-0 my-auto transition-transform duration-200",
-                        isOpen && "rotate-180"
-                      )}
-                    />
-                  </div>
-                  <div className="block md:hidden">
-                    <Globe />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Languages</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>English</DropdownMenuItem>
-                  <DropdownMenuItem>Hindi</DropdownMenuItem>
-                  <DropdownMenuItem>Telugu</DropdownMenuItem>
-                  <DropdownMenuItem></DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
+            <div className=" justify-center   flex random">
+              <div id="google_translate_element" className=""></div>
             </div>
 
             {!isSignedIn ? (
@@ -147,6 +123,7 @@ const Nav = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
+
                 <DropdownMenuItem>
                   {!isSignedIn ? (
                     <button
@@ -164,7 +141,6 @@ const Nav = () => {
                   )}
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem>Sign Up</DropdownMenuItem> */}
-                <DropdownMenuItem></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
