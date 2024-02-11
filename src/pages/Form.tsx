@@ -122,6 +122,8 @@ const Form = () => {
         };
       })});
     
+
+      console.log(groupBy)
     try {
       let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/addObjectOnce`;
       if (!!id) url = `${BASE_URL}/templates/update/${id}`;

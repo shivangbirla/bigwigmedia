@@ -103,7 +103,8 @@ const CardComponent = ({
         </div>
       </div>
       <div className="w-full line-clamp-3   text-sm dark:text-white  font-normal">
-        {card.description}
+        {/* {card.description} */}
+        {card.tagLine}
       </div>
       <div className="flex items-start justify-center  pt-0 gap-5">
         <button

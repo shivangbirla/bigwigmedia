@@ -251,15 +251,18 @@ const Generate = () => {
           ))}
         </div>
       </div>
-      {id === "65c08738e31efb40ed5c4213" ? (
+      {id === "65c87f7bfaf3fd266b16ce9f" ? (
         <Paraphrase />
-      ) : id === "65c08894e31efb40ed5c4227" ? (
+      ) : id === "65c88181faf3fd266b16cedb" ? (
         <ImageGenerator />
       ) : (
         <>
-          <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-4">
+          <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-8">
             {groups.map((grp: any, index: number) => (
-              <div key={index} className="w-full flex flex-row flex-wrap justify-center gap-2 items-center">
+              <div
+                key={index}
+                className="w-full flex flex-row flex-wrap justify-center gap-8 items-center"
+              >
                 {grp.map((ele: any, i: number) => (
                   <Element key={i} element={ele} val={val} setVal={setVal} />
                 ))}
@@ -398,17 +401,20 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
 
   if (element.type === "tone") {
     return (
-      <div className="flex flex-wrap sm:flex-row self-start gap-2">
+      <div className="flex flex-wrap flex-col  sm:flex-row self-start gap-4">
+        
         <Label
-          className="dark:text-white self-start text-black text-left font-outfit text-xl font-semibold"
+          className="dark:text-white self-start my-auto text-black text-left font-outfit text-xl font-semibold"
           htmlFor={element.text}
         >
           {element.placeholder}
         </Label>
+        <div className="flex flex-wrap sm:flex-row  justify-center md:justify-start md:self-start gap-2">
+
         {element.options.map((label, index) => (
           <button
             key={index}
-            className={`border rounded-full  px-7 py-2 ${
+            className={`border rounded-full text-sm md:text-base p-2 md:px-7 py-2 ${
               val[element.in] === label ? "border-gradient-1" : ""
             }`}
             onClick={() => setVal({ ...val, [element.in]: label })}
@@ -416,6 +422,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
             {label}
           </button>
         ))}
+        </div>
       </div>
     );
   }
@@ -457,6 +464,11 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
         />
       </div>
     );
+  }
+  if(element.type ==="paraphrase"){
+    return(
+      <Paraphrase/>
+    )
   }
   return (
     <div className="flex flex-col w-full max-w-[844px] self-start gap-2">

@@ -21,6 +21,7 @@ export interface Card {
   logo: string;
   isBookmarked: Boolean;
   labels: string[];
+  tagLine:String;
   // setChange: Function;
 }
 
