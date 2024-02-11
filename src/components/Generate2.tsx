@@ -261,7 +261,7 @@ const Generate = () => {
             {groups.map((grp: any, index: number) => (
               <div
                 key={index}
-                className="w-full flex flex-row flex-wrap justify-center gap-8 items-center"
+                className="w-full flex flex-row  max-w-[844px] justify-center gap-8 items-center"
               >
                 {grp.map((ele: any, i: number) => (
                   <Element key={i} element={ele} val={val} setVal={setVal} />
@@ -387,7 +387,7 @@ interface ElementComponent {
 export const Element = ({ val, setVal, element }: ElementComponent) => {
   if (element.type === "switch") {
     return (
-      <div className="flex flex-row gap-2">
+      <div className=" flex flex-row gap-2">
         <Switch
           id={element.text}
           className="data-[state=checked]:bg-green-500  data-[state=unchecked]:bg-gray-400"
@@ -430,15 +430,15 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
     return (
       <Select onValueChange={(e) => setVal({ ...val, [element.in]: e })}>
         <SelectTrigger
-          className="w-full self-start min-w-[300px] max-w-[500px] "
+          className=" self-start min-w-[300px] max-w-[844px] "
           value={val[element.in]}
           // @ts-ignore
         >
-          <SelectValue placeholder="Select a Number of Images" />
+          <SelectValue placeholder={element.placeholder} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Number of Images</SelectLabel>
+            <SelectLabel>{element.text}</SelectLabel>
             {element.options.map((option) => (
               <SelectItem value={option}>{option}</SelectItem>
             ))}
