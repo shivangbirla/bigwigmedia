@@ -33,6 +33,8 @@ import { Paraphrase } from "./paraphrase";
 import ImageGenerator from "./ImageGenerator";
 import { ElementType } from "@/pages/Form";
 import { Input } from "./ui/input";
+import Audio from "./Audio";
+import AudioText from "./AudioText";
 // type Props = {};
 
 interface Tool {
@@ -255,6 +257,10 @@ const Generate = () => {
         <Paraphrase />
       ) : id === "65c88181faf3fd266b16cedb" ? (
         <ImageGenerator />
+      ) : id === "65cb60bae8bbe5d25d13b9ba" ? (
+        <Audio />
+      ) : id === "65cb886ebd2f462c896d46b3" ? (
+        <AudioText />
       ) : (
         <>
           <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-8">
@@ -452,13 +458,13 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
       <div className="flex flex-col   w-full max-w-[844px]  self-start gap-2">
         <Label
           className="dark:text-white self-start text-black text-left font-outfit text-xl font-semibold"
-          htmlFor={element.text}
+          htmlFor={element.placeholder}
         >
-          {element.placeholder}
+          {element.text}
         </Label>
         <Textarea
           className="mb-4 h-24 w-full min-w-[300px] rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
-          placeholder="Enter Prompt to generate image"
+          placeholder={element.text}
           value={val[element.in]}
           onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
         />
