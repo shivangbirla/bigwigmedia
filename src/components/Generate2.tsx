@@ -35,7 +35,6 @@ import { ElementType } from "@/pages/Form";
 import { Input } from "./ui/input";
 import Audio from "./Audio";
 import AudioText from "./AudioText";
-// type Props = {};
 
 interface Tool {
   _id: String;

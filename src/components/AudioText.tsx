@@ -1,5 +1,5 @@
 import { Loader2 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "./ui/input";
@@ -8,7 +8,8 @@ import { toast } from "sonner";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Textarea } from "./ui/textarea";
 import OpenAI from "openai";
-const key =import.meta.env.VITE_OPEN_API_KEY
+import About from './About';
+const key = import.meta.env.VITE_OPEN_API_KEY;
 
 const openai = new OpenAI({ apiKey: key, dangerouslyAllowBrowser: true });
 
@@ -16,6 +17,8 @@ const AudioText = () => {
   const [file, setfile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [output, setOutput] = useState();
+  const [audioBuffer, setAudioBuffer] = useState(null);
+  const ref = useRef(null);
   const handleTranscribe = async (e: any) => {
     e.preventDefault();
     if (!file) {
@@ -29,19 +32,72 @@ const AudioText = () => {
     formData.append("voice", "alloy");
     formData.append("model", "tts-1");
 
-
     try {
-      const mp3 = await openai.audio.speech.create({
-        model: "tts-1",
-        voice: "alloy",
+      const postData = {
+        model: 'tts-1',
         input: file,
-      });
-      const buffer = Buffer.from(await mp3.arrayBuffer());
+        voice: "alloy"
+    };
+  const url = 'https://api.openai.com/v1/audio/speech';
+  const apiKey = import.meta.env.VITE_OPEN_API_KEY;
+
+      const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+
+
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const blob = new Blob(["This is a blob!"], { type: "text/plain" });
+
+        // Create an object URL from the blob
+        const objectUrl = URL.createObjectURL(blob);
+
+        // Use the object URL
+        console.log(objectUrl); 
+         
+      // const mp3 = await openai.audio.speech.create({
+      //   model: "tts-1",
+      //   voice: "alloy",
+      //   input: file,
+      //   // response_format: "mp3",
+      //   //  output_format: "mp3"
+      // });
+      // console.log(mp3)
+      // const arrayBuffer = await mp3.arrayBuffer();
+      // console.log(arrayBuffer, typeof arrayBuffer)
+      // const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+
+      // const objectURL = URL.createObjectURL(blob);
+      // console.log(blob)
+      // console.log(objectURL)
+
       // @ts-ignore
-      setOutput(buffer)
+      // setAudioBuffer(
+      //   URL.createObjectURL(new Blob([arrayBuffer], { type: "audio/mpeg" }) as string)
+      // );
+      // mp3.
+      // const buffer = await mp3.arrayBuffer()
+      // buffer.
+      // console.log(buffer)
+      // const blobb = await mp3.blob()
+      // console.log(blobb)
 
- 
-
+      // const blob = new Blob([buffer], { type: "audio/mpeg" });
+      // const objectURL = URL.createObjectURL(blobb);
+      //  console.log(blob)
+      //  console.log(objectURL)
+      // @ts-ignore
+      //  ref.current.src = objectURL;
+      // @ts-ignore
+      // ref.current.play();
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",
@@ -51,8 +107,7 @@ const AudioText = () => {
       setIsLoading(false);
     }
   };
-
-  console.log(!!output, !!isLoading);
+console.log(audioBuffer)
   return (
     <div className=" flex flex-col gap-4 m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       <div className="flex flex-col   w-full max-w-[844px]  self-start gap-2">
@@ -73,23 +128,19 @@ const AudioText = () => {
         Generate
       </button>
 
-      {(!!output || isLoading) && isLoading ? (
+      <audio controls>
+        <source  ref={ref} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      {/* {(!!output || isLoading) && isLoading ? (
         <div className="w-full h-full flex items-center justify-center">
           <Loader2 className="animate-spin w-20 h-20 mt-10" />
         </div>
       ) : (
         (
-          <audio controls>
-            <source
-              src={URL.createObjectURL(
-                new Blob([output], { type: "audio/mp3" })
-              )}
-              type="audio/mp3"
-            />
-            Your browser does not support the audio element.
-          </audio>
+          
         )
-      )}
+      )} */}
     </div>
   );
 };
