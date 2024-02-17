@@ -21,7 +21,7 @@ export interface Card {
   logo: string;
   isBookmarked: Boolean;
   labels: string[];
-  tagLine:String;
+  tagLine: String;
   // setChange: Function;
 }
 
@@ -74,14 +74,14 @@ const Landing = () => {
     if (isSignedIn)
       url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}?clerkId=${user.id}`;
     const res = await axios.get(url);
-    console.log("resss",res.data.message)
+    console.log("resss", res.data.message);
     setCards(res.data.message);
     setIsLoading(false);
   };
 
   useEffect(() => {
     if (buttons.length === 0) return;
-    if(!isLoaded) return;
+    if (!isLoaded) return;
     setIsLoading(true);
     if (selectedButton !== "My Tools") {
       getTemplates();
@@ -99,9 +99,10 @@ const Landing = () => {
   }, [isLoaded, change]);
 
   const handleSearch = async () => {
-    const res = await axios.get(
-      `${BASE_URL}/templates/search?search=${search}`
-    );
+    // const res = await axios.get(
+    //   `${BASE_URL}/templates/search?search=${search}`
+    // );
+    const res = await axios.get(`${BASE_URL2}/objects/searchObjects/${search}`);
     setCards(res.data.data);
   };
 

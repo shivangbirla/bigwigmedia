@@ -95,7 +95,6 @@ const Generate = () => {
 
   // Define the array of button labels
 
-
   // Function to handle button click
   const handleButtonClick = (selected: string) => {
     setSelectedButton(selected);
@@ -106,7 +105,6 @@ const Generate = () => {
   const getData = async () => {
     let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/getObject/${id}`;
     const res = await axios.get(url);
-
 
     let i = -1;
     const obj: any = {};
@@ -148,7 +146,7 @@ const Generate = () => {
 
     let isRequiredFieldMissing = false; // Flag to track missing required fields
     const dupVal: any[] = [];
-    groups.forEach((grp: any,index) => {
+    groups.forEach((grp: any, index) => {
       dupVal.push([]);
       grp.forEach((ele: any) => {
         if (
@@ -159,12 +157,12 @@ const Generate = () => {
           toast.error(`${ele.text} is required`);
           isRequiredFieldMissing = true; // Set flag to true if a required field is missing
         }
-        if(ele.type==="switch"){
-          dupVal[index].push(val[ele.in]?ele.options[0]:ele.options[1])
-          return
+        if (ele.type === "switch") {
+          dupVal[index].push(val[ele.in] ? ele.options[0] : ele.options[1]);
+          return;
         }
-        
-        dupVal[index].push(val[ele.in])
+
+        dupVal[index].push(val[ele.in]);
       });
     });
 
@@ -185,7 +183,6 @@ const Generate = () => {
           groups: dupVal,
         }
       );
-
 
       if (res.status === 200) {
         setOutput(res.data.data);
@@ -226,6 +223,9 @@ const Generate = () => {
         <p className="  dark:text-white text-black text-center font-outfit max-w-[844px] text-base px-6 lg:text-lg font-base">
           {description?.description}
         </p>
+        <h1 className="  dark:text-white text-black text-center font-outfit text-md md:text-lg lg:text-xl  font-medium">
+          Related Tools
+        </h1>
         <div className="flex flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500">
           {relatedTemplates?.slice(0, 5).map((icon, index) => (
             <button
@@ -305,7 +305,9 @@ const Generate = () => {
       )}
 
       <div className="flex flex-col gap-6 w-fit mx-auto">
-        <h1 className="text-3xl text-center font-semibold">Share This</h1>
+        <h1 className="text-3xl text-center font-semibold">
+          Share This With Your Friends
+        </h1>
         <div
           className="elfsight-app-41c0aaf1-c9af-4d02-bf17-6ae8306f8500"
           data-elfsight-app-lazy
@@ -407,7 +409,6 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
   if (element.type === "tone") {
     return (
       <div className="flex flex-wrap flex-col  sm:flex-row self-start gap-4">
-        
         <Label
           className="dark:text-white self-start my-auto text-black text-left font-outfit text-xl font-semibold"
           htmlFor={element.text}
@@ -415,18 +416,17 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
           {element.placeholder}
         </Label>
         <div className="flex flex-wrap sm:flex-row  justify-center md:justify-start md:self-start gap-2">
-
-        {element.options.map((label, index) => (
-          <button
-            key={index}
-            className={`border rounded-full text-sm md:text-base p-2 md:px-7 py-2 ${
-              val[element.in] === label ? "border-gradient-1" : ""
-            }`}
-            onClick={() => setVal({ ...val, [element.in]: label })}
-          >
-            {label}
-          </button>
-        ))}
+          {element.options.map((label, index) => (
+            <button
+              key={index}
+              className={`border rounded-full text-sm md:text-base p-2 md:px-7 py-2 ${
+                val[element.in] === label ? "border-gradient-1" : ""
+              }`}
+              onClick={() => setVal({ ...val, [element.in]: label })}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
     );
@@ -470,10 +470,8 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
       </div>
     );
   }
-  if(element.type ==="paraphrase"){
-    return(
-      <Paraphrase/>
-    )
+  if (element.type === "paraphrase") {
+    return <Paraphrase />;
   }
   return (
     <div className="flex flex-col w-full max-w-[844px] self-start gap-2">

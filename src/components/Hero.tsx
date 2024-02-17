@@ -24,7 +24,6 @@ const Hero = ({
 
   return (
     <div className="flex flex-col justify-center space-y-4">
-      
       <div className=" py-4 text-black dark:text-white text-center font-outfit text-[40px] md:text-[45px] lg:text-[50px] font-normal flex flex-col md:block">
         Unlock the
         <span className="bg-gradient text-transparent bg-clip-text font-outfit font-semibold">
@@ -41,7 +40,7 @@ const Hero = ({
         <div className="z-10 w-full max-w-[637px]  overflow-hidden mx-auto p-[6px] md:p-2  border-gradient bg-white  dark:bg-[#1E1E1E] ">
           <div className="flex  justify-between   border-opacity-0  overflow-hidden  rounded-[73px] items-center ">
             <input
-              placeholder="Social Media"
+              placeholder="All Tools"
               className="w-full  border-none z-50 rounded-l-[73px] outline-none px-4 py-1 md:py-4 placeholder:text-black dark:placeholder:text-white dark:text-white bg-transparent"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
