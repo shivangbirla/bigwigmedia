@@ -1,5 +1,5 @@
 import MultiSelect from "@/components/MultiSelect";
-import { BASE_URL } from "@/utils/funcitons";
+import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
 import { Select, SelectItem, select } from "@nextui-org/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -86,13 +86,18 @@ const Form = () => {
   }, []);
 
   const getData = async () => {
-    const res = await axios.get(`${BASE_URL}/objects/get/${id}`);
+    const res = await axios.get(`${BASE_URL2}/objects/getObject/${id}`);
     console.log("data", res.data.data);
-    const data = res.data.data;
+    const data = res.data.message.object;
+    
     setName(data.name);
+    setaccoName(data.accoName)
     setDescription(data.description);
     setTemplate(data.templete);
     setSelectedLabel(data.labels);
+    setgroupBy(data.groupBy)
+    setGroups(data.groups)
+    setFaqs(data.faq)
     setSelectedImage(
       data.logo.replace(
         "http://localhost:4000",
@@ -126,7 +131,7 @@ const Form = () => {
       console.log(groupBy)
     try {
       let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/addObjectOnce`;
-      if (!!id) url = `${BASE_URL}/templates/update/${id}`;
+      if (!!id) url = `${BASE_URL2}/objects/updateObject/${id}`;
       const res = await axios.post(url, {
         name,
         accoName,
