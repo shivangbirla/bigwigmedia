@@ -103,7 +103,8 @@ const Landing = () => {
     //   `${BASE_URL}/templates/search?search=${search}`
     // );
     const res = await axios.get(`${BASE_URL2}/objects/searchObjects/${search}`);
-    setCards(res.data.data);
+    // console.log(res.data.message)
+    setCards(res.data.message);
   };
 
   return (

@@ -86,7 +86,7 @@ const Form = () => {
   }, []);
 
   const getData = async () => {
-    const res = await axios.get(`${BASE_URL}/templates/get/${id}`);
+    const res = await axios.get(`${BASE_URL}/objects/get/${id}`);
     console.log("data", res.data.data);
     const data = res.data.data;
     setName(data.name);
