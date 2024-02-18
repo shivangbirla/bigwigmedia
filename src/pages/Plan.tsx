@@ -1,14 +1,43 @@
 import Nav from "@/components/Nav";
 import React from "react";
+import { loadStripe } from '@stripe/stripe-js';
+import axios from "axios";
+import { BASE_URL2 } from "@/utils/funcitons";
 
 type Props = {};
 
 const Plan = (props: Props) => {
   const arr = [
-    { duration: "Weekly", price: "$5", creadits: "50" },
-    { duration: "Monthly", price: "$20", creadits: "200" },
-    { duration: "Yearly", price: "$200", creadits: "2550" },
+    { duration: "Weekly", price: 5, creadits: "50" },
+    { duration: "Monthly", price: 20, creadits: "200" },
+    { duration: "Yearly", price: 200, creadits: "2550" },
   ];
+
+  const buyPlan = async (index:any) => {
+    try {
+      console.log('buy plan')
+      const obj = arr[index]
+      const stripe = await loadStripe(
+        "pk_test_51NgPpPSIcJ4vSbovspO4fUbLjduW9tGNuZ4JbqXprlZD5DtqRWTLfedFUIBGi4l5qXj3QcQipkbOjBClKB3xQ83100tMI7cvRE"
+      );
+  
+      const resp = await axios.post(
+        `${BASE_URL2}/payment/create-checkout-session`, {
+        product: {
+          name: obj.creadits+" credit",
+          price: obj.price,
+          quantity: 1
+        }
+      }
+      );
+      stripe?.redirectToCheckout({
+        sessionId: resp.data.id,
+  
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       <Nav />
@@ -32,7 +61,7 @@ const Plan = (props: Props) => {
                   </div>
                 </div>
               </div>
-              <button className=" z-50 w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer">
+              <button className=" z-50 w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer" onClick={() => buyPlan(index)}>
                 Buy Premium
               </button>
               <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
