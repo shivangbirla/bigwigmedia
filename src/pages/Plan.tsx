@@ -16,7 +16,7 @@ const Plan = (props: Props) => {
         <div className="w-full h-full flex flex-row gap-3 justify-center items-center  max-w-[867px] ">
           {arr.map((ite, index) => (
             <div
-              className=" relative  flex border-gradient-2 dark:bg-[#262626
+              className="flex border-gradient-2 dark:bg-[#262626
 ] z-10 w-[298px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
             >
               <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
@@ -32,7 +32,7 @@ const Plan = (props: Props) => {
                   </div>
                 </div>
               </div>
-              <button className="w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer">
+              <button className=" z-50 w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer">
                 Buy Premium
               </button>
               <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
