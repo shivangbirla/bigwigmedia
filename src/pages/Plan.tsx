@@ -32,10 +32,8 @@ const Plan = (props: Props) => {
                   </div>
                 </div>
               </div>
-              <button className="w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient">
-                <span className="text-white font-Outfit text-sm font-medium leading-normal">
-                  Buy Premium
-                </span>
+              <button className="w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer">
+                Buy Premium
               </button>
               <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
               <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
