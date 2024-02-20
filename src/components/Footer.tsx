@@ -216,8 +216,15 @@ const Footer = () => {
             >
               Contact
             </div>
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
+            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={() => {
+              navigate("/blog");
+            }}>
               Blog
+            </div>
+            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={() => {
+              navigate("/profile");
+            }}>
+              My profile
             </div>
           </div>
         </div>

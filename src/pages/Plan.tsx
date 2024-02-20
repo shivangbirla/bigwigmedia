@@ -8,9 +8,9 @@ type Props = {};
 
 const Plan = (props: Props) => {
   const arr = [
-    { duration: "Weekly", price: 5, creadits: "50" },
-    { duration: "Monthly", price: 20, creadits: "200" },
-    { duration: "Yearly", price: 200, creadits: "2550" },
+    { duration: "Weekly TRIAL", price: 5, creadits: "50" },
+    { duration: "Monthly  PREMIUM PLAN", price: 20, creadits: "200" },
+    { duration: "Yearly PREMIUM PLAN", price: 200, creadits: "2550" },
   ];
 
   const buyPlan = async (index:any) => {
@@ -49,12 +49,12 @@ const Plan = (props: Props) => {
 ] z-10 w-[298px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
             >
               <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
-                <span className="capitalize">{ite.duration}</span> PREMIUIM PLAN
+                <span className="capitalize">{ite.duration}</span> 
               </div>
               <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
                 <div className="w-full flex flex-col gap-3">
                   <div className="text-black dark:text-white font-Outfit text-5xl font-medium leading-normal text-center">
-                    {ite.price}
+                    ${ite.price}
                   </div>
                   <div className="text-black dark:text-white font-Outfit text-3xl font-medium leading-normal text-center">
                     {ite.creadits} Credits

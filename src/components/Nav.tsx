@@ -78,7 +78,7 @@ const Nav = () => {
               <div id="google_translate_element" className=""></div>
             </div>
 
-            {!isSignedIn ? (
+            {!isSignedIn && (
               <button
                 className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md "
                 onClick={() => {
@@ -87,17 +87,13 @@ const Nav = () => {
               >
                 Login
               </button>
-            ) : (
-              <button className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-gray-800 bg-gray-900 shadow-md ">
-                <SignOutButton />
-              </button>
-            )}
+            ) }
           </div>
 
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className="md:hidden ml-2">
+          <div className=" mx-2">
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button className="p-0 bg-transparent">
@@ -120,9 +116,9 @@ const Nav = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                {isSignedIn && <DropdownMenuItem onClick={() => navigate("/profile")}>Profile</DropdownMenuItem>}
 
                 <DropdownMenuItem>
                   {!isSignedIn ? (

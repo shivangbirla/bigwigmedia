@@ -44,6 +44,11 @@ const Hero = ({
               className="w-full  border-none z-50 rounded-l-[73px] outline-none px-4 py-1 md:py-4 placeholder:text-black dark:placeholder:text-white dark:text-white bg-transparent"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  onClick();
+                }
+              }}
             />
             <button
               className=" text-white text-center font-outfit md:text-lg font-semibold flex relative  text-xs  p-3 md:p-5 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80"

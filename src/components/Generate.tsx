@@ -364,15 +364,11 @@ const Generate = () => {
         </p>
         <div className="flex flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500">
           {relatedTemplates?.slice(0, 5).map((icon, index) => (
-            <button
+            <Link
               key={index}
               className="p-2  rounded-full shadow-md"
-              onClick={() =>
-                navigate({
-                  pathname: "/generate",
-                  //@ts-ignore
-                  search: `?id=${icon._id}`,
-                })
+              target="_blank"
+              to={ `${window.location.origin}/generate?id=${icon._id}`
               }
             >
               <img
@@ -384,7 +380,7 @@ const Generate = () => {
                 }
                 alt=""
               />
-            </button>
+            </Link>
           ))}
         </div>
       </div>
