@@ -29,12 +29,12 @@ const Login = () => {
       <img
         src={One}
         alt="sideImg"
-        className="absolute hidden lg:flex left-0 bottom-0 "
+        className="absolute hidden lg:flex left-0 bottom-0  mix-blend-exclusion"
       />
       <img
         src={Two}
         alt="sideImg"
-        className="absolute hidden lg:flex right-0 top-0"
+        className="absolute hidden lg:flex right-0 top-0 mix-blend-exclusion"
       />
       {/* <div className="w-1/2 h-screen relative  hidden md:flex items-center justify-">
         <div className="flex absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 items-center gap-4 cursor-pointer">

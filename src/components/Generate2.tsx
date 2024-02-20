@@ -226,14 +226,16 @@ const Generate = () => {
         <h1 className="  dark:text-white text-black text-center font-outfit text-md md:text-lg lg:text-xl  font-medium">
           Related Tools
         </h1>
-        <div className="flex flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500">
+        <div className="flex flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500" >
           {relatedTemplates?.slice(0, 5).map((icon, index) => (
-            <Link
+            <a
               key={index}
               className="p-2  rounded-full shadow-md flex justify-center item-center"
               target="_blank"
-              to={`${window.location.origin}/generate?id=${icon._id}`
+              href={`${window.location.origin}/generate?id=${icon._id}`
               }
+              // @ts-ignore
+              title={icon.accoName}
             >
               <img
                 src={
@@ -242,9 +244,11 @@ const Generate = () => {
                     "https://social-media-ai-content-api.onrender.com"
                   ) as string
                 }
-                alt=""
+                alt={icon!.name as string}
+                title={icon.name as string}
+
               />
-            </Link>
+            </a>
           ))}
         </div>
       </div>

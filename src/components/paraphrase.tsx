@@ -105,8 +105,8 @@ export function Paraphrase() {
               <Loader2 className="animate-spin w-20 h-20 mt-20" />
             </div>
           ) : (
-            <div className="h-96 w-full rounded-md border-2 border-gray-300 dark:text-gray-200 text-gray-800 p-5 "  >
-
+            <div className="h-96 w-full rounded-md border-2 border-gray-300 dark:text-gray-200 text-gray-800 p-5  overflow-y-scroll"  >
+              lorem500
               {output }
             </div>
           )}
