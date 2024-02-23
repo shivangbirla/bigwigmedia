@@ -9,13 +9,13 @@ import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { Card } from "@/pages/Landing";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const Profile = () => {
   // const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate()
-  const [bookmarks, setbookmarks] = useState([])
+  const navigate = useNavigate();
+  const [bookmarks, setbookmarks] = useState([]);
   const { user, isSignedIn, isLoaded } = useUser();
 
   const getBookMarks = async (bool = false) => {
@@ -29,20 +29,17 @@ const Profile = () => {
       isBookmarked: true,
     }));
 
-    setbookmarks(cards)
-
+    setbookmarks(cards);
   };
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
-      navigate("/login")
-      toast.error("Login to continue...")
+      navigate("/login");
+      toast.error("Login to continue...");
     }
     isSignedIn && getBookMarks();
   }, [isLoaded, isSignedIn]);
-  console.log(bookmarks)
-
-
+  console.log(bookmarks);
 
   return (
     <>
@@ -61,7 +58,6 @@ const Profile = () => {
                 {user?.fullName}
               </div>
               <div className="flex felx-row justify-between gap-[12px]">
-
                 <div className="text-black dark:text-white font-Outfit text-base font-normal leading-normal w-full line-clamp-1">
                   {user?.primaryEmailAddress?.emailAddress}
                 </div>
@@ -76,11 +72,14 @@ const Profile = () => {
                 <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
                   Get unlimited access to all the BigWig Media’s AI Tools
                 </div>
-                <button className="w-[154px] h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient">
+                <Link
+                  className="w-[154px] h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient"
+                  to="/plans"
+                >
                   <span className="text-white font-Outfit text-sm font-medium leading-normal">
                     Buy Premium
                   </span>
-                </button>
+                </Link>
                 <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
                 <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
               </div>
@@ -128,10 +127,10 @@ const Profile = () => {
                       </button>
                       <div
                         className={cn(
-                          "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert",
+                          "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                      // onClick={handleBookmarkToggle}
+                        // onClick={handleBookmarkToggle}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

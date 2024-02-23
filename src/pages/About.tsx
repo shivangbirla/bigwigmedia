@@ -12,9 +12,7 @@ const AboutUs: React.FC = () => {
     <div className="bg-white dark:bg-[#1E1E1E]">
       <Nav />
       <div className="p-10 text-center min-h-screen">
-        <h1 className="bg-gradient text-transparent bg-clip-text  text-3xl font-bold mb-4">
-          About Us
-        </h1>
+        <h1 className=" text-3xl font-bold mb-4">About Us</h1>
         <p className="text-xl my-4 lg:mx-[20vh] text-center ">
           Welcome to BigWigMedia.ai – your go-to hub for comprehensive AI
           solutions. We offer a range of cutting-edge tools designed to elevate

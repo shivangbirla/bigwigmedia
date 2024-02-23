@@ -108,18 +108,16 @@ const CardComponent = ({
       </div>
       <div className="flex items-start justify-center  pt-0 gap-5">
         <button
-          className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto "
+          className="dark:bt-gradient dark:text-white flex w-full p-1 md:p-2 justify-center my-auto hover:opacity-80 gap-2.26 rounded-full bt-gradient text-white font-outfit text-base font-medium px-10 mx-auto"
           onClick={() => {
             if (bool) {
               toast("Coming Soon...");
               return;
             }
-            navigate({
-              pathname: "/generate",
-              search: `?id=${card._id}`,
-            });
+            // Using window.open to navigate to a new page in a new tab
+            const newPath = `/generate?id=${card._id}`;
+            window.open(newPath, "_blank");
           }}
-          // disabled={bool}
         >
           Generate
         </button>
