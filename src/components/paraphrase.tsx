@@ -20,60 +20,58 @@ export function Paraphrase() {
 
   const navigate = useNavigate();
 
-
-
   const handlePaste = async () => {
     const text = await navigator.clipboard.readText();
     setText(text);
   };
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
 
-   const handleSubmit = async (
-     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-   ) => {      
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    //@ts-ignore
+    setIsLoading(true);
+    e.preventDefault();
+    if (!isSignedIn) {
+      navigate("/login");
+      toast.error("Please Signin to continue");
+      return;
+    }
+    if (!text) {
+      toast.error("Please enter the text to generate");
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/response/paraphrase?clerkId=${userId}`,
+        {
+          prompt: text,
+        }
+      );
 
-     //@ts-ignore
-     setIsLoading(true);
-     e.preventDefault();
-     if (!isSignedIn) {
-       navigate("/login");
-       toast.error("Please Signin to continue");
-       return;
-     }
-     if (!text) {
-       toast.error("Please enter the text to generate");
-       setIsLoading(false);
-       return;
-     }
-     try {
-       const res = await axios.post(`${BASE_URL}/response/paraphrase?clerkId=${userId}`, {
-         prompt: text,
-       });
+      if (res.status === 200) {
+        setOutput(res.data.data);
+        setIsLoading(false);
+      } else {
+        toast.error(res.data.error);
+        setIsLoading(false);
+      }
+    } catch (error: any) {
+      // toast.error(error);
+      toast.error(error.response.data.error);
+      setIsLoading(false);
+    }
+  };
 
-
-       if (res.status === 200) {
-         setOutput(res.data.data);
-         setIsLoading(false);
-       } else {
-         toast.error(res.data.error);
-         setIsLoading(false);
-       }
-     } catch (error: any) {
-       // toast.error(error);
-       toast.error(error.response.data.error);
-       setIsLoading(false);
-     }
-   };
-
-
-   const handleCopy = () => {
-     try {
-       navigator.clipboard.writeText(output);
-       toast.success("Copied to Clipboard");
-     } catch (error) {
-       toast.error("Failed to copy");
-     }
-   };
+  const handleCopy = () => {
+    try {
+      navigator.clipboard.writeText(output);
+      toast.success("Copied to Clipboard");
+    } catch (error) {
+      toast.error("Failed to copy");
+    }
+  };
   return (
     <div className="m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       <div className="flex flex-col md:flex-row">
@@ -94,7 +92,10 @@ export function Paraphrase() {
               Paste Text
             </Button>
 
-            <Button className="rounded-md bt-gradient bg-green-500 px-6 py-2 text-white hover:bg-green-600" onClick={handleSubmit}>
+            <Button
+              className="rounded-md bt-gradient bg-green-500 px-6 py-2 text-white hover:bg-green-600"
+              onClick={handleSubmit}
+            >
               Paraphrase
             </Button>
           </div>
@@ -105,19 +106,20 @@ export function Paraphrase() {
               <Loader2 className="animate-spin w-20 h-20 mt-20" />
             </div>
           ) : (
-            <div className="h-96 w-full rounded-md border-2 border-gray-300 dark:text-gray-200 text-gray-800 p-5  overflow-y-scroll"  >
-              lorem500
-              {output }
+            <div className="h-96 w-full rounded-md border-2 border-gray-300 dark:text-gray-200 text-gray-800 p-5  overflow-y-scroll">
+              {output}
             </div>
           )}
-          {!!output &&<Button
-            className="rounded-md self-end  px-4 py-2 text-gray-600 hover:dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100"
-            variant="ghost"
-            onClick={handleCopy}
-          >
-            <CopyIcon className="mr-2 h-5 w-5" />
-            Try Sample Text
-          </Button>} 
+          {!!output && (
+            <Button
+              className="rounded-md self-end  px-4 py-2 text-gray-600 hover:dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100"
+              variant="ghost"
+              onClick={handleCopy}
+            >
+              <CopyIcon className="mr-2 h-5 w-5" />
+              Try Sample Text
+            </Button>
+          )}
         </div>
       </div>
     </div>
