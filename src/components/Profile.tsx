@@ -62,10 +62,11 @@ const Profile = () => {
                   {user?.primaryEmailAddress?.emailAddress}
                 </div>
               </div>
-              <div
+              {/* <div
                 className=" relative  flex border-gradient-2 dark:bg-[#262626
-] z-10 w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 "
-              >
+] w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2"
+              > */}
+              <div className="relative flex border-white w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 rounded-2xl">
                 <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
                   PREMIUIM PLAN
                 </div>
@@ -73,12 +74,12 @@ const Profile = () => {
                   Get unlimited access to all the BigWig Media’s AI Tools
                 </div>
                 <Link
-                  className="w-[154px] h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient"
-                  to="/plans"
+                  className="w-[154px] h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient mt-2"
+                  to="/plan"
                 >
-                  <span className="text-white font-Outfit text-sm font-medium leading-normal">
+                  <div className="text-white font-Outfit text-sm font-medium leading-normal">
                     Buy Premium
-                  </span>
+                  </div>
                 </Link>
                 <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
                 <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
