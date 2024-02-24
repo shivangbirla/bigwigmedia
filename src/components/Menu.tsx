@@ -7,7 +7,7 @@ interface MenuProps {
   setSelectedButton: Function;
 }
 const Menu = ({ buttons, selectedButton, setSelectedButton }: MenuProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   if (buttons.length === 0) return;
 

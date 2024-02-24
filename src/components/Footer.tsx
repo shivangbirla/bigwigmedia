@@ -151,7 +151,7 @@ const Footer = () => {
               BigWig Media AI Tools
             </div>
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
-              S-1, 3rd Floor, Janta Market, Rajouri Garden, New Delhi, 110027
+              a product by bigwigmedia.ai
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@ const Footer = () => {
               All Blog Writer
             </div> */}
             <div
-              className="bg-gradient-to-br from-yellow-400 via-red-600 to-purple-600 bg-clip-text text-transparent cursor-pointer"
+              className=" cursor-pointer"
               onClick={() => {
                 navigate("/");
               }}
@@ -225,7 +225,7 @@ const Footer = () => {
               Blog
             </div>
             <div
-              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal"
+              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal hover:cursive cursor-pointer"
               onClick={() => {
                 navigate("/profile");
               }}

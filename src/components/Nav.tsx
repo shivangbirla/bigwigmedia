@@ -32,7 +32,6 @@ const Nav = () => {
   const googleTranslateElementInit = () => {
     // @ts-ignore
     new window.google.translate.TranslateElement(
-
       {
         pageLanguage: "en",
         autoDisplay: false,
@@ -87,7 +86,7 @@ const Nav = () => {
               >
                 Login
               </button>
-            ) }
+            )}
           </div>
 
           <div className="ml-4">
@@ -118,7 +117,11 @@ const Nav = () => {
               <DropdownMenuContent>
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
                 <DropdownMenuSeparator />
-                {isSignedIn && <DropdownMenuItem onClick={() => navigate("/profile")}>Profile</DropdownMenuItem>}
+                {isSignedIn && (
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    Profile
+                  </DropdownMenuItem>
+                )}
 
                 <DropdownMenuItem>
                   {!isSignedIn ? (

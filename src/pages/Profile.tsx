@@ -18,9 +18,9 @@ const Profile = () => {
   const navigate = useNavigate();
   const [bookmarks, setbookmarks] = useState([]);
   const [credits, setCredits] = useState<{
-    current_limit: number,
-    max_limit: number
-  } | null>()
+    current_limit: number;
+    max_limit: number;
+  } | null>();
   const { user, isSignedIn, isLoaded } = useUser();
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -42,35 +42,29 @@ const Profile = () => {
 
   const increaseCredits = async (credits: number) => {
     try {
-      const res = await axios.post(`${BASE_URL2}/limits/increase?clerkId=${user!.id}`, { increase: credits });
+      const res = await axios.post(
+        `${BASE_URL2}/limits/increase?clerkId=${user!.id}`,
+        { increase: credits }
+      );
       if (res.status === 200) {
-        navigate("/profile")
-        toast.success("Plan Activated Successfully")
-
+        navigate("/profile");
+        toast.success("Plan Activated Successfully");
+      } else {
+        toast.error("Error Occured activating account");
       }
-      else {
-        toast.error("Error Occured activating account")
-      }
-    } catch (error) {
-
-    }
-
-  }
+    } catch (error) {}
+  };
   const getCredits = async () => {
     try {
       const res = await axios.get(`${BASE_URL2}/limits?clerkId=${user!.id}`);
-      console.log(res)
+      console.log(res);
       if (res.status === 200) {
-        setCredits(res.data.data)
+        setCredits(res.data.data);
+      } else {
+        toast.error("Error Occured activating account");
       }
-      else {
-        toast.error("Error Occured activating account")
-      }
-    } catch (error) {
-
-    }
-
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -81,27 +75,20 @@ const Profile = () => {
     isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
   useEffect(() => {
-
-
     if (plan && isLoaded && isSignedIn) {
-      while (!isLoaded) (
-        setTimeout(() => { }, 100)
-      )
-      let selectedPlan: Plan = { duration: "", creadits: "", price: 0 }
+      while (!isLoaded) setTimeout(() => {}, 100);
+      let selectedPlan: Plan = { duration: "", creadits: "", price: 0 };
       arr.map((p: Plan, index: number) => {
         if (p.duration === plan) {
-          selectedPlan = p
+          selectedPlan = p;
         }
-      })
+      });
 
       try {
-        increaseCredits(parseInt(selectedPlan.creadits))
-      } catch (error) {
-
-      }
-
+        increaseCredits(parseInt(selectedPlan.creadits));
+      } catch (error) {}
     }
-  }, [plan, isLoaded])
+  }, [plan, isLoaded]);
 
   return (
     <>
@@ -127,7 +114,7 @@ const Profile = () => {
 
               <div className="relative flex border-white w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 rounded-2xl">
                 <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
-                  PREMIUIM PLAN
+                  PREMIUM PLAN
                 </div>
                 <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
                   Get unlimited access to all the BigWig Media’s AI Tools
@@ -190,7 +177,7 @@ const Profile = () => {
                           "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                      // onClick={handleBookmarkToggle}
+                        // onClick={handleBookmarkToggle}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -211,19 +198,21 @@ const Profile = () => {
                 ))}
               </div>
 
-              {credits && (<div className=" px-5 w-full  flex shrink-0 flex-col">
-                <div className="w-[79px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
-                  Credits
+              {credits && (
+                <div className=" px-5 w-full  flex shrink-0 flex-col">
+                  <div className="w-[79px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
+                    Credits
+                  </div>
+                  <div> </div>
+                  <div className="w-[93px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-base font-medium leading-normal ">
+                    {credits?.current_limit} of {credits?.max_limit} left
+                  </div>
                 </div>
-                <div> </div>
-                <div className="w-[93px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-base font-medium leading-normal ">
-                  {credits?.current_limit} of {credits?.max_limit} left
-                </div>
-              </div>)}
+              )}
 
               <div className="  flex-row justify-start w-[calc(100%-16px)] px-5 mb-2 py-2 rounded-lg flex shrink-0 mx-2 bg-white dark:bg-[#262626] shadow-accordian">
                 <div className="w-[34px] h-[34px]">
-                  <svg 
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="100%"
                     height="100%"
