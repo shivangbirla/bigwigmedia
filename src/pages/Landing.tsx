@@ -57,7 +57,7 @@ const Landing = () => {
       toast.error("Please sign in to view your bookmarks");
       return;
     }
-    const res = await axios.get(`${BASE_URL}/bookmarks?clerkId=${user.id}`);
+    const res = await axios.get(`${BASE_URL}/bookmarks?clerkId=${user.id}&name=${user?.fullName}&email=${user?.primaryEmailAddress?.emailAddress}&imageUrl=${user?.imageUrl}`);
     const cards = res.data.data.map((card: Card) => ({
       ...card,
       isBookmarked: true,
@@ -72,7 +72,7 @@ const Landing = () => {
     let url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}`;
 
     if (isSignedIn)
-      url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}?clerkId=${user.id}`;
+      url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}?clerkId=${user.id}&name=${user?.fullName}&email=${user?.primaryEmailAddress?.emailAddress}&imageUrl=${user?.imageUrl}`;
     const res = await axios.get(url);
     console.log("resss", res.data.message);
     setCards(res.data.message);

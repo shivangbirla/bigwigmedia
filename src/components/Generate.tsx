@@ -23,23 +23,7 @@ import { Paraphrase } from "./paraphrase";
 import ImageGenerator from "./ImageGenerator";
 // type Props = {};
 
-const acc = [
-  {
-    title: "What exactly is Facebook bio?",
-    content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum bdsfadsfsdlanditiis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
-  },
-  {
-    title: "What exactly is Facebook Bio Generator?",
-    content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditiis suscipit numquam, consectetur quasi? Hic, facilis eum similsdfadsfdasfdasfdasfique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
-  },
-  {
-    title: "What is the Facebook Bio Generator and how does it work?",
-    content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia harum qui sed neque, ipsa quaerat quia facere perspiciatis optio magnam sequi aut iure quae ullam tempora, minus recusandae praesentium rerum. Adipisci dolorum blanditisdfasdfdasis suscipit numquam, consectetur quasi? Hic, facilis eum similique ullam molestias inventore, accusantium rerum iusto maxime illo veritatis!",
-  },
-];
+
 
 const buttonIcons = [
   {

@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useNavigationType } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { button } from "@nextui-org/react";
@@ -92,15 +92,23 @@ const Generate = () => {
   const [relatedTemplates, setrelatedTemplates] = useState<Icon[]>([]);
   const [val, setVal] = useState([]);
   const [groups, setGroups] = useState([]);
+  const navigate = useNavigate()
 
   // Define the array of button labels
 
   // Function to handle button click
+
+  useEffect(()=>{
+    if (isLoaded && !isSignedIn){
+      navigate("/login");
+      toast.error("Please Signin to continue");
+      return;
+    }
+  }, [isLoaded])
   const handleButtonClick = (selected: string) => {
     setSelectedButton(selected);
   };
 
-  const navigate = useNavigate();
 
   const getData = async () => {
     let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/getObject/${id}`;

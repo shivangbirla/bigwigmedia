@@ -2,21 +2,29 @@
 // import { useNavigate } from "react-router-dom";
 import logo from "../assets/Logo.png";
 import Ellipse51 from "../assets/Ellipse51.png";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "@/utils/funcitons";
+import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
 import { Card } from "@/pages/Landing";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { Plan, arr } from "@/utils/plans";
 
 const Profile = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [bookmarks, setbookmarks] = useState([]);
+  const [credits, setCredits] = useState<{
+    current_limit: number,
+    max_limit: number
+  } | null>()
   const { user, isSignedIn, isLoaded } = useUser();
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const plan = urlParams.get("plan");
 
   const getBookMarks = async (bool = false) => {
     if (!isSignedIn) {
@@ -32,14 +40,68 @@ const Profile = () => {
     setbookmarks(cards);
   };
 
+  const increaseCredits = async (credits: number) => {
+    try {
+      const res = await axios.post(`${BASE_URL2}/limits/increase?clerkId=${user!.id}`, { increase: credits });
+      if (res.status === 200) {
+        navigate("/profile")
+        toast.success("Plan Activated Successfully")
+
+      }
+      else {
+        toast.error("Error Occured activating account")
+      }
+    } catch (error) {
+
+    }
+
+  }
+  const getCredits = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL2}/limits?clerkId=${user!.id}`);
+      console.log(res)
+      if (res.status === 200) {
+        setCredits(res.data.data)
+      }
+      else {
+        toast.error("Error Occured activating account")
+      }
+    } catch (error) {
+
+    }
+
+  }
+
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       navigate("/login");
       toast.error("Login to continue...");
     }
     isSignedIn && getBookMarks();
+    isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
-  console.log(bookmarks);
+  useEffect(() => {
+
+
+    if (plan && isLoaded && isSignedIn) {
+      while (!isLoaded) (
+        setTimeout(() => { }, 100)
+      )
+      let selectedPlan: Plan = { duration: "", creadits: "", price: 0 }
+      arr.map((p: Plan, index: number) => {
+        if (p.duration === plan) {
+          selectedPlan = p
+        }
+      })
+
+      try {
+        increaseCredits(parseInt(selectedPlan.creadits))
+      } catch (error) {
+
+      }
+
+    }
+  }, [plan, isLoaded])
 
   return (
     <>
@@ -62,10 +124,7 @@ const Profile = () => {
                   {user?.primaryEmailAddress?.emailAddress}
                 </div>
               </div>
-              {/* <div
-                className=" relative  flex border-gradient-2 dark:bg-[#262626
-] w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2"
-              > */}
+
               <div className="relative flex border-white w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 rounded-2xl">
                 <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
                   PREMIUIM PLAN
@@ -131,7 +190,7 @@ const Profile = () => {
                           "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                        // onClick={handleBookmarkToggle}
+                      // onClick={handleBookmarkToggle}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -152,19 +211,19 @@ const Profile = () => {
                 ))}
               </div>
 
-              <div className=" px-5 w-full  flex shrink-0 flex-col">
+              {credits && (<div className=" px-5 w-full  flex shrink-0 flex-col">
                 <div className="w-[79px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
                   Credits
                 </div>
                 <div> </div>
                 <div className="w-[93px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-base font-medium leading-normal ">
-                  22 of 30 left
+                  {credits?.current_limit} of {credits?.max_limit} left
                 </div>
-              </div>
+              </div>)}
 
               <div className="  flex-row justify-start w-[calc(100%-16px)] px-5 mb-2 py-2 rounded-lg flex shrink-0 mx-2 bg-white dark:bg-[#262626] shadow-accordian">
                 <div className="w-[34px] h-[34px]">
-                  <svg
+                  <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     width="100%"
                     height="100%"

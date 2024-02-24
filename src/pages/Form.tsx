@@ -89,7 +89,7 @@ const Form = () => {
     const res = await axios.get(`${BASE_URL2}/objects/getObject/${id}`);
     console.log("data", res.data.data);
     const data = res.data.message.object;
-    
+
     setName(data.name);
     setaccoName(data.accoName)
     setDescription(data.description);
@@ -125,25 +125,43 @@ const Form = () => {
           options: element.options.filter((option) => option !== ""),
           type: element.type === "other" ? element.otherType : element.type,
         };
-      })});
-    
+      })
+    });
 
-      console.log(groupBy)
+
     try {
       let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/addObjectOnce`;
-      if (!!id) url = `${BASE_URL2}/objects/updateObject/${id}`;
-      const res = await axios.post(url, {
-        name,
-        accoName,
-        description,
-        tagLine: template,
-        labels: selectedLabel,
-        logo: selectedImage,
-        accoLogo: selectedImage,
-        faq: faqs,
-        groups: groupsSubmitted,
-        groupBy,
-      });
+      let res
+      if (!!id) {
+        url = `${BASE_URL2}/objects/updateObject/${id}`;
+        res = await axios.put(url, {
+          name,
+          accoName,
+          description,
+          tagLine: template,
+          labels: selectedLabel,
+          logo: selectedImage,
+          accoLogo: selectedImage,
+          faq: faqs,
+          groups: groupsSubmitted,
+          groupBy,
+        });
+      }
+      else {
+
+        res = await axios.post(url, {
+          name,
+          accoName,
+          description,
+          tagLine: template,
+          labels: selectedLabel,
+          logo: selectedImage,
+          accoLogo: selectedImage,
+          faq: faqs,
+          groups: groupsSubmitted,
+          groupBy,
+        });
+      }
       if (res.status === 201) {
         toast.success(" success: " + res.data.message._id);
         console.log("success", res.data.message._id);
@@ -350,7 +368,7 @@ const Form = () => {
               // console.log(e)
               setSelectedImage(e.currentKey);
             }}
-            // label="Select Image"
+          // label="Select Image"
           >
             {/* @ts-ignore */}
             {/* Dropdown options for images */}
@@ -377,7 +395,7 @@ const Form = () => {
               // console.log(e)
               setgroupBy(e.currentKey);
             }}
-            // label="Select Image"
+          // label="Select Image"
           >
             {/* @ts-ignore */}
             {/* Dropdown options for images */}

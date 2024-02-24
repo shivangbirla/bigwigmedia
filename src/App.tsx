@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 
-import ProfileP from "./pages/ProfileP";
 
 import Generate from "./components/Generate";
 import Generate2 from "./components/Generate2";
@@ -12,6 +11,7 @@ import About from "./pages/About";
 import Failed from "./pages/Failed";
 import Plan from "./pages/Plan";
 import Blog from "./pages/Blog";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
         {/* <Route path="/2" element={<Landing />} /> */}
         <Route path="/login" element={<Login />} />
 
-        <Route path="/profile" element={<ProfileP />} />
+        <Route path="/profile" element={<Profile/>} />
 
         {/* <Route path="/generate" element={<Generate />} /> */}
         <Route path="/generate" element={<Generate2 />} />

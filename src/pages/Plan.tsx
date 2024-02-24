@@ -30,15 +30,12 @@ import {
   useAuth,
   SignedOut,
 } from "@clerk/clerk-react";
+import { arr } from "@/utils/plans";
 
 type Props = {};
 
+
 const Plan = (props: Props) => {
-  const arr = [
-    { duration: "Monthly  PREMIUM PLAN", price: 20, creadits: "200" },
-    { duration: "Yearly PREMIUM PLAN", price: 200, creadits: "2550" },
-    { duration: "TOPUP", price: 10, creadits: "100" },
-  ];
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
 

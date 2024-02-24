@@ -5,10 +5,13 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "./ui/input";
 import axios from "axios";
 import { toast } from "sonner";
+import { BASE_URL2 } from "@/utils/funcitons";
+import { useAuth } from "@clerk/clerk-react";
 const Audio = () => {
   const [file, setfile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [output, setOutput] = useState();
+  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const handleTranscribe = async (e: any) => {
     e.preventDefault();
     if (!file) {
@@ -34,8 +37,13 @@ const Audio = () => {
           },
         }
       );
+      if(response.status===200){
+        toast.success("hello")
 
-      setOutput(response.data.text);
+        const resp = await axios.post(`${BASE_URL2}/objects/limit/decrease?clerkId=${userId}`)
+        setOutput(response.data.text);
+      }
+
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",

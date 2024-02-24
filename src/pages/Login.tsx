@@ -15,9 +15,7 @@ import { useAuth } from "@clerk/clerk-react";
 // type Props = {};
 
 const Login = () => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+
   const { userId } = useAuth();
   return (
     <div className="flex  gap-2 w-screen h-screen bg-black">
@@ -36,14 +34,7 @@ const Login = () => {
         alt="sideImg"
         className="absolute hidden lg:flex right-0 top-0 mix-blend-exclusion"
       />
-      {/* <div className="w-1/2 h-screen relative  hidden md:flex items-center justify-">
-        <div className="flex absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 items-center gap-4 cursor-pointer">
-          <img src={logo} alt="" />
-          <span className="text-white  font-outfit text-3xl font-semibold">
-            BigWigMedia.ai
-          </span>
-        </div>
-      </div> */}
+ 
       <div className="absolute bg-white rounded-lg top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 items-center gap-4 cursor-pointer">
         <SignIn />
       </div>
