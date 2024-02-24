@@ -12,6 +12,7 @@ import Failed from "./pages/Failed";
 import Plan from "./pages/Plan";
 import Blog from "./pages/Blog";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/plan" element={<Plan />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
