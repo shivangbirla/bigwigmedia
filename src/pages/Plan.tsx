@@ -36,7 +36,6 @@ import Footer from "@/components/Footer";
 
 type Props = {};
 
-
 const Plan = (props: Props) => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
@@ -71,7 +70,6 @@ const Plan = (props: Props) => {
       navigate("/login");
       toast.error("Login to continue...");
     }
-    
   }, [isLoaded, isSignedIn]);
 
   return (
@@ -207,7 +205,7 @@ const Plan = (props: Props) => {
                   className=" z-50 w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer"
                   onClick={() => buyPlan(index)}
                 >
-                  Buy Premium
+                  Buy
                 </button>
                 <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
                 <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
@@ -215,7 +213,7 @@ const Plan = (props: Props) => {
             ))}
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );

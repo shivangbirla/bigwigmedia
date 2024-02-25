@@ -130,8 +130,10 @@ const Footer = () => {
       </svg>
       <div className="flex flex-wrap items-start gap-5 md:gap-[83px]">
         <div className="flex flex-col items-start justify-center gap-[18px] w-[303px] h-[167px]">
-          <div className="flex justify-cent
-          er">
+          <div
+            className="flex justify-cent
+          er"
+          >
             <div
               id="google_translate_element"
               className="hidden sm:block"
@@ -231,7 +233,7 @@ const Footer = () => {
                 navigate("/profile");
               }}
             >
-              My profile
+              My Profile
             </div>
           </div>
         </div>
@@ -240,19 +242,28 @@ const Footer = () => {
             Legal
           </div>
           <div className="flex flex-col items-start gap-[5px]">
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={()=>{
-              navigate('/terms')
-            }}>
+            <div
+              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal hover:cursor-pointer"
+              onClick={() => {
+                navigate("/terms");
+              }}
+            >
               Terms of Service
             </div>
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={() => {
-              navigate('/privacy')
-            }}>
+            <div
+              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal hover:cursor-pointer"
+              onClick={() => {
+                navigate("/privacy");
+              }}
+            >
               Privacy Policy
             </div>
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={() => {
-              navigate('/transaction')
-            }}>
+            <div
+              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal hover:cursor-pointer"
+              onClick={() => {
+                navigate("/transaction");
+              }}
+            >
               Secure Transaction Policy
             </div>
           </div>

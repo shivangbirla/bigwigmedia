@@ -24,7 +24,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-import { Link, Navigate, useNavigate, useNavigationType } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useNavigationType,
+} from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { button } from "@nextui-org/react";
@@ -92,23 +97,22 @@ const Generate = () => {
   const [relatedTemplates, setrelatedTemplates] = useState<Icon[]>([]);
   const [val, setVal] = useState([]);
   const [groups, setGroups] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Define the array of button labels
 
   // Function to handle button click
 
-  useEffect(()=>{
-    if (isLoaded && !isSignedIn){
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
       navigate("/login");
       toast.error("Please Signin to continue");
       return;
     }
-  }, [isLoaded])
+  }, [isLoaded]);
   const handleButtonClick = (selected: string) => {
     setSelectedButton(selected);
   };
-
 
   const getData = async () => {
     let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/getObject/${id}`;
@@ -231,7 +235,6 @@ const Generate = () => {
         <p className="  dark:text-white text-black text-center font-outfit max-w-[844px] text-base px-6 lg:text-lg font-base">
           {description?.description}
         </p>
-       
       </div>
       {id === "65c87f7bfaf3fd266b16ce9f" ? (
         <Paraphrase />
@@ -265,35 +268,6 @@ const Generate = () => {
         </>
       )}
 
-      <h1 className="  dark:text-white text-black text-center font-outfit text-md md:text-lg lg:text-xl  font-medium">
-        Related Tools
-      </h1>
-      <div className="flex mx-auto flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500" >
-        {relatedTemplates?.slice(0, 5).map((icon, index) => (
-          <a
-            key={index}
-            className="p-2  rounded-full shadow-md flex justify-center item-center"
-            target="_blank"
-            href={`${window.location.origin}/generate?id=${icon._id}`
-            }
-            // @ts-ignore
-            title={icon.accoName}
-          >
-            <img
-              src={
-                icon.logo.replace(
-                  "http://localhost:4000",
-                  "https://social-media-ai-content-api.onrender.com"
-                ) as string
-              }
-              alt={icon!.name as string}
-              title={icon.name as string}
-
-            />
-          </a>
-        ))}
-      </div>
-
       {(!!output || isLoading) && (
         <div className="flex flex-col border   w-full mx-auto max-w-[1084px] pb-8 rounded-xl">
           <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between">
@@ -313,6 +287,33 @@ const Generate = () => {
           )}
         </div>
       )}
+
+      <h1 className="  dark:text-white text-black text-center font-outfit text-md md:text-lg lg:text-xl  font-medium">
+        Related Tools
+      </h1>
+      <div className="flex mx-auto flex-row justify-center gap-4  md:gap-8 md:w-full max-w-[473px] rounded-full px-3  w-4/5 py-2 border border-gray-500">
+        {relatedTemplates?.slice(0, 5).map((icon, index) => (
+          <a
+            key={index}
+            className="p-2  rounded-full shadow-md flex justify-center item-center"
+            target="_blank"
+            href={`${window.location.origin}/generate?id=${icon._id}`}
+            // @ts-ignore
+            title={icon.accoName}
+          >
+            <img
+              src={
+                icon.logo.replace(
+                  "http://localhost:4000",
+                  "https://social-media-ai-content-api.onrender.com"
+                ) as string
+              }
+              alt={icon!.name as string}
+              title={icon.name as string}
+            />
+          </a>
+        ))}
+      </div>
 
       <div className="flex flex-col gap-6  mt-16 w-fit mx-auto">
         <h1 className="text-3xl text-center font-semibold">
