@@ -16,6 +16,7 @@ import Admin from "./pages/Admin";
 import Success from "./pages/Success";
 import Terms from "./pages/Terms";
 import Transaction from "./pages/Transaction";
+import Privacy from "./pages/Privacy";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/terms" element={<Terms/>} />
         <Route path="/transaction" element={<Transaction/>} />
+        <Route path="/privacy" element={<Privacy/>} />
       </Routes>
     </div>
   );
