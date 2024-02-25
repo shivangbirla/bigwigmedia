@@ -79,7 +79,7 @@ const Nav = () => {
 
             {!isSignedIn && (
               <button
-                className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl hover:bg-zinc  -800 bg-zinc-900 shadow-md "
+                className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
                 onClick={() => {
                   navigate("/login");
                 }}
@@ -114,7 +114,7 @@ const Nav = () => {
                   </svg>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-zinc-900">
+              <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
                 <DropdownMenuSeparator />
                 {isSignedIn && (
