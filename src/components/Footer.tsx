@@ -152,7 +152,7 @@ const Footer = () => {
               BigWig Media AI Tools
             </div>
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
-              a product by bigwigmedia.ai
+              A product by bigwigmedia.ai
             </div>
           </div>
         </div>
@@ -217,13 +217,13 @@ const Footer = () => {
             >
               Contact
             </div>
-            <div
-              className="text-black dark:text-white font-Outfit text-base font-medium leading-normal"
-              onClick={() => {
-                navigate("/blog");
-              }}
-            >
-              Blog
+            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
+              <a
+                href="http://blogs.bigwigmedia.ai"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Blog
+              </a>
             </div>
             <div
               className="text-black dark:text-white font-Outfit text-base font-medium leading-normal hover:cursive cursor-pointer"
