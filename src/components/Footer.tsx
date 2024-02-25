@@ -130,7 +130,8 @@ const Footer = () => {
       </svg>
       <div className="flex flex-wrap items-start gap-5 md:gap-[83px]">
         <div className="flex flex-col items-start justify-center gap-[18px] w-[303px] h-[167px]">
-          <div className="flex justify-center">
+          <div className="flex justify-cent
+          er">
             <div
               id="google_translate_element"
               className="hidden sm:block"
@@ -239,13 +240,17 @@ const Footer = () => {
             Legal
           </div>
           <div className="flex flex-col items-start gap-[5px]">
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
+            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={()=>{
+              navigate('/terms')
+            }}>
               Terms of Service
             </div>
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
               Privacy Policy
             </div>
-            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
+            <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal" onClick={() => {
+              navigate('/transaction')
+            }}>
               Secure Transaction Policy
             </div>
           </div>

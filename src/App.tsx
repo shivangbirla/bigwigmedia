@@ -14,6 +14,8 @@ import Blog from "./pages/Blog";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import Success from "./pages/Success";
+import Terms from "./pages/Terms";
+import Transaction from "./pages/Transaction";
 
 const App = () => {
   return (
@@ -35,6 +37,8 @@ const App = () => {
         <Route path="/plan" element={<Plan />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/terms" element={<Terms/>} />
+        <Route path="/transaction" element={<Transaction/>} />
       </Routes>
     </div>
   );

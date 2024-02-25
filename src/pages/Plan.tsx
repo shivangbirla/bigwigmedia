@@ -92,7 +92,7 @@ const Plan = (props: Props) => {
         className="absolute hidden lg:flex right-0 top-0 mix-blend-exclusion"
       />
       <div className="z-50 absolute top-0 w-full">
-        <nav className="sticky top-0 z-50 bg-white/30 dark:bg-gray-800/70 backnavdrop  shadow-md dark:shadow-black">
+        <nav className="sticky top-0 z-50 bg-white/30 dark:bg-zinc-800/70 backnavdrop  shadow-md dark:shadow-black">
           <div className="h-10vh flex justify-between z-50 text-black dark:text-white lg:py-5 px-9 md:px-14  lg:px-24 mx-auto py-4  border-b items-center">
             <div
               className="flex items-center gap-4 cursor-pointer"

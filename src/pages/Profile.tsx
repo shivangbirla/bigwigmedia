@@ -98,7 +98,7 @@ const Profile = () => {
                   to="/plan"
                 >
                   <div className="text-white font-Outfit text-sm font-medium leading-normal">
-                    Buy Premium
+                    Updgrade Plan
                   </div>
                 </Link>
                 <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
@@ -137,7 +137,7 @@ const Profile = () => {
                     <div className="flex flex-row gap-5 line-clamp-2 justify-between items-center ">
                       <img src={p.logo} alt="" className="" />
 
-                      <div className=" flex items-center text-lg text-black dark:text-white  font-outfit  font-semibold">
+                      <div className=" flex items-center text-base text-black dark:text-white line-clamp-2 max-h-[56px]  font-outfit  font-semibold">
                         {p.name}
                       </div>
                     </div>
