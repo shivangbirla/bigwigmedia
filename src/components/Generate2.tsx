@@ -316,9 +316,7 @@ const Generate = () => {
       </div>
 
       <div className="flex flex-col gap-6  mt-16 w-fit mx-auto">
-        <h1 className="text-3xl text-center font-semibold">
-          Share This With Your Friends
-        </h1>
+        <h1 className="text-3xl text-center font-semibold">Share This Tool</h1>
         <div
           className="elfsight-app-41c0aaf1-c9af-4d02-bf17-6ae8306f8500"
           data-elfsight-app-lazy
