@@ -68,7 +68,10 @@ const Profile = () => {
     <>
       <Nav />
       <div className=" dark:!text-white flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
-        <div className="w-full h-full flex flex-col justify-center items-center  max-w-[867px] ">
+        <div className="relative w-full h-full flex flex-col justify-center items-center  max-w-[867px] ">
+          <div className="absolute w-full text-center -bottom-20 text-lg bg-zinc-800 p-4 rounded-full">
+            You are currently on trial plan for 7 days
+          </div>
           <div className="w-full flex flex-col md:flex-row justify-center item-center gap-[14px] ">
             <div className="flex flex-col gap-3 w-[325px] h-fit py-5 justify-center items-center rounded-md bg-white dark:bg-[#262626] shadow-accordian px-4">
               <div className="text-center text-black w-full  dark:text-white  self-start font-Outfit text-3xl font-semibold leading-normal mb-2">
