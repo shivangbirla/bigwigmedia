@@ -11,14 +11,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useUser } from '@clerk/clerk-react'
+import { useNavigate } from 'react-router-dom'
+import { emails } from '@/utils/email'
+import { toast } from 'sonner'
 
 type Props = {}
 
 const Admin = (props: Props) => {
   const [users, setusers] = useState<{ clerkId: string, name: string, email: string, image: string, current_limit: number }[]>([])
-  useEffect(() => {
-    getUsers()
-  }, [])
+  const { isLoaded, isSignedIn, user } = useUser();
+  const [access, setAccess] = useState(false)
+
+  const navigate = useNavigate()
+
 
   const getUsers = async () => {
     try {
@@ -29,8 +35,30 @@ const Admin = (props: Props) => {
       console.log(error)
     }
   }
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      navigate("/login");
+      toast.error("Login to continue...");
+    }
+    if (isSignedIn) {
+      let canAccess = false
+      user.emailAddresses.forEach(e => {
+        if (emails.includes(e.emailAddress)) canAccess = true
+      })
+      if (!canAccess) {
+        navigate("/")
+        toast.error("Cannot access ")
+        return;
+      }
+      getUsers()
+
+      setAccess(canAccess)
+
+    }
+  }, [isLoaded, isSignedIn]);
+  if (!access) return <></>
   return (
-    <Table>
+    <Table className='my-10'>
       <TableCaption>A list of All Users.</TableCaption>
       <TableHeader>
         <TableRow>
@@ -51,7 +79,7 @@ const Admin = (props: Props) => {
           </TableRow>
         ))}
       </TableBody>
-      
+
     </Table>
   )
 }

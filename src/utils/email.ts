@@ -1,0 +1,1 @@
+export const emails:string[] = ["shivangbirla9999@gmail.com",]

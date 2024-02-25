@@ -1,5 +1,5 @@
 import Nav from "@/components/Nav";
-import React from "react";
+import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { BASE_URL2 } from "@/utils/funcitons";
@@ -31,6 +31,8 @@ import {
   SignedOut,
 } from "@clerk/clerk-react";
 import { arr } from "@/utils/plans";
+import { toast } from "sonner";
+import Footer from "@/components/Footer";
 
 type Props = {};
 
@@ -51,7 +53,7 @@ const Plan = (props: Props) => {
         `${BASE_URL2}/payment/create-checkout-session`,
         {
           product: {
-            name: obj.creadits + " credit",
+            name: obj.duration,
             price: obj.price,
             quantity: 1,
           },
@@ -64,6 +66,14 @@ const Plan = (props: Props) => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      navigate("/login");
+      toast.error("Login to continue...");
+    }
+    
+  }, [isLoaded, isSignedIn]);
+
   return (
     <div className="w-screen h-screen bg-black">
       <img
@@ -205,6 +215,7 @@ const Plan = (props: Props) => {
             ))}
           </div>
         </div>
+        <Footer/>
       </div>
     </div>
   );

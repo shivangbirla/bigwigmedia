@@ -139,7 +139,6 @@ const Nav = () => {
                     </button>
                   )}
                 </DropdownMenuItem>
-                {/* <DropdownMenuItem>Sign Up</DropdownMenuItem> */}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

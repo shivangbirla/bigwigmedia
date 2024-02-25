@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Plan, arr } from "@/utils/plans";
+import Footer from "@/components/Footer";
 
 const Profile = () => {
   // const [isOpen, setIsOpen] = useState(false);
@@ -22,9 +23,7 @@ const Profile = () => {
     max_limit: number;
   } | null>();
   const { user, isSignedIn, isLoaded } = useUser();
-  const urlParams = new URLSearchParams(window.location.search);
 
-  const plan = urlParams.get("plan");
 
   const getBookMarks = async (bool = false) => {
     if (!isSignedIn) {
@@ -40,20 +39,7 @@ const Profile = () => {
     setbookmarks(cards);
   };
 
-  const increaseCredits = async (credits: number) => {
-    try {
-      const res = await axios.post(
-        `${BASE_URL2}/limits/increase?clerkId=${user!.id}`,
-        { increase: credits }
-      );
-      if (res.status === 200) {
-        navigate("/profile");
-        toast.success("Plan Activated Successfully");
-      } else {
-        toast.error("Error Occured activating account");
-      }
-    } catch (error) {}
-  };
+
   const getCredits = async () => {
     try {
       const res = await axios.get(`${BASE_URL2}/limits?clerkId=${user!.id}`);
@@ -63,7 +49,7 @@ const Profile = () => {
       } else {
         toast.error("Error Occured activating account");
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -74,21 +60,9 @@ const Profile = () => {
     isSignedIn && getBookMarks();
     isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
-  useEffect(() => {
-    if (plan && isLoaded && isSignedIn) {
-      while (!isLoaded) setTimeout(() => {}, 100);
-      let selectedPlan: Plan = { duration: "", creadits: "", price: 0 };
-      arr.map((p: Plan, index: number) => {
-        if (p.duration === plan) {
-          selectedPlan = p;
-        }
-      });
 
-      try {
-        increaseCredits(parseInt(selectedPlan.creadits));
-      } catch (error) {}
-    }
-  }, [plan, isLoaded]);
+
+
 
   return (
     <>
@@ -112,11 +86,11 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="relative flex border-white w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 rounded-2xl">
+              <div className="relative flex items-center border-white w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 rounded-2xl">
                 <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
                   PREMIUM PLAN
                 </div>
-                <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
+                <div className="text-black text-center dark:text-white font-Outfit text-sm font-medium leading-normal">
                   Get unlimited access to all the BigWig Media’s AI Tools
                 </div>
                 <Link
@@ -132,8 +106,8 @@ const Profile = () => {
               </div>
             </div>
             <div className="flex w-full flex-col justify-between items-start gap-[14px] shadow-accordian  dark:bg-[#262626] bg-white">
-              <div className="flex flex-row w-full justify-between rounded-md   p-3">
-                <div className="text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
+              <div className="flex flex-row w-full justify-between rounded-md   p-5 pb-0">
+                <div className="text-black dark:text-white font-Outfit text-2xl font-semibold leading-normal">
                   Your Bookmarks
                 </div>
                 <button className=" flex items-center text-black dark:text-white font-Outfit text-base  leading-normal cursor-pointer font-bold">
@@ -159,17 +133,17 @@ const Profile = () => {
 
               <div className="w-full h-fit flex  gap-5 flex-row justify-start px-3 flex-wrap">
                 {bookmarks.slice(0, 4).map((p: any) => (
-                  <div className="flex w-[calc(47%)] flex-col  gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl  max-w-80 max-h-[227px] dark:bg-[#262626] bg-white  ">
-                    <div className="flex flex-row gap-5 justify-between items-center ">
+                  <div className="flex w-[calc(47%)] flex-col  gap-3 px-3 py-4 text-gray-700 shadow-accordian rounded-xl  max-w-80 max-h-[227px] dark:bg-[#262626] bg-white  dark:border dark:border-zinc-600 ">
+                    <div className="flex flex-row gap-5 line-clamp-2 justify-between items-center ">
                       <img src={p.logo} alt="" className="" />
 
-                      <div className=" flex items-center text-xl text-black dark:text-white font-outfit  font-semibold">
+                      <div className=" flex items-center text-lg text-black dark:text-white  font-outfit  font-semibold">
                         {p.name}
                       </div>
                     </div>
 
                     <div className="flex items-start justify-center  pt-0 gap-5">
-                      <button className="flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto">
+                      <button className="flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto bt-gradient">
                         Generate
                       </button>
                       <div
@@ -177,7 +151,7 @@ const Profile = () => {
                           "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                        // onClick={handleBookmarkToggle}
+                      // onClick={handleBookmarkToggle}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -197,43 +171,46 @@ const Profile = () => {
                   </div>
                 ))}
               </div>
+              <div className="flex flex-col gap-2 ">
 
-              {credits && (
-                <div className=" px-5 w-full  flex shrink-0 flex-col">
-                  <div className="w-[79px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
-                    Credits
+                {credits && (
+                  <div className=" px-5 w-full  flex shrink-0 flex-col">
+                    <div className="flex shrink-0 text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
+                      Credits
+                    </div>
+                    <div> </div>
+                    <div className="flex shrink-0 text-black dark:text-white font-Outfit text-base font-medium leading-normal ">
+                      {credits?.current_limit} of {credits?.max_limit} left
+                    </div>
                   </div>
-                  <div> </div>
-                  <div className="w-[93px] h-[28px] flex shrink-0 text-black dark:text-white font-Outfit text-base font-medium leading-normal ">
-                    {credits?.current_limit} of {credits?.max_limit} left
-                  </div>
-                </div>
-              )}
+                )}
 
-              <div className="  flex-row justify-start w-[calc(100%-16px)] px-5 mb-2 py-2 rounded-lg flex shrink-0 mx-2 bg-white dark:bg-[#262626] shadow-accordian">
-                <div className="w-[34px] h-[34px]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 34 34"
-                    fill="none"
-                    className="text-red-500"
-                  >
-                    <path
-                      d="M7.08333 29.75C6.30417 29.75 5.63739 29.4728 5.083 28.9184C4.52861 28.364 4.25094 27.6968 4.25 26.9167V7.08333C4.25 6.30417 4.52767 5.63739 5.083 5.083C5.63833 4.52861 6.30511 4.25094 7.08333 4.25H17V7.08333H7.08333V26.9167H17V29.75H7.08333ZM22.6667 24.0833L20.7188 22.0292L24.3312 18.4167H12.75V15.5833H24.3312L20.7188 11.9708L22.6667 9.91667L29.75 17L22.6667 24.0833Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div className="text-red-500 cursor-pointer font-Outfit text-xl font-normal leading-normal">
-                  <SignOutButton />
+                <div className="  flex-row justify-start w-[calc(100%-16px)] px-5 mb-2 py-2 rounded-lg flex shrink-0 w-full bg-white dark:bg-[#262626] shadow-accordian">
+                  <div className="flex flex-row gap-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      height="100%"
+                      viewBox="0 0 34 34"
+                      fill="none"
+                      className="text-red-500 h-7 w-7"
+                    >
+                      <path
+                        d="M7.08333 29.75C6.30417 29.75 5.63739 29.4728 5.083 28.9184C4.52861 28.364 4.25094 27.6968 4.25 26.9167V7.08333C4.25 6.30417 4.52767 5.63739 5.083 5.083C5.63833 4.52861 6.30511 4.25094 7.08333 4.25H17V7.08333H7.08333V26.9167H17V29.75H7.08333ZM22.6667 24.0833L20.7188 22.0292L24.3312 18.4167H12.75V15.5833H24.3312L20.7188 11.9708L22.6667 9.91667L29.75 17L22.6667 24.0833Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-red-500 cursor-pointer my-auto font-Outfit text-lg font-normal leading-normal">
+                    <SignOutButton />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

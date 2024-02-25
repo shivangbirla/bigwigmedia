@@ -224,7 +224,7 @@ const Generate = () => {
   return (
     <div className="flex flex-col  gap-8 min-h-screen">
       <Nav />
-      <div className="flex flex-col justify-center items-center gap-4">
+      <div className="flex flex-col justify-center items-center gap-6">
         <h1 className="  dark:text-white text-black text-center font-outfit text-2xl md:text-3xl lg:text-4xl  font-medium">
           {description?.name}
         </h1>
@@ -312,7 +312,7 @@ const Generate = () => {
         </div>
       )}
 
-      <div className="flex flex-col gap-6 w-fit mx-auto">
+      <div className="flex flex-col gap-6  mt-16 w-fit mx-auto">
         <h1 className="text-3xl text-center font-semibold">
           Share This With Your Friends
         </h1>
@@ -321,7 +321,7 @@ const Generate = () => {
           data-elfsight-app-lazy
         ></div>
       </div>
-      <div className="flex  flex-col gap-6 max-w-[1084px] w-fit mx-auto">
+      {/* <div className="flex  flex-col gap-6 max-w-[1084px] w-fit mx-auto">
         <h1 className="text-3xl text-center font-semibold">More Tools</h1>
         <div className="flex px-4 justify-center flex-row flex-wrap gap-3">
           <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
@@ -362,7 +362,7 @@ const Generate = () => {
             />
           </svg>
         </Link>
-      </div>
+      </div> */}
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">
         <h1 className="text-3xl text-center font-semibold">
           Everything you need to know

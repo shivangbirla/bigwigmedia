@@ -1,8 +1,11 @@
 import MultiSelect from "@/components/MultiSelect";
+import { emails } from "@/utils/email";
 import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
+import { useUser } from "@clerk/clerk-react";
 import { Select, SelectItem, select } from "@nextui-org/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export interface ElementType {
@@ -20,11 +23,14 @@ export interface ElementType {
 const Form = () => {
   // State for form fields
   const [description, setDescription] = useState("");
+  const { isLoaded, isSignedIn, user } = useUser();
+  const navigate = useNavigate()
   const [name, setName] = useState("");
   const [accoName, setaccoName] = useState("");
   const [template, setTemplate] = useState("");
   const [selectedLabel, setSelectedLabel] = useState([]);
   const [selectedImage, setSelectedImage] = useState<string>("");
+  const [access, setAccess] = useState(false)
   const [labels, setLabels] = useState<string[]>([
     "All Tools",
     "In Demand Tools",
@@ -84,6 +90,26 @@ const Form = () => {
   useEffect(() => {
     document.documentElement.classList.remove("dark");
   }, []);
+
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      navigate("/login");
+      toast.error("Login to continue...");
+    }
+    if (isSignedIn) {
+      let canAccess = false
+      user.emailAddresses.forEach(e => {
+        if (emails.includes(e.emailAddress)) canAccess = true
+      })
+      if (!canAccess) {
+        navigate("/")
+        toast.error("Cannot access ")
+        return;
+      }
+      setAccess(canAccess)
+
+    }
+  }, [isLoaded, isSignedIn]);
 
   const getData = async () => {
     const res = await axios.get(`${BASE_URL2}/objects/getObject/${id}`);
@@ -270,7 +296,7 @@ const Form = () => {
 
   return (
     <div className="max-w-md mx-auto">
-      <form
+      {access && <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
@@ -644,8 +670,8 @@ const Form = () => {
             Submit
           </button>
         </div>
-      </form>
-      {id && (
+      </form>}
+      {access && id && (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"

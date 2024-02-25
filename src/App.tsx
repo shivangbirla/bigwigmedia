@@ -13,6 +13,7 @@ import Plan from "./pages/Plan";
 import Blog from "./pages/Blog";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
+import Success from "./pages/Success";
 
 const App = () => {
   return (
@@ -27,8 +28,9 @@ const App = () => {
         {/* <Route path="/generate" element={<Generate />} /> */}
         <Route path="/generate" element={<Generate2 />} />
         <Route path="/form" element={<Form />} />
-        <Route path="/contact" element={<Contact />} />X
-        <Route path="/failed" element={<Failed />} />X
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/failed" element={<Failed />} />
+        <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
         <Route path="/plan" element={<Plan />} />
         <Route path="/blog" element={<Blog />} />
