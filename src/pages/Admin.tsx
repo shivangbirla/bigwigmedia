@@ -22,6 +22,7 @@ const Admin = (props: Props) => {
   const [users, setusers] = useState<{ clerkId: string, name: string, email: string, image: string, current_limit: number }[]>([])
   const { isLoaded, isSignedIn, user } = useUser();
   const [access, setAccess] = useState(false)
+  
 
   const navigate = useNavigate()
 
@@ -41,7 +42,7 @@ const Admin = (props: Props) => {
     }
     if (isSignedIn) {
       let canAccess = false
-      user.emailAddresses.forEach(e => {
+      user.emailAddresses?.forEach(e => {
         if (emails.includes(e.emailAddress)) canAccess = true
       })
       if (!canAccess) {

@@ -107,7 +107,9 @@ export function Paraphrase() {
             </div>
           ) : (
             <div className="h-96 w-full rounded-md border-2 border-gray-300 dark:text-gray-200 text-gray-800 p-5  overflow-y-scroll">
-              {output}
+                {output.split('\n').map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
             </div>
           )}
           {!!output && (
