@@ -143,7 +143,13 @@ const Profile = () => {
                     </div>
 
                     <div className="flex items-start justify-center  pt-0 gap-5">
-                      <button className="flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto bt-gradient">
+                      <button className="flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto bt-gradient"
+                        onClick={() => {
+                          
+                          // Using window.open to navigate to a new page in a new tab
+                          const newPath = `/generate?id=${p._id}`;
+                          window.open(newPath, "_blank");
+                        }}>
                         Generate
                       </button>
                       <div

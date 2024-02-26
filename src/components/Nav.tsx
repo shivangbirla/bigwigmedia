@@ -21,13 +21,14 @@ import {
   SignIn,
   useAuth,
   SignedOut,
+  useUser,
 } from "@clerk/clerk-react";
 import { Globe } from "lucide-react";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const {  isLoaded, isSignedIn, user } = useUser();
 
   const googleTranslateElementInit = () => {
     // @ts-ignore
@@ -77,26 +78,35 @@ const Nav = () => {
               <div id="google_translate_element" className=""></div>
             </div>
 
-            {!isSignedIn && (
+            {!isSignedIn ? (
               <button
-                className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
+                className="hidden md:flex px-4 py-2 justify-center items-center dark:text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
                 onClick={() => {
                   navigate("/login");
                 }}
               >
                 Login
               </button>
-            )}
+            ) : <button
+              className="hidden md:flex px-4 py-2 justify-center items-center dark:text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              Profile
+            </button>}
           </div>
 
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className=" mx-2">
+          <div className={cn(" mx-2 ", !isSignedIn &&"md:hidden")}>
             <DropdownMenu>
-              <DropdownMenuTrigger className="p-0 bg-transparent">
+              <DropdownMenuTrigger className="p-0 bg-transparent focus-visible:border-none">
                 
-                  <svg
+                  {isSignedIn?(
+                  <img src={user.imageUrl} alt="" className="w-9 h-9 focus-visible:border-none rounded-full" />
+                  ):(<svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="36"
                     height="36"
@@ -111,22 +121,22 @@ const Nav = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </svg>
+                  </svg>)}
                 
               </DropdownMenuTrigger>
               <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
-                <DropdownMenuSeparator />
-                {isSignedIn && (
+                {/* <DropdownMenuSeparator /> */}
+                {/* {isSignedIn && (
                   <DropdownMenuItem onClick={() => navigate("/profile")}>
                     Profile
                   </DropdownMenuItem>
-                )}
+                )} */}
 
                 <DropdownMenuItem>
                   {!isSignedIn ? (
                     <button
-                      className="flex   text-white font-outfit text-base font-semibold gap-2 w-full  "
+                      className="flex   dark:text-white font-outfit text-base font-semibold gap-2 w-full  "
                       onClick={() => {
                         navigate("/login");
                       }}
