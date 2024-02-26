@@ -31,8 +31,12 @@ const Landing = () => {
   const { user, isSignedIn, isLoaded } = useUser();
   const [change, setChange] = useState(0);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const mytools = urlParams.get("mytools");
+  console.log(mytools)
+
   const [selectedButton, setSelectedButton] =
-    useState<String>("Article Creator");
+    useState<String>(mytools?"My Tools":"Article Creator");
   const [cards, setCards] = useState<Card[]>([]);
   const [cardsBookmark, setCardsBookmark] = useState<Card[]>([]);
   const [search, setSearch] = useState("");
@@ -43,7 +47,8 @@ const Landing = () => {
     const bookmarked = [...res.data.message];
     if (isSignedIn) bookmarked.splice(1, 0, "My Tools");
     setButtons(bookmarked);
-    setSelectedButton(res.data.message[0]);
+    setSelectedButton(mytools && isSignedIn
+       ? "My Tools" : res.data.message[0]);
   };
 
   useEffect(() => {
@@ -67,6 +72,10 @@ const Landing = () => {
     if (bool) setCards(cards);
     setIsLoading(false);
   };
+
+  useEffect(()=>{
+    if(mytools) setSelectedButton("My Tools")
+  },[mytools])
 
   const getTemplates = async () => {
     let url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}`;

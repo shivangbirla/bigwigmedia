@@ -114,7 +114,12 @@ const Profile = () => {
                 <div className="text-black dark:text-white font-Outfit text-2xl font-semibold leading-normal">
                   Your Bookmarks
                 </div>
-                <button className=" flex items-center text-black dark:text-white font-Outfit text-base  leading-normal cursor-pointer font-bold">
+                <button className=" flex items-center text-black dark:text-white font-Outfit text-base  leading-normal cursor-pointer font-bold" onClick={()=>{
+                  navigate({
+                    pathname:"/",
+                    search:"?mytools=true"
+                  })
+                }}>
                   View All
                   <svg
                     width="7"
