@@ -87,7 +87,7 @@ function manipulate(bio: string) {
 const Generate = () => {
   const [description, setDescription] = useState<Tool | undefined>();
   const [text, settext] = useState("");
-  const [output, setOutput] = useState<{output:string} | undefined>();
+  const [output, setOutput] = useState<{ output: string } | undefined>();
   const [hashTag, setHashTag] = useState(true);
   const [icons, setIcons] = useState(true);
   const urlParams = new URLSearchParams(window.location.search);
@@ -198,8 +198,8 @@ const Generate = () => {
       );
 
       if (res.status === 200) {
-        const json = JSON.parse(res.data.data)
-        setOutput(json);  
+        const json = JSON.parse(res.data.data);
+        setOutput(json);
         setIsLoading(false);
       } else {
         toast.error(res.data.error);
@@ -214,12 +214,12 @@ const Generate = () => {
 
   const handleCopy = () => {
     try {
-      const tempElement = document.createElement('div');
+      const tempElement = document.createElement("div");
       tempElement.innerHTML = output?.output as string;
 
       // Replace newline characters (\n) with <br> elements
-      tempElement.querySelectorAll('br').forEach(br => {
-        br.insertAdjacentHTML('beforebegin', '\n');
+      tempElement.querySelectorAll("br").forEach((br) => {
+        br.insertAdjacentHTML("beforebegin", "\n");
         // @ts-ignore
         br!.parentNode.removeChild(br);
       });
@@ -293,7 +293,10 @@ const Generate = () => {
             )}
           </div>
           {!isLoading ? (
-            <p className="p-5 text-base md:text-xl font-medium" dangerouslySetInnerHTML={{ __html: output?.output as string }} />
+            <p
+              className="p-5 text-base md:text-xl font-medium"
+              dangerouslySetInnerHTML={{ __html: output?.output as string }}
+            />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <Loader2 className="animate-spin w-20 h-20 mt-20" />
@@ -301,7 +304,7 @@ const Generate = () => {
           )}
         </div>
       )}
-     
+
       <h1 className="  dark:text-white text-black text-center font-outfit text-md md:text-lg lg:text-xl  font-medium">
         Related Tools
       </h1>
@@ -379,7 +382,7 @@ const Generate = () => {
         </Link>
       </div> */}
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">
-        <h1 className="text-3xl text-center font-semibold">
+        <h1 className="text-3xl text-center font-semibold my-6">
           Everything you need to know
         </h1>
         <Accordion

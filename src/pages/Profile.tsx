@@ -21,11 +21,9 @@ const Profile = () => {
   const [credits, setCredits] = useState<{
     current_limit: number;
     max_limit: number;
-    plan:string;
+    plan: string;
   } | null>();
   const { user, isSignedIn, isLoaded } = useUser();
-
-
 
   const getBookMarks = async (bool = false) => {
     if (!isSignedIn) {
@@ -41,7 +39,6 @@ const Profile = () => {
     setbookmarks(cards);
   };
 
-
   const getCredits = async () => {
     try {
       const res = await axios.get(`${BASE_URL2}/limits?clerkId=${user!.id}`);
@@ -50,7 +47,7 @@ const Profile = () => {
       } else {
         toast.error("Error Occured activating account");
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -62,17 +59,16 @@ const Profile = () => {
     isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
 
-
-
-
   return (
     <>
       <Nav />
       <div className=" dark:!text-white flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
         <div className="relative w-full h-full flex flex-col justify-center items-center  max-w-[867px] ">
-          {credits?.plan==="free"&&<div className="absolute w-full text-center -bottom-20 text-lg bg-white shadow-2xl dark:bg-zinc-800 p-4 rounded-full">
-            You are currently on trial plan for 7 days
-          </div>}
+          {credits?.plan === "free" && (
+            <div className="absolute w-full text-center -bottom-20 text-lg bg-white shadow-2xl dark:bg-zinc-800 p-4 rounded-full">
+              You are currently on trial plan for 7 days
+            </div>
+          )}
           <div className="w-full flex flex-col md:flex-row justify-center item-center gap-[14px] ">
             <div className="flex flex-col gap-3 w-[325px] h-fit py-5 justify-center items-center rounded-md bg-white dark:bg-[#262626] shadow-accordian px-4">
               <div className="text-center text-black w-full  dark:text-white  self-start font-Outfit text-3xl font-semibold leading-normal mb-2">
@@ -102,7 +98,7 @@ const Profile = () => {
                   to="/plan"
                 >
                   <div className="text-white font-Outfit text-sm font-medium leading-normal">
-                    Updgrade Plan
+                    Upgrade Plan
                   </div>
                 </Link>
                 <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
@@ -114,12 +110,15 @@ const Profile = () => {
                 <div className="text-black dark:text-white font-Outfit text-2xl font-semibold leading-normal">
                   Your Bookmarks
                 </div>
-                <button className=" flex items-center text-black dark:text-white font-Outfit text-base  leading-normal cursor-pointer font-bold" onClick={()=>{
-                  navigate({
-                    pathname:"/",
-                    search:"?mytools=true"
-                  })
-                }}>
+                <button
+                  className=" flex items-center text-black dark:text-white font-Outfit text-base  leading-normal cursor-pointer font-bold"
+                  onClick={() => {
+                    navigate({
+                      pathname: "/",
+                      search: "?mytools=true",
+                    });
+                  }}
+                >
                   View All
                   <svg
                     width="7"
@@ -160,7 +159,7 @@ const Profile = () => {
                           "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                      // onClick={handleBookmarkToggle}
+                        // onClick={handleBookmarkToggle}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +180,6 @@ const Profile = () => {
                 ))}
               </div>
               <div className="flex flex-col gap-2 ">
-
                 {credits && (
                   <div className=" px-5 w-full  flex shrink-0 flex-col">
                     <div className="flex shrink-0 text-black dark:text-white font-Outfit text-xl font-semibold leading-normal">
@@ -219,7 +217,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <div className="mt-[20vh]">
+        {" "}
+        <Footer />
+      </div>
     </>
   );
 };
