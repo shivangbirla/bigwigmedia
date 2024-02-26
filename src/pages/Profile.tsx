@@ -70,11 +70,9 @@ const Profile = () => {
       <Nav />
       <div className=" dark:!text-white flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
         <div className="relative w-full h-full flex flex-col justify-center items-center  max-w-[867px] ">
-          {credits?.plan==="free"&&<div className="absolute w-full text-center -bottom-20 text-lg bg-white shadow-2xl dark:bg-zinc-800 p-4 rounded-full">
-            You are currently on trial plan for 7 days
-          </div>}
+          
           <div className="w-full flex flex-col md:flex-row justify-center item-center gap-[14px] ">
-            <div className="flex flex-col gap-3 w-[325px] h-fit py-5 justify-center items-center rounded-md bg-white dark:bg-[#262626] shadow-accordian px-4">
+            <div className="flex flex-col gap-3 w-[325px] h-fit py-5 justify-center items-center rounded-xl bg-white dark:bg-[#262626] shadow-accordian px-4">
               <div className="text-center text-black w-full  dark:text-white  self-start font-Outfit text-3xl font-semibold leading-normal mb-2">
                 Your Profile
               </div>
@@ -91,12 +89,9 @@ const Profile = () => {
               </div>
 
               <div className="relative flex items-center border-white w-[298px] h-[188px] flex-col p-[23px] gap-[10px] shrink-0 border-2 rounded-2xl">
-                <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
-                  PREMIUM PLAN
-                </div>
-                <div className="text-black text-center dark:text-white font-Outfit text-sm font-medium leading-normal">
-                  Get unlimited access to all the BigWig Media’s AI Tools
-                </div>
+                {credits?.plan === "free" && <>
+                  You are currently on trial plan for 7 days
+                </>}
                 <Link
                   className="w-[154px] h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient mt-2"
                   to="/plan"
@@ -109,7 +104,7 @@ const Profile = () => {
                 <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
               </div>
             </div>
-            <div className="flex w-full flex-col justify-between items-start gap-[14px] shadow-accordian  dark:bg-[#262626] bg-white">
+            <div className="flex w-full flex-col rounded-xl justify-between items-start gap-[14px] shadow-accordian  dark:bg-[#262626] bg-white">
               <div className="flex flex-row w-full justify-between rounded-md   p-5 pb-0">
                 <div className="text-black dark:text-white font-Outfit text-2xl font-semibold leading-normal">
                   Your Bookmarks
@@ -194,7 +189,7 @@ const Profile = () => {
                   </div>
                 )}
 
-                <div className="  flex-row justify-start w-[calc(100%-16px)] px-5 mb-2 py-2 rounded-lg flex shrink-0 w-full bg-white dark:bg-[#262626] shadow-accordian">
+                <div className="  flex-row justify-start w-[calc(100%-16px)] px-5 my-4 mx-4 py-2 rounded-lg flex shrink-0 w-full bg-white dark:bg-[#262626] shadow-accordian">
                   <div className="flex flex-row gap-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
