@@ -32,7 +32,6 @@ const MultiSelect = ({ chips, setChips, label, options = [], placeholder }:Multi
         event.keyCode === 13) &&
       !!search
     ) {
-      console.log("tab");
       // ... (existing code for handling Enter key remains unchanged)
       event.preventDefault();
       let newChip = event.target.value.trim();
@@ -71,7 +70,6 @@ const MultiSelect = ({ chips, setChips, label, options = [], placeholder }:Multi
       ref2.current.style.top = `${ref.current.offsetHeight}px`;
     }
   }, [chips]);
-  console.log(height);
 
   return (
     <div

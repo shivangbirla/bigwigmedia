@@ -43,7 +43,6 @@ const ImageGenerator = (props: Props) => {
   const [quality, setQuality] = useState<string>("");
   const [selectedButton, setSelectedButton] = useState("Professional");
 
-  console.log(number, quality);
 
   const navigate = useNavigate();
 
@@ -105,7 +104,6 @@ const ImageGenerator = (props: Props) => {
   };
 
   const handleButtonClick = (selected: string) => {
-    console.log(selected);
     setSelectedButton(selected);
   };
   return (

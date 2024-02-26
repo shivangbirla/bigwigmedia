@@ -196,11 +196,9 @@ const Generate = () => {
           groups: dupVal,
         }
       );
-      console.log(res)
 
       if (res.status === 200) {
         const json = JSON.parse(res.data.data)
-        console.log(json)
         setOutput(json);  
         setIsLoading(false);
       } else {

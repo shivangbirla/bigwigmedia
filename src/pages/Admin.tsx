@@ -29,7 +29,6 @@ const Admin = (props: Props) => {
   const getUsers = async () => {
     try {
       const res = await axios.get(`${BASE_URL2}/user/get/all`)
-      console.log(res)
       setusers(res.data.data)
     } catch (error) {
       console.log(error)

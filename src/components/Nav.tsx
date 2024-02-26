@@ -94,8 +94,8 @@ const Nav = () => {
           </div>
           <div className=" mx-2">
             <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button className="p-0 bg-transparent">
+              <DropdownMenuTrigger className="p-0 bg-transparent">
+                
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="36"
@@ -112,7 +112,7 @@ const Nav = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </Button>
+                
               </DropdownMenuTrigger>
               <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}

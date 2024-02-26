@@ -11,7 +11,6 @@ const ContactUs: React.FC = () => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here you can handle form submission logic, like sending the email.
-    console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
     // You can also integrate with your backend or any email service to send the message.
     // Reset form fields after submission
     setName("");

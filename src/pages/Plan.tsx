@@ -44,7 +44,6 @@ const Plan = (props: Props) => {
     max_limit: number;
     plan: string;
   } | null>();
-  // https://www.bigwigmedia.ai/success?plan=Monthly%20Plan
   let plansToShow = []
 
   if(credits&&credits?.plan==="free"){
@@ -56,7 +55,6 @@ const Plan = (props: Props) => {
 
   const buyPlan = async (index: any) => {
     try {
-      console.log("buy plan");
       const obj = arr[index];
       const stripe = await loadStripe(
         "pk_test_51NgPpPSIcJ4vSbovspO4fUbLjduW9tGNuZ4JbqXprlZD5DtqRWTLfedFUIBGi4l5qXj3QcQipkbOjBClKB3xQ83100tMI7cvRE"
@@ -90,7 +88,6 @@ const Plan = (props: Props) => {
   const getCredits = async () => {
     try {
       const res = await axios.get(`${BASE_URL2}/limits?clerkId=${userId}`);
-      console.log(res);
       if (res.status === 200) {
         setCredits(res.data.data);
       } else {

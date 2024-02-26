@@ -85,7 +85,6 @@ const Form = () => {
 
   const id = urlParams.get("id");
 
-  console.log("selectedImage", groups);
 
   useEffect(() => {
     document.documentElement.classList.remove("dark");
@@ -114,7 +113,6 @@ const Form = () => {
 
   const getData = async () => {
     const res = await axios.get(`${BASE_URL2}/objects/getObject/${id}`);
-    console.log("data", res.data.data);
     const data = res.data.message.object;
 
     setName(data.name);
@@ -191,10 +189,8 @@ const Form = () => {
       }
       if (res.status === 201) {
         toast.success(" success: " + res.data.message._id);
-        console.log("success", res.data.message._id);
         navigator.clipboard.writeText(res.data.message._id);
       }
-      console.log("POST request successful:", res.data);
     } catch (error) {
       console.error("Error making POST request:", error);
     }
@@ -203,7 +199,6 @@ const Form = () => {
   const handleDelete = async () => {
     try {
       const res = await axios.delete(`${BASE_URL}/templates/delete/${id}`);
-      console.log("DELETE request successful:", res.data);
       // Perform any additional logic after deletion
     } catch (error) {
       console.error("Error making DELETE request:", error);

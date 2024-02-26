@@ -45,7 +45,6 @@ const Profile = () => {
   const getCredits = async () => {
     try {
       const res = await axios.get(`${BASE_URL2}/limits?clerkId=${user!.id}`);
-      console.log(res);
       if (res.status === 200) {
         setCredits(res.data.data);
       } else {

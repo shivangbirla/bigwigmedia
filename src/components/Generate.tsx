@@ -264,11 +264,9 @@ const Generate = () => {
     "Minimal",
   ];
 
-  console.log(selectedButton);
 
   // Function to handle button click
   const handleButtonClick = (selected: string) => {
-    console.log(selected);
     setSelectedButton(selected);
   };
 

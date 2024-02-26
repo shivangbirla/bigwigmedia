@@ -61,7 +61,6 @@ const AudioText = () => {
       setIsLoading(false);
     }
   };
-  console.log(audioBuffer);
   return (
     <div className=" flex flex-col gap-4 m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       <div className="flex flex-col   w-full max-w-[844px]  self-start gap-2">

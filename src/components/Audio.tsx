@@ -54,7 +54,6 @@ const Audio = () => {
     }
   };
 
-  console.log(!!output ,!! isLoading);
   return (
     <div className=" flex flex-col gap-4 m-auto w-full max-w-4xl rounded-lg dark:bg-[#262626] bg-white p-6 shadow-lg">
       <h1>Choose an audio file</h1>

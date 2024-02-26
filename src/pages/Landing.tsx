@@ -74,7 +74,6 @@ const Landing = () => {
     if (isSignedIn)
       url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}?clerkId=${user.id}&name=${user?.fullName}&email=${user?.primaryEmailAddress?.emailAddress}&imageUrl=${user?.imageUrl}`;
     const res = await axios.get(url);
-    console.log("resss", res.data.message);
     setCards(res.data.message);
     setIsLoading(false);
   };
