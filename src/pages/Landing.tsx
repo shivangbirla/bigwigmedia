@@ -10,6 +10,7 @@ import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { toast } from "sonner";
+import { useSearchParams } from "react-router-dom";
 // import Profile from "@/components/Profile";
 
 // type Props = {};
@@ -30,16 +31,17 @@ const Landing = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, isSignedIn, isLoaded } = useUser();
   const [change, setChange] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const urlParams = new URLSearchParams(window.location.search);
   const mytools = urlParams.get("mytools");
-  console.log(mytools)
 
   const [selectedButton, setSelectedButton] =
-    useState<String>(mytools?"My Tools":"Article Creator");
+    useState<String>(mytools ? "My Tools" : "Article Creator");
   const [cards, setCards] = useState<Card[]>([]);
   const [cardsBookmark, setCardsBookmark] = useState<Card[]>([]);
   const [search, setSearch] = useState("");
+  const [isSearched, setIsSearched] = useState<string>("")
 
   const getButtons = async () => {
     // const
@@ -48,7 +50,7 @@ const Landing = () => {
     if (isSignedIn) bookmarked.splice(1, 0, "My Tools");
     setButtons(bookmarked);
     setSelectedButton(mytools && isSignedIn
-       ? "My Tools" : res.data.message[0]);
+      ? "My Tools" : res.data.message[0]);
   };
 
   useEffect(() => {
@@ -73,9 +75,16 @@ const Landing = () => {
     setIsLoading(false);
   };
 
-  useEffect(()=>{
-    if(mytools) setSelectedButton("My Tools")
-  },[mytools])
+  useEffect(() => {
+    if (mytools) {
+      //remove from search without navigating
+      
+      setTimeout(()=>{
+        searchParams.delete("mytools");
+        setSearchParams(searchParams)
+      },5000)
+    }
+  }, [])
 
   const getTemplates = async () => {
     let url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}`;
@@ -89,6 +98,7 @@ const Landing = () => {
 
   useEffect(() => {
     if (buttons.length === 0) return;
+    if(isSearched && selectedButton===isSearched) return;
     if (!isLoaded) return;
     setIsLoading(true);
     if (selectedButton !== "My Tools") {
@@ -112,8 +122,15 @@ const Landing = () => {
     // );
     const res = await axios.get(`${BASE_URL2}/objects/searchObjects/${search}`);
     // console.log(res.data.message)
+    if (!!isSearched) { setButtons([search, ...buttons.slice(1)]) }
+    else setButtons([search, ...buttons])
+    setSelectedButton(search)
     setCards(res.data.message);
+    setIsSearched(search)
+    setIsLoading(false)
   };
+
+  console.log(selectedButton)
 
   return (
     <div className="bg-white dark:bg-[#1E1E1E]">

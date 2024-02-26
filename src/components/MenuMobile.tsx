@@ -26,11 +26,12 @@ const MenuMobile = ({buttons,selectedButton,setSelectedButton,cards,isLoading,se
       <Accordion
         type="single"
         collapsible
+        value={selectedButton as string}
         className="w-full flex flex-col gap-2"
         onValueChange={(value) => setSelectedButton(value)}
       >
         {buttons.map((ac, id) => (
-          <AccordionItem value={ac as string}key={id} >
+          <AccordionItem value={ac as string} key={id} >
             <AccordionTrigger className="dark:text-white dark:border dark:border-gray-700 py-4 z-40 items-center rounded-md shadow-accordian px-5 font-outfit" >
               {ac}
             </AccordionTrigger>
