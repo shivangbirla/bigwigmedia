@@ -21,8 +21,10 @@ const Profile = () => {
   const [credits, setCredits] = useState<{
     current_limit: number;
     max_limit: number;
+    plan:string;
   } | null>();
   const { user, isSignedIn, isLoaded } = useUser();
+
 
 
   const getBookMarks = async (bool = false) => {
@@ -69,9 +71,9 @@ const Profile = () => {
       <Nav />
       <div className=" dark:!text-white flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
         <div className="relative w-full h-full flex flex-col justify-center items-center  max-w-[867px] ">
-          <div className="absolute w-full text-center -bottom-20 text-lg bg-zinc-800 p-4 rounded-full">
+          {credits?.plan==="free"&&<div className="absolute w-full text-center -bottom-20 text-lg bg-white shadow-2xl dark:bg-zinc-800 p-4 rounded-full">
             You are currently on trial plan for 7 days
-          </div>
+          </div>}
           <div className="w-full flex flex-col md:flex-row justify-center item-center gap-[14px] ">
             <div className="flex flex-col gap-3 w-[325px] h-fit py-5 justify-center items-center rounded-md bg-white dark:bg-[#262626] shadow-accordian px-4">
               <div className="text-center text-black w-full  dark:text-white  self-start font-Outfit text-3xl font-semibold leading-normal mb-2">
@@ -140,7 +142,7 @@ const Profile = () => {
                     <div className="flex flex-row gap-5 line-clamp-2 justify-between items-center ">
                       <img src={p.logo} alt="" className="" />
 
-                      <div className=" flex items-center text-base text-black dark:text-white line-clamp-2 max-h-[56px]  font-outfit  font-semibold">
+                      <div className=" flex items-center text-base text-black dark:text-white line-clamp-2 max-h-[56px]  font-outfit  font-semibold break-words">
                         {p.name}
                       </div>
                     </div>

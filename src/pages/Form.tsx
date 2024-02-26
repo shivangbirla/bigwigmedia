@@ -92,23 +92,24 @@ const Form = () => {
   }, []);
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      navigate("/login");
-      toast.error("Login to continue...");
-    }
-    if (isSignedIn) {
-      let canAccess = false
-      user.emailAddresses.forEach(e => {
-        if (emails.includes(e.emailAddress)) canAccess = true
-      })
-      if (!canAccess) {
-        navigate("/")
-        toast.error("Cannot access ")
-        return;
-      }
-      setAccess(canAccess)
+    // if (isLoaded && !isSignedIn) {
+    //   navigate("/login");
+    //   toast.error("Login to continue...");
+    // }
+    // if (isSignedIn) {
+    //   let canAccess = false
+    //   user.emailAddresses.forEach(e => {
+    //     if (emails.includes(e.emailAddress)) canAccess = true
+    //   })
+    //   if (!canAccess) {
+    //     navigate("/")
+    //     toast.error("Cannot access ")
+    //     return;
+    //   }
+    //   setAccess(canAccess)
 
-    }
+    // }
+    setAccess(true)
   }, [isLoaded, isSignedIn]);
 
   const getData = async () => {

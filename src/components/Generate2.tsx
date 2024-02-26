@@ -22,11 +22,12 @@ import {
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "@/utils/funcitons";
+import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
 import {
   Link,
   Navigate,
+  json,
   useNavigate,
   useNavigationType,
 } from "react-router-dom";
@@ -86,7 +87,7 @@ function manipulate(bio: string) {
 const Generate = () => {
   const [description, setDescription] = useState<Tool | undefined>();
   const [text, settext] = useState("");
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState<{output:string} | undefined>();
   const [hashTag, setHashTag] = useState(true);
   const [icons, setIcons] = useState(true);
   const urlParams = new URLSearchParams(window.location.search);
@@ -115,7 +116,7 @@ const Generate = () => {
   };
 
   const getData = async () => {
-    let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/getObject/${id}`;
+    let url = `${BASE_URL2}/objects/getObject/${id}`;
     const res = await axios.get(url);
 
     let i = -1;
@@ -190,14 +191,17 @@ const Generate = () => {
 
     try {
       const res = await axios.post(
-        `https://social-media-ai-content-api.onrender.com/api/v2/objects/getResponseOfObject/${id}?clerkId=${userId}`,
+        `${BASE_URL2}/objects/getResponseOfObject/${id}?clerkId=${userId}`,
         {
           groups: dupVal,
         }
       );
+      console.log(res)
 
       if (res.status === 200) {
-        setOutput(res.data.data);
+        const json = JSON.parse(res.data.data)
+        console.log(json)
+        setOutput(json);  
         setIsLoading(false);
       } else {
         toast.error(res.data.error);
@@ -212,7 +216,19 @@ const Generate = () => {
 
   const handleCopy = () => {
     try {
-      navigator.clipboard.writeText(output);
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = output?.output as string;
+
+      // Replace newline characters (\n) with <br> elements
+      tempElement.querySelectorAll('br').forEach(br => {
+        br.insertAdjacentHTML('beforebegin', '\n');
+        // @ts-ignore
+        br!.parentNode.removeChild(br);
+      });
+
+      // Extract the text content from the temporary element
+      const textContent = tempElement.innerText;
+      navigator.clipboard.writeText(textContent);
       toast.success("Copied to Clipboard");
     } catch (error) {
       toast.error("Failed to copy");
@@ -279,7 +295,7 @@ const Generate = () => {
             )}
           </div>
           {!isLoading ? (
-            <p className="p-5 text-base md:text-xl font-medium">{output}</p>
+            <p className="p-5 text-base md:text-xl font-medium" dangerouslySetInnerHTML={{ __html: output?.output as string }} />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <Loader2 className="animate-spin w-20 h-20 mt-20" />
@@ -287,7 +303,7 @@ const Generate = () => {
           )}
         </div>
       )}
-
+     
       <h1 className="  dark:text-white text-black text-center font-outfit text-md md:text-lg lg:text-xl  font-medium">
         Related Tools
       </h1>
@@ -472,7 +488,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
         </Label>
         <Textarea
           className="mb-4 h-24 w-full min-w-[300px] rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
-          placeholder={element.text}
+          placeholder={element.placeholder}
           value={val[element.in]}
           onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
         />
@@ -492,7 +508,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
       </Label>
       <Input
         className="w-full min-w-[300px]"
-        placeholder={element.text}
+        placeholder={element.placeholder}
         value={val[element.in]}
         onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
       />

@@ -1,5 +1,5 @@
 import Nav from "@/components/Nav";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { BASE_URL2 } from "@/utils/funcitons";
@@ -39,6 +39,20 @@ type Props = {};
 const Plan = (props: Props) => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
+  const [credits, setCredits] = useState<{
+    current_limit: number;
+    max_limit: number;
+    plan: string;
+  } | null>();
+
+  let plansToShow = []
+
+  if(credits&&credits?.plan==="free"){
+    plansToShow = arr.filter((p) => p.duration !== "Topup")
+  }
+  else{
+    plansToShow = arr.filter((p) => p.duration === "Topup")
+  }
 
   const buyPlan = async (index: any) => {
     try {
@@ -70,7 +84,20 @@ const Plan = (props: Props) => {
       navigate("/login");
       toast.error("Login to continue...");
     }
+    isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
+
+  const getCredits = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL2}/limits?clerkId=${userId}`);
+      console.log(res);
+      if (res.status === 200) {
+        setCredits(res.data.data);
+      } else {
+        toast.error("Error Occured activating account");
+      }
+    } catch (error) { }
+  };
 
   return (
     <div className="w-screen h-screen bg-black">
@@ -183,7 +210,7 @@ const Plan = (props: Props) => {
         </nav>
         <div className=" dark:!text-white flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
           <div className="w-full h-full flex flex-row gap-3 justify-center items-center  max-w-[867px] ">
-            {arr.map((ite, index) => (
+            {plansToShow.map((ite, index) => (
               <div
                 className="flex border-gradient-2 dark:bg-[#262626
 ] z-10 w-[298px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "

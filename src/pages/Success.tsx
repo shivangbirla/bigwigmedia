@@ -44,7 +44,7 @@ const Success = (props: Props) => {
 
       try {
         //@ts-ignore
-        selectedPlan!==null && increaseCredits(parseInt(selectedPlan.creadits as Plan['creadits']))
+        selectedPlan!==null && increaseCredits(parseInt(selectedPlan.creadits as Plan['creadits'],selectedPlan.duration))
       } catch (error) {
 
       }
@@ -52,9 +52,9 @@ const Success = (props: Props) => {
     }
   }, [plan, isLoaded])
 
-  const increaseCredits = async (credits: number) => {
+  const increaseCredits = async (credits: number,duration:string) => {
     try {
-      const res = await axios.post(`${BASE_URL2}/limits/increase?clerkId=${user!.id}`, { increase: credits });
+      const res = await axios.post(`${BASE_URL2}/limits/increase?clerkId=${user!.id}`, { increase: credits,plan:duration });
       console.log(res)
       if (res.status === 200) {
         navigate("/profile")
