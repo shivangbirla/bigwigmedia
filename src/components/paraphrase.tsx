@@ -112,12 +112,11 @@ export function Paraphrase() {
           )}
           {!!output && (
             <Button
-              className="rounded-md self-end  px-4 py-2 text-gray-600 hover:dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100"
+              className="rounded-md self-end mb-6 px-4 py-0 text-gray-600 hover:dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100"
               variant="ghost"
               onClick={handleCopy}
             >
               <CopyIcon className="mr-2 h-5 w-5" />
-              Try Sample Text
             </Button>
           )}
         </div>

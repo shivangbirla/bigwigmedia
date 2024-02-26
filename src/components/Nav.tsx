@@ -73,13 +73,13 @@ const Nav = () => {
 
         <div className="flex flex-row items-center">
           <div className="flex  gap-4 items center justify-end front-normal ">
-            <div className=" justify-center   flex random">
+            <div className="justify-center flex random">
               <div id="google_translate_element" className=""></div>
             </div>
 
             {!isSignedIn && (
               <button
-                className="hidden md:flex px-4 py-2 justify-center items-center text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
+                className="flex px-4 py-0 justify-center items-center text-white font-outfit text-base font-semibold rounded-3xl  shadow-md dark:border-white border-[1.4px] text-[12px]"
                 onClick={() => {
                   navigate("/login");
                 }}
@@ -92,27 +92,25 @@ const Nav = () => {
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className=" mx-2">
+          <div className="mx-2 mt-1">
             <DropdownMenu>
               <DropdownMenuTrigger className="p-0 bg-transparent">
-                
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="36"
-                    height="36"
-                    viewBox="0 0 36 36"
-                    fill="none"
-                    className="dark:invert"
-                  >
-                    <path
-                      d="M7.79199 25.5416H28.2087M7.79199 18.25H28.2087M7.79199 10.9583H28.2087"
-                      stroke="black"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="36"
+                  height="36"
+                  viewBox="0 0 36 36"
+                  fill="none"
+                  className="dark:invert"
+                >
+                  <path
+                    d="M7.79199 25.5416H28.2087M7.79199 18.25H28.2087M7.79199 10.9583H28.2087"
+                    stroke="black"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
@@ -134,7 +132,7 @@ const Nav = () => {
                       Login
                     </button>
                   ) : (
-                    <div >
+                    <div>
                       <SignOutButton />
                     </div>
                   )}
