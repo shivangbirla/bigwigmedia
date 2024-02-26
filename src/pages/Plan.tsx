@@ -44,7 +44,7 @@ const Plan = (props: Props) => {
     max_limit: number;
     plan: string;
   } | null>();
-
+  // https://www.bigwigmedia.ai/success?plan=Monthly%20Plan
   let plansToShow = []
 
   if(credits&&credits?.plan==="free"){
