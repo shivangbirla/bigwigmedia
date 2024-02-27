@@ -102,7 +102,7 @@ const Nav = () => {
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className={cn(" mx-2 ", !isSignedIn && "md:hidden")}>
+          <div className={cn(" ml-3 mt-1", !isSignedIn && "md:hidden")}>
             <DropdownMenu>
               <DropdownMenuTrigger className="p-0 bg-transparent focus-visible:border-none">
                 {isSignedIn ? (
