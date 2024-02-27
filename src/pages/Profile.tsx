@@ -123,7 +123,6 @@ const Profile = () => {
                   onClick={() => {
                     navigate({
                       pathname: "/",
-                      search: "?mytools=true",
                     });
                   }}
                 >
@@ -153,8 +152,13 @@ const Profile = () => {
                     <div className="flex flex-row gap-5 line-clamp-2 justify-between items-center ">
                       <img src={p.logo} alt="" className="" />
 
-                      <div className=" flex items-center text-base text-black dark:text-white line-clamp-2 max-h-[56px]  font-outfit  font-semibold break-words" title={p.name}>
-                        {p.name.length>28? p.name.slice(0,28)+"...":p.name}
+                      <div
+                        className=" flex items-center text-base text-black dark:text-white line-clamp-2 max-h-[56px]  font-outfit  font-semibold break-words"
+                        title={p.name}
+                      >
+                        {p.name.length > 28
+                          ? p.name.slice(0, 28) + "..."
+                          : p.name}
                       </div>
                     </div>
 
