@@ -127,11 +127,11 @@ const Nav = () => {
               <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
                 {/* <DropdownMenuSeparator /> */}
-                {/* {isSignedIn && (
-                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                {isSignedIn && (
+                  <DropdownMenuItem className="md:hidden" onClick={() => navigate("/profile")}>
                     Profile
                   </DropdownMenuItem>
-                )} */}
+                )}
 
                 <DropdownMenuItem>
                   {!isSignedIn ? (
