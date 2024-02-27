@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { BASE_URL, BASE_URL2 } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
@@ -99,6 +99,7 @@ const Generate = () => {
   const [val, setVal] = useState([]);
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
+  const basicOutputRef = useRef(null);
 
   // Define the array of button labels
 
@@ -159,9 +160,9 @@ const Generate = () => {
 
     let isRequiredFieldMissing = false; // Flag to track missing required fields
     const dupVal: any[] = [];
-    groups.forEach((grp: any, index) => {
+    groups?.forEach((grp: any, index) => {
       dupVal.push([]);
-      grp.forEach((ele: any) => {
+      grp?.forEach((ele: any) => {
         if (
           ele.required &&
           !(ele.type === "switch" || ele.type === "checkbox") &&
@@ -201,6 +202,7 @@ const Generate = () => {
         const json = JSON.parse(res.data.data);
         setOutput(json);
         setIsLoading(false);
+        scrollToBasicOutput()
       } else {
         toast.error(res.data.error);
         setIsLoading(false);
@@ -218,7 +220,7 @@ const Generate = () => {
       tempElement.innerHTML = output?.output as string;
 
       // Replace newline characters (\n) with <br> elements
-      tempElement.querySelectorAll("br").forEach((br) => {
+      tempElement.querySelectorAll("br")?.forEach((br) => {
         br.insertAdjacentHTML("beforebegin", "\n");
         // @ts-ignore
         br!.parentNode.removeChild(br);
@@ -238,6 +240,32 @@ const Generate = () => {
     window.scrollTo(0, 0);
     getData();
   }, [id]);
+
+  const scrollToBasicOutput = () => {
+    // Check if basicOutputRef exists
+    if (basicOutputRef.current) {
+      // @ts-ignore
+      const scrollOptions: ScrollIntoViewOptions = {
+        behavior: "smooth",
+        block: "start" // Align the top of the element with the top of the scrollable area within the viewport
+      };
+
+      // Calculate the offset by subtracting some pixels from the top of the element
+      const offset = 200; // Adjust this value as needed
+
+      // Get the DOM element
+      const element = basicOutputRef.current as HTMLElement;
+
+      // Calculate the target scroll position
+      const targetScrollPosition = element.getBoundingClientRect().top + window.scrollY - offset;
+
+      // Scroll to the target position
+      window.scrollTo({
+        top: targetScrollPosition,
+        behavior: scrollOptions.behavior
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col  gap-8 min-h-screen">
@@ -283,8 +311,8 @@ const Generate = () => {
       )}
 
       {(!!output || isLoading) && (
-        <div className="flex flex-col border   w-full mx-auto max-w-[1084px] pb-8 rounded-xl">
-          <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between">
+        <div className="flex flex-col border xl:w-full  w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl">
+          <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between" ref={basicOutputRef}>
             <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
             {output && (
               <button onClick={handleCopy}>

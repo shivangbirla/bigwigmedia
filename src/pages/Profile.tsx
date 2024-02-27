@@ -59,6 +59,22 @@ const Profile = () => {
     isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
 
+  const handleBookmarkToggle = async (id: string) => {
+    if (!isSignedIn) {
+      toast.error("Please sign in to bookmark this template");
+      return navigate("/login");
+    }
+
+    const res = await axios.post(
+      `${BASE_URL}/bookmarks/add-remove/${id}?clerkId=${user.id}`,
+      {}
+    );
+    if (res.status === 200) {
+      const arr = bookmarks.filter((b: any) => b._id !== id);
+      setbookmarks(arr);
+    }
+  };
+
   return (
     <>
       <Nav />
@@ -158,7 +174,7 @@ const Profile = () => {
                           "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                        // onClick={handleBookmarkToggle}
+                        onClick={() => handleBookmarkToggle(p._id)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

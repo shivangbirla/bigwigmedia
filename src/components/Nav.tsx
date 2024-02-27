@@ -21,13 +21,14 @@ import {
   SignIn,
   useAuth,
   SignedOut,
+  useUser,
 } from "@clerk/clerk-react";
 import { Globe } from "lucide-react";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const googleTranslateElementInit = () => {
     // @ts-ignore
@@ -77,14 +78,23 @@ const Nav = () => {
               <div id="google_translate_element" className=""></div>
             </div>
 
-            {!isSignedIn && (
+            {!isSignedIn ? (
               <button
-                className="flex px-4 py-0 justify-center items-center text-white font-outfit text-base font-semibold rounded-3xl  shadow-md dark:border-white border-[1.4px] text-[12px]"
+                className="flex px-4 py-0 justify-center items-center dark:text-white font-outfit text-base font-semibold rounded-3xl  shadow-md dark:border-white border-[1.4px] text-[12px]"
                 onClick={() => {
                   navigate("/login");
                 }}
               >
                 Login
+              </button>
+            ) : (
+              <button
+                className="hidden md:flex px-4 py-2 justify-center items-center dark:text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                Profile
               </button>
             )}
           </div>
@@ -92,39 +102,47 @@ const Nav = () => {
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className="mx-2 mt-1">
+          <div className={cn(" mx-2 ", !isSignedIn && "md:hidden")}>
             <DropdownMenu>
-              <DropdownMenuTrigger className="p-0 bg-transparent">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 36 36"
-                  fill="none"
-                  className="dark:invert"
-                >
-                  <path
-                    d="M7.79199 25.5416H28.2087M7.79199 18.25H28.2087M7.79199 10.9583H28.2087"
-                    stroke="black"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              <DropdownMenuTrigger className="p-0 bg-transparent focus-visible:border-none">
+                {isSignedIn ? (
+                  <img
+                    src={user.imageUrl}
+                    alt=""
+                    className="w-9 h-9 focus-visible:border-none rounded-full"
                   />
-                </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="36"
+                    height="36"
+                    viewBox="0 0 36 36"
+                    fill="none"
+                    className="dark:invert"
+                  >
+                    <path
+                      d="M7.79199 25.5416H28.2087M7.79199 18.25H28.2087M7.79199 10.9583H28.2087"
+                      stroke="black"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
-                <DropdownMenuSeparator />
-                {isSignedIn && (
+                {/* <DropdownMenuSeparator /> */}
+                {/* {isSignedIn && (
                   <DropdownMenuItem onClick={() => navigate("/profile")}>
                     Profile
                   </DropdownMenuItem>
-                )}
+                )} */}
 
                 <DropdownMenuItem>
                   {!isSignedIn ? (
                     <button
-                      className="flex   text-white font-outfit text-base font-semibold gap-2 w-full  "
+                      className="flex   dark:text-white font-outfit text-base font-semibold gap-2 w-full  "
                       onClick={() => {
                         navigate("/login");
                       }}
