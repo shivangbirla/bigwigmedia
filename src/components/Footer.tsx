@@ -129,7 +129,7 @@ const Footer = () => {
         </defs>
       </svg>
       <div className="flex flex-wrap items-start gap-5 md:gap-[83px]">
-        <div className="flex flex-col items-start justify-center gap-[18px] w-[303px] h-[167px]">
+        <div className="flex flex-col items-start justify-center gap-[18px] w-[303px] h-[167px] mt-[-30px]">
           <div
             className="flex justify-cent
           er"
@@ -154,11 +154,11 @@ const Footer = () => {
               BigWig Media AI Tools
             </div>
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
-              A product by bigwigmedia.ai
+              Made with ❤ by BigWigMedia
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start md:pl-[19px] gap-[21px]">
+        <div className="flex flex-col items-start md:pl-[19px] gap-[21px] ">
           <div className="text-black dark:text-white font-Outfit text-22.7 font-semibold">
             Top Tools
           </div>

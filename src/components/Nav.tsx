@@ -28,7 +28,7 @@ import { Globe } from "lucide-react";
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const {  isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const googleTranslateElementInit = () => {
     // @ts-ignore
@@ -74,39 +74,45 @@ const Nav = () => {
 
         <div className="flex flex-row items-center">
           <div className="flex  gap-4 items center justify-end front-normal ">
-            <div className=" justify-center   flex random">
+            <div className="justify-center flex random">
               <div id="google_translate_element" className=""></div>
             </div>
 
             {!isSignedIn ? (
               <button
-                className="hidden md:flex px-4 py-2 justify-center items-center dark:text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
+                className="flex px-4 py-0 justify-center items-center dark:text-white font-outfit text-base font-semibold rounded-3xl  shadow-md dark:border-white border-[1.4px] text-[12px]"
                 onClick={() => {
                   navigate("/login");
                 }}
               >
                 Login
               </button>
-            ) : <button
-              className="hidden md:flex px-4 py-2 justify-center items-center dark:text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-              Profile
-            </button>}
+            ) : (
+              <button
+                className="hidden md:flex px-4 py-2 justify-center items-center dark:text-white font-outfit text-base font-semibold gap-2 rounded-3xl dark:hover:bg-zinc  -800 dark:bg-zinc-900 shadow-md "
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </button>
+            )}
           </div>
 
           <div className="ml-4">
             <ModeToggle />
           </div>
-          <div className={cn(" mx-2 ", !isSignedIn &&"md:hidden")}>
+          <div className={cn(" ml-3 mt-1", !isSignedIn && "md:hidden")}>
             <DropdownMenu>
               <DropdownMenuTrigger className="p-0 bg-transparent focus-visible:border-none">
-                
-                  {isSignedIn?(
-                  <img src={user.imageUrl} alt="" className="w-9 h-9 focus-visible:border-none rounded-full" />
-                  ):(<svg
+                {isSignedIn ? (
+                  <img
+                    src={user.imageUrl}
+                    alt=""
+                    className="w-9 h-9 focus-visible:border-none rounded-full"
+                  />
+                ) : (
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="36"
                     height="36"
@@ -121,8 +127,8 @@ const Nav = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </svg>)}
-                
+                  </svg>
+                )}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="dark:bg-zinc-900">
                 {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
@@ -144,7 +150,7 @@ const Nav = () => {
                       Login
                     </button>
                   ) : (
-                    <div >
+                    <div>
                       <SignOutButton />
                     </div>
                   )}

@@ -59,7 +59,7 @@ const Profile = () => {
     isSignedIn && getCredits();
   }, [isLoaded, isSignedIn]);
 
-  const handleBookmarkToggle = async (id:string) => {
+  const handleBookmarkToggle = async (id: string) => {
     if (!isSignedIn) {
       toast.error("Please sign in to bookmark this template");
       return navigate("/login");
@@ -70,7 +70,6 @@ const Profile = () => {
       {}
     );
     if (res.status === 200) {
-      
       const arr = bookmarks.filter((b: any) => b._id !== id);
       setbookmarks(arr);
     }
@@ -160,13 +159,14 @@ const Profile = () => {
                     </div>
 
                     <div className="flex items-start justify-center  pt-0 gap-5">
-                      <button className="flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto bt-gradient"
+                      <button
+                        className="flex w-full p-1 md:p-2 justify-center my-auto gap-2.26 rounded-full bg-gray-900  text-white font-outfit text-base font-medium px-10 mx-auto bt-gradient"
                         onClick={() => {
-                          
                           // Using window.open to navigate to a new page in a new tab
                           const newPath = `/generate?id=${p._id}`;
                           window.open(newPath, "_blank");
-                        }}>
+                        }}
+                      >
                         Generate
                       </button>
                       <div
@@ -174,7 +174,7 @@ const Profile = () => {
                           "flex w-fit p-1 my-auto hover:invert h-fit bg-white justify-center items-center cursor-pointer  rounded-full border border-gray-900 invert"
                           // isBookmarked && "invert hover:invert-0"
                         )}
-                        onClick={()=>handleBookmarkToggle(p._id)}
+                        onClick={() => handleBookmarkToggle(p._id)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

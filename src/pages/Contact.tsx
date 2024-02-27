@@ -31,8 +31,8 @@ const ContactUs: React.FC = () => {
             AI tools, we're here to help.
           </p>
           <div className="space-y-2">
-            <p>Email: enquiry@bigwigmedia.ai</p>
-            <p>Phone: 123-456-7890</p>
+            <p>Email: marketing@bigwigmedia.in</p>
+            <p>Phone: 9711991341</p>
             <p>
               S-1, 3rd Floor, Janta Market, Rajouri Garden, New Delhi, 110027
             </p>
