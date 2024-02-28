@@ -200,8 +200,10 @@ const Generate = () => {
     // // Step 2: Map over sorted keys and retrieve values
     // const sortedValues = keys.map((key: any) => dupVal[key]);
 
-    try {
+    setTimeout(()=>{
       scrollToBasicOutput()
+    },10)
+    try {
 
       const res = await axios.post(
         `${BASE_URL2}/objects/getResponseOfObject/${id}?clerkId=${userId}`,
@@ -215,6 +217,8 @@ const Generate = () => {
         const json = JSON.parse(formatted);
         setOutput(json);
         setIsLoading(false);
+        // scrollToBasicOutput()
+
       } else {
         toast.error(res.data.error);
         setIsLoading(false);
@@ -255,6 +259,7 @@ const Generate = () => {
 
   const scrollToBasicOutput = () => {
     // Check if basicOutputRef exists
+    console.log("first",basicOutputRef)
     if (basicOutputRef.current) {
       // @ts-ignore
       const scrollOptions: ScrollIntoViewOptions = {
@@ -327,9 +332,9 @@ const Generate = () => {
       )}
 
       {(!!output || isLoading) && (
-        <div className="flex flex-col border xl:w-full  w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl" ref={basicOutputRef}>
+        <div className="flex flex-col border xl:w-full  w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl" >
           <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between" >
-            <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
+            <h1 className="text-xl md:text-3xl font-semibold " ref={basicOutputRef}>Your Pitch</h1>
             {output && (
               <button onClick={handleCopy}>
                 <ClipboardList className="w-5 h-5" />
