@@ -12,7 +12,9 @@ const ContactUs: React.FC = () => {
     e.preventDefault();
     // Here you can handle form submission logic, like sending the email.
     // You can also integrate with your backend or any email service to send the message.
-    // Reset form fields after submission
+    // For mailto link, it will open the default email client on the user's machine.
+    window.location.href = `mailto:marketing@bigwigmedia.in?subject=Contact%20Form&body=Name:%20${name}%0AEmail:%20${email}%0AMessage:%20${message}`;
+    // Reset form fields after submission (optional)
     setName("");
     setEmail("");
     setMessage("");
@@ -33,13 +35,13 @@ const ContactUs: React.FC = () => {
           <div className="space-y-2">
             <p>Email: marketing@bigwigmedia.in</p>
             <p>Phone: 9711991341</p>
-            <p>
-              S-1, 3rd Floor, Janta Market, Rajouri Garden, New Delhi, 110027
-            </p>
           </div>
         </div>
         <form
           onSubmit={handleFormSubmit}
+          action="mailto:marketing@bigwigmedia.in"
+          method="post"
+          encType="text/plain"
           className="w-full max-w-lg bg-white dark:bg-[#222222] shadow-lg rounded-lg p-8"
         >
           <div className="mb-6">

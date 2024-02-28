@@ -154,7 +154,13 @@ const Footer = () => {
               BigWig Media AI Tools
             </div>
             <div className="text-black dark:text-white font-Outfit text-base font-medium leading-normal">
-              Made with ❤ by BigWigMedia
+              Made with ❤ by{" "}
+              <a
+                href="#"
+                onClick={() => (window.location.href = "http://bigwigmedia.in")}
+              >
+                BigWigMedia
+              </a>
             </div>
           </div>
         </div>
