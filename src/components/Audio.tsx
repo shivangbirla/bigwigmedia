@@ -38,9 +38,8 @@ const Audio = () => {
         }
       );
       if(response.status===200){
-        toast.success("hello")
 
-        const resp = await axios.post(`${BASE_URL2}/objects/limit/decrease?clerkId=${userId}`)
+        const resp = await axios.post(`${BASE_URL2}/limits/decrease?clerkId=${userId}`)
         setOutput(response.data.text);
       }
 

@@ -42,6 +42,16 @@ import { Input } from "./ui/input";
 import Audio from "./Audio";
 import AudioText from "./AudioText";
 
+function extractJSON(textWithJSON:string) {
+  // Find the index of the first occurrence of '{'
+  var startIndex = textWithJSON.indexOf('{');
+  // Find the index of the last occurrence of '}'
+  var endIndex = textWithJSON.lastIndexOf('}') + 1;
+  // Extract the JSON content
+  var jsonContent = textWithJSON.substring(startIndex, endIndex);
+  return jsonContent;
+}
+
 interface Tool {
   _id: String;
   name: String;
@@ -191,6 +201,8 @@ const Generate = () => {
     // const sortedValues = keys.map((key: any) => dupVal[key]);
 
     try {
+      scrollToBasicOutput()
+
       const res = await axios.post(
         `${BASE_URL2}/objects/getResponseOfObject/${id}?clerkId=${userId}`,
         {
@@ -199,10 +211,10 @@ const Generate = () => {
       );
 
       if (res.status === 200) {
-        const json = JSON.parse(res.data.data);
+        const formatted = extractJSON(res.data.data)
+        const json = JSON.parse(formatted);
         setOutput(json);
         setIsLoading(false);
-        scrollToBasicOutput()
       } else {
         toast.error(res.data.error);
         setIsLoading(false);
@@ -302,9 +314,13 @@ const Generate = () => {
           </div>
 
           <button
-            className="text-white text-center font-outfit md:text-lg font-semibold flex relative text-xs py-3 px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient hover:opacity-80 w-fit mx-auto"
+            className="text-white text-center font-outfit md:text-lg font-semibold flex relative text-xs py-3 px-10 justify-center items-center gap-4 flex-shrink-0 rounded-full bt-gradient disabled:opacity-60 hover:opacity-80 w-fit mx-auto"
             onClick={(e) => void handleSubmit(e)}
+            disabled={isLoading}
           >
+                    {isLoading && <Loader2 className="animate-spin w-7 h-7 " />}
+
+
             Generate
           </button>
         </>

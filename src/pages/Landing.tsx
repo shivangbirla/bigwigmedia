@@ -120,11 +120,14 @@ const Landing = () => {
     // const res = await axios.get(
     //   `${BASE_URL}/templates/search?search=${search}`
     // );
+    setIsLoading(true)
     const res = await axios.get(`${BASE_URL2}/objects/searchObjects/${search}`);
     // console.log(res.data.message)
-    if (!!isSearched) { setButtons([search, ...buttons.slice(1)]) }
-    else setButtons([search, ...buttons])
-    setSelectedButton(search)
+    if(window.innerWidth<768){
+      if (!!isSearched) { setButtons([search, ...buttons.slice(1)]) }
+      else setButtons([search, ...buttons])
+      setSelectedButton(search)
+    }
     setCards(res.data.message);
     setIsSearched(search)
     setIsLoading(false)
