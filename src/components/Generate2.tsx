@@ -318,7 +318,7 @@ const Generate = () => {
             onClick={(e) => void handleSubmit(e)}
             disabled={isLoading}
           >
-                    {isLoading && <Loader2 className="animate-spin w-7 h-7 " />}
+            {isLoading && <Loader2 className="animate-spin w-7 h-7 " />}
 
 
             Generate
@@ -327,8 +327,8 @@ const Generate = () => {
       )}
 
       {(!!output || isLoading) && (
-        <div className="flex flex-col border xl:w-full  w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl">
-          <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between" ref={basicOutputRef}>
+        <div className="flex flex-col border xl:w-full  w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl" ref={basicOutputRef}>
+          <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between" >
             <h1 className="text-xl md:text-3xl font-semibold ">Your Pitch</h1>
             {output && (
               <button onClick={handleCopy}>
