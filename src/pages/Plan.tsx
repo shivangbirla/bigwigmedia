@@ -1,5 +1,5 @@
 import Nav from "@/components/Nav";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { BASE_URL2 } from "@/utils/funcitons";
@@ -39,12 +39,39 @@ type Props = {};
 const Plan = (props: Props) => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
+  const [isScroll, setIsScroll] = useState(false);
+  
   const [credits, setCredits] = useState<{
     current_limit: number;
     max_limit: number;
     plan: string;
   } | null>();
+  const ref = useRef();
   let plansToShow = []
+  useLayoutEffect(() => {
+    //@ts-ignore
+    if (ref?.current?.scrollWidth > ref?.current?.clientWidth) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+
+    const handleReSize = () => {
+      //@ts-ignore
+      if (ref?.current?.scrollWidth > ref?.current?.clientWidth) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    };
+
+    window.addEventListener("resize", handleReSize);
+
+    return () => {
+      window.removeEventListener("resize", handleReSize);
+    };
+  }, []);
+
 
   if(credits&&credits?.plan==="free"){
     plansToShow = arr.filter((p) => p.duration !== "Topup")
@@ -97,7 +124,7 @@ const Plan = (props: Props) => {
   };
 
   return (
-    <div className="w-screen h-screen bg-black">
+    <div className="w-screen h-screen overflow-x-hidden bg-black">
       <img
         src={SideImg}
         alt="sideImg"
@@ -205,12 +232,13 @@ const Plan = (props: Props) => {
             </div>
           </div>
         </nav>
-        <div className=" dark:!text-white flex flex-col min-w-screen min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
-          <div className="w-full h-full flex flex-row gap-3 justify-center items-center  max-w-[867px] ">
+        <div  className=" dark:!text-white flex flex-col  min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
+          <div ref={ref} className={cn("w-full snap-always  overflow-y-hidden snap-center  h-full flex flex-row gap-3 justify-center items-center  max-w-[1200px]  ", isScroll &&
+            "overflow-x-scroll  snap-x px-5 justify-start scroll-smooth snap-mandatory 	")}>
             {plansToShow.map((ite, index) => (
               <div
                 className="flex border-gradient-2 dark:bg-[#262626
-] z-10 w-[298px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
+] z-10 w-[200px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
               >
                 <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
                   <span className="capitalize">{ite.duration}</span>

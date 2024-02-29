@@ -111,9 +111,6 @@ const Generate = () => {
   const navigate = useNavigate();
   const basicOutputRef = useRef(null);
 
-  // Define the array of button labels
-
-  // Function to handle button click
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -195,10 +192,7 @@ const Generate = () => {
       return; // Exit the function if a required field is missing
     }
 
-    // const keys = Object.keys(val).sort((a, b) => Number(a) - Number(b));
-
-    // // Step 2: Map over sorted keys and retrieve values
-    // const sortedValues = keys.map((key: any) => dupVal[key]);
+;
 
     setTimeout(()=>{
       scrollToBasicOutput()
@@ -213,11 +207,11 @@ const Generate = () => {
       );
 
       if (res.status === 200) {
-        const formatted = extractJSON(res.data.data)
-        const json = JSON.parse(formatted);
-        setOutput(json);
         setIsLoading(false);
-        // scrollToBasicOutput()
+        const formatted = extractJSON(res.data.data)
+        const json = JSON.parse(formatted.replace("</p>","</p><br/>"));
+        console.log(json)
+        setOutput(json);
 
       } else {
         toast.error(res.data.error);
@@ -284,6 +278,7 @@ const Generate = () => {
     }
   };
 
+
   return (
     <div className="flex flex-col  gap-8 min-h-screen">
       <Nav />
@@ -309,7 +304,7 @@ const Generate = () => {
             {groups.map((grp: any, index: number) => (
               <div
                 key={index}
-                className="w-full flex flex-row  max-w-[844px] justify-center gap-8 items-center"
+                className="w-full flex flex-col md:flex-row  max-w-[844px] justify-center gap-8 items-center"
               >
                 {grp.map((ele: any, i: number) => (
                   <Element key={i} element={ele} val={val} setVal={setVal} />
@@ -388,48 +383,7 @@ const Generate = () => {
           data-elfsight-app-lazy
         ></div>
       </div>
-      {/* <div className="flex  flex-col gap-6 max-w-[1084px] w-fit mx-auto">
-        <h1 className="text-3xl text-center font-semibold">More Tools</h1>
-        <div className="flex px-4 justify-center flex-row flex-wrap gap-3">
-          <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            Freestyle Email Generator
-          </button>
-          <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            Blog Titles
-          </button>
-          <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            SEO Meta Title Generator
-          </button>
-          <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            Facebook Bio
-          </button>
-          <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            LinkedIn Company Summary
-          </button>
-          <button className="rounded-full text-base lg:text-xl font-medium dark:border-white   py-2 px-5 border bg-transparent">
-            Freestyle Email Generator
-          </button>
-        </div>
-        <Link
-          to="/"
-          className="text-gray-400 w-fit text-lg mx-auto bg-transparent flex gap-2"
-        >
-          See all Tools
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
-            viewBox="0 0 32 32"
-            fill="none"
-          >
-            <path
-              d="M17.2925 6.29243C17.1995 6.3853 17.1258 6.49559 17.0754 6.61699C17.0251 6.73839 16.9992 6.86852 16.9992 6.99993C16.9992 7.13135 17.0251 7.26147 17.0754 7.38287C17.1258 7.50427 17.1995 7.61456 17.2925 7.70743L24.5863 14.9999H5.00001C4.73479 14.9999 4.48044 15.1053 4.2929 15.2928C4.10536 15.4804 4.00001 15.7347 4.00001 15.9999C4.00001 16.2651 4.10536 16.5195 4.2929 16.707C4.48044 16.8946 4.73479 16.9999 5.00001 16.9999H24.5863L17.2925 24.2924C17.1049 24.4801 16.9995 24.7346 16.9995 24.9999C16.9995 25.2653 17.1049 25.5198 17.2925 25.7074C17.4801 25.8951 17.7346 26.0005 18 26.0005C18.2654 26.0005 18.5199 25.8951 18.7075 25.7074L27.7075 16.7074C27.8005 16.6146 27.8742 16.5043 27.9246 16.3829C27.9749 16.2615 28.0008 16.1313 28.0008 15.9999C28.0008 15.8685 27.9749 15.7384 27.9246 15.617C27.8742 15.4956 27.8005 15.3853 27.7075 15.2924L18.7075 6.29243C18.6146 6.19945 18.5043 6.12569 18.3829 6.07537C18.2615 6.02505 18.1314 5.99915 18 5.99915C17.8686 5.99915 17.7385 6.02505 17.6171 6.07537C17.4957 6.12569 17.3854 6.19945 17.2925 6.29243Z"
-              fill="white"
-              fill-opacity="0.6"
-            />
-          </svg>
-        </Link>
-      </div> */}
+      
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">
         <h1 className="text-3xl text-center font-semibold my-6">
           Everything you need to know
@@ -510,7 +464,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
     return (
       <Select onValueChange={(e) => setVal({ ...val, [element.in]: e })}>
         <SelectTrigger
-          className=" self-start min-w-[300px] max-w-[844px] "
+          className=" self-start w-full  md:min-w-[300px] max-w-[844px] "
           value={val[element.in]}
           // @ts-ignore
         >
@@ -537,7 +491,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
           {element.text}
         </Label>
         <Textarea
-          className="mb-4 h-24 w-full min-w-[300px] rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
+          className="mb-4 h-24 w-full w-full  md:min-w-[300px] rounded-md border-2 dark:bg-[#262626] border-gray-300 p-4"
           placeholder={element.placeholder}
           value={val[element.in]}
           onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
@@ -557,7 +511,7 @@ export const Element = ({ val, setVal, element }: ElementComponent) => {
         {element.placeholder}
       </Label>
       <Input
-        className="w-full min-w-[300px]"
+        className="w-full   md:min-w-[300px]"
         placeholder={element.placeholder}
         value={val[element.in]}
         onChange={(e) => setVal({ ...val, [element.in]: e.target.value })}
