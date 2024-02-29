@@ -233,6 +233,7 @@ const Plan = (props: Props) => {
           </div>
         </nav>
         <div  className=" dark:!text-white flex flex-col  min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
+          {/*  @ts-ignore */ }
           <div ref={ref} className={cn("w-full snap-always  overflow-y-hidden snap-center  h-full flex flex-row gap-3 justify-center items-center  max-w-[1200px]  ", isScroll &&
             "overflow-x-scroll  snap-x px-5 justify-start scroll-smooth snap-mandatory 	")}>
             {plansToShow.map((ite, index) => (
@@ -263,7 +264,7 @@ const Plan = (props: Props) => {
                 <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
               </div>
             ))}
-          </div>
+          -</div>
         </div>
         <Footer />
       </div>
