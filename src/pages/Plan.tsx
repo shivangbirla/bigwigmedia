@@ -40,14 +40,14 @@ const Plan = (props: Props) => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
   const [isScroll, setIsScroll] = useState(false);
-  
+
   const [credits, setCredits] = useState<{
     current_limit: number;
     max_limit: number;
     plan: string;
   } | null>();
   const ref = useRef();
-  let plansToShow = []
+  let plansToShow = [];
   useLayoutEffect(() => {
     //@ts-ignore
     if (ref?.current?.scrollWidth > ref?.current?.clientWidth) {
@@ -72,19 +72,17 @@ const Plan = (props: Props) => {
     };
   }, []);
 
-
-  if(credits&&credits?.plan==="free"){
-    plansToShow = arr.filter((p) => p.duration !== "Topup")
-  }
-  else{
-    plansToShow = arr.filter((p) => p.duration === "Topup")
+  if (credits && credits?.plan === "free") {
+    plansToShow = arr.filter((p) => p.duration !== "Topup");
+  } else {
+    plansToShow = arr.filter((p) => p.duration === "Topup");
   }
 
   const buyPlan = async (index: any) => {
     try {
       const obj = arr[index];
       const stripe = await loadStripe(
-        "pk_test_51NgPpPSIcJ4vSbovspO4fUbLjduW9tGNuZ4JbqXprlZD5DtqRWTLfedFUIBGi4l5qXj3QcQipkbOjBClKB3xQ83100tMI7cvRE"
+        "pk_live_51OnzNaSDyCQHDHHU8Ppp4kpMRyHHLZqRapD6xZRjBVexHGwbuz02217MQHQcKCI4o5MrJvdQPgYjiUmgvYJ0p4iX00y0uK6Qdz"
       );
 
       const resp = await axios.post(
@@ -120,7 +118,7 @@ const Plan = (props: Props) => {
       } else {
         toast.error("Error Occured activating account");
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -232,10 +230,16 @@ const Plan = (props: Props) => {
             </div>
           </div>
         </nav>
-        <div  className=" dark:!text-white flex flex-col  min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
-          {/*  @ts-ignore */ }
-          <div ref={ref} className={cn("w-full snap-always  overflow-y-hidden snap-center  h-full flex flex-row gap-3 justify-center items-center  max-w-[1200px]  ", isScroll &&
-            "overflow-x-scroll  snap-x px-5 justify-start scroll-smooth snap-mandatory 	")}>
+        <div className=" dark:!text-white flex flex-col  min-h-[calc(100vh-90px)] w-full h-full justify-center items-center px-5">
+          {/*  @ts-ignore */}
+          <div
+            ref={ref}
+            className={cn(
+              "w-full snap-always  overflow-y-hidden snap-center  h-full flex flex-row gap-3 justify-center items-center  max-w-[1200px]  ",
+              isScroll &&
+                "overflow-x-scroll  snap-x px-5 justify-start scroll-smooth snap-mandatory 	"
+            )}
+          >
             {plansToShow.map((ite, index) => (
               <div
                 className="flex border-gradient-2 dark:bg-[#262626
@@ -264,7 +268,8 @@ const Plan = (props: Props) => {
                 <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
               </div>
             ))}
-          -</div>
+            -
+          </div>
         </div>
         <Footer />
       </div>
