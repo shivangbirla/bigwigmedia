@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 
-
 import Generate from "./components/Generate";
 import Generate2 from "./components/Generate2";
 import Form from "./pages/Form";
@@ -17,8 +16,18 @@ import Success from "./pages/Success";
 import Terms from "./pages/Terms";
 import Transaction from "./pages/Transaction";
 import Privacy from "./pages/Privacy";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+import ReactGA from "react-ga";
+// Initialize React Ga with your tracking ID
+ReactGA.initialize("G-BWWD8V0SE5");
 
 const App = () => {
+  const location = useLocation();
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location]);
   return (
     <div className=" min-w-screern min-h-screen bg-white dark:bg-[#1E1E1E]">
       <Routes>
@@ -26,7 +35,7 @@ const App = () => {
         {/* <Route path="/2" element={<Landing />} /> */}
         <Route path="/login" element={<Login />} />
 
-        <Route path="/profile" element={<Profile/>} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* <Route path="/generate" element={<Generate />} /> */}
         <Route path="/generate" element={<Generate2 />} />
@@ -38,9 +47,9 @@ const App = () => {
         <Route path="/plan" element={<Plan />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/terms" element={<Terms/>} />
-        <Route path="/transaction" element={<Transaction/>} />
-        <Route path="/privacy" element={<Privacy/>} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/transaction" element={<Transaction />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
     </div>
   );

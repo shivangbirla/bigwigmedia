@@ -44,20 +44,19 @@ const Plan = (props: Props) => {
     max_limit: number;
     plan: string;
   } | null>();
-  let plansToShow = []
+  let plansToShow = [];
 
-  if(credits&&credits?.plan==="free"){
-    plansToShow = arr.filter((p) => p.duration !== "Topup")
-  }
-  else{
-    plansToShow = arr.filter((p) => p.duration === "Topup")
+  if (credits && credits?.plan === "free") {
+    plansToShow = arr.filter((p) => p.duration !== "Topup");
+  } else {
+    plansToShow = arr.filter((p) => p.duration === "Topup");
   }
 
   const buyPlan = async (index: any) => {
     try {
       const obj = arr[index];
       const stripe = await loadStripe(
-        "pk_test_51NgPpPSIcJ4vSbovspO4fUbLjduW9tGNuZ4JbqXprlZD5DtqRWTLfedFUIBGi4l5qXj3QcQipkbOjBClKB3xQ83100tMI7cvRE"
+        "pk_live_51OnzNaSDyCQHDHHU8Ppp4kpMRyHHLZqRapD6xZRjBVexHGwbuz02217MQHQcKCI4o5MrJvdQPgYjiUmgvYJ0p4iX00y0uK6Qdz"
       );
 
       const resp = await axios.post(
@@ -70,6 +69,7 @@ const Plan = (props: Props) => {
           },
         }
       );
+
       stripe?.redirectToCheckout({
         sessionId: resp.data.id,
       });
@@ -77,6 +77,7 @@ const Plan = (props: Props) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       navigate("/login");
@@ -93,7 +94,7 @@ const Plan = (props: Props) => {
       } else {
         toast.error("Error Occured activating account");
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
