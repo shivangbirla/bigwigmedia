@@ -29,7 +29,7 @@ const App = () => {
     ReactGA.pageview(location.pathname + location.search);
   }, [location]);
   return (
-    <div className=" min-w-screern min-h-screen bg-white dark:bg-[#1E1E1E]">
+    <div className=" min-w-screen min-h-screen bg-white dark:bg-[#1E1E1E]">
       <Routes>
         <Route path="/" element={<Landing />} />
         {/* <Route path="/2" element={<Landing />} /> */}
