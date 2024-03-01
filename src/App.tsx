@@ -18,12 +18,14 @@ import Transaction from "./pages/Transaction";
 import Privacy from "./pages/Privacy";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { clarity } from "react-microsoft-clarity";
 
 import ReactGA from "react-ga";
 // Initialize React Ga with your tracking ID
 ReactGA.initialize("G-BWWD8V0SE5");
 
 const App = () => {
+  clarity.init("l99zq2nph0");
   const location = useLocation();
   useEffect(() => {
     ReactGA.pageview(location.pathname + location.search);
