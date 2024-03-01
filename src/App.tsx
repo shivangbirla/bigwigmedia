@@ -16,16 +16,8 @@ import Success from "./pages/Success";
 import Terms from "./pages/Terms";
 import Transaction from "./pages/Transaction";
 import Privacy from "./pages/Privacy";
-import ReactGA from "react-ga";
-import { useEffect } from "react";
-
-ReactGA.initialize("G-BWWD8V0SE5");
 
 const App = () => {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
-
   return (
     <div className=" min-w-screen min-h-screen bg-white dark:bg-[#1E1E1E]">
       <Routes>
