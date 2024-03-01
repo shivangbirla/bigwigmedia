@@ -9,15 +9,9 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { ThemeProvider } from "./components/ui/theme-provider.tsx";
 import { Toaster } from "@/components/ui/sonner";
 
-// Import react-ga
-import ReactGA from "react-ga";
-
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
-
-// Initialize Google Analytics with your tracking ID
-ReactGA.initialize("G-BWWD8V0SE5");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -31,6 +25,3 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </NextUIProvider>
   </BrowserRouter>
 );
-
-// Track page view
-ReactGA.pageview(window.location.pathname + window.location.search);
