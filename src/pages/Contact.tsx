@@ -33,8 +33,21 @@ const ContactUs: React.FC = () => {
             AI tools, we're here to help.
           </p>
           <div className="space-y-2">
-            <p>Email: marketing@bigwigmedia.in</p>
-            <p>Phone: 9711991341</p>
+            <p>
+              Email:{" "}
+              <a
+                href="mailto:marketing@bigwigmedia.in"
+                className="text-blue-400"
+              >
+                marketing@bigwigmedia.in
+              </a>
+            </p>
+            <p>
+              Phone:{" "}
+              <a href="tel:+919711991341" className="text-blue-400">
+                +91 9711991341
+              </a>
+            </p>
           </div>
         </div>
         <form

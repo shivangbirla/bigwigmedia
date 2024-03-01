@@ -42,11 +42,11 @@ import { Input } from "./ui/input";
 import Audio from "./Audio";
 import AudioText from "./AudioText";
 
-function extractJSON(textWithJSON:string) {
+function extractJSON(textWithJSON: string) {
   // Find the index of the first occurrence of '{'
-  var startIndex = textWithJSON.indexOf('{');
+  var startIndex = textWithJSON.indexOf("{");
   // Find the index of the last occurrence of '}'
-  var endIndex = textWithJSON.lastIndexOf('}') + 1;
+  var endIndex = textWithJSON.lastIndexOf("}") + 1;
   // Extract the JSON content
   var jsonContent = textWithJSON.substring(startIndex, endIndex);
   return jsonContent;
@@ -110,7 +110,6 @@ const Generate = () => {
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
   const basicOutputRef = useRef(null);
-
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -192,13 +191,10 @@ const Generate = () => {
       return; // Exit the function if a required field is missing
     }
 
-;
-
-    setTimeout(()=>{
-      scrollToBasicOutput()
-    },10)
+    setTimeout(() => {
+      scrollToBasicOutput();
+    }, 10);
     try {
-
       const res = await axios.post(
         `${BASE_URL2}/objects/getResponseOfObject/${id}?clerkId=${userId}`,
         {
@@ -208,11 +204,10 @@ const Generate = () => {
 
       if (res.status === 200) {
         setIsLoading(false);
-        const formatted = extractJSON(res.data.data)
-        const json = JSON.parse(formatted.replace("</p>","</p><br/>"));
-        console.log(json)
+        const formatted = extractJSON(res.data.data);
+        const json = JSON.parse(formatted.replace("</p>", "</p><br/>"));
+        console.log(json);
         setOutput(json);
-
       } else {
         toast.error(res.data.error);
         setIsLoading(false);
@@ -253,12 +248,12 @@ const Generate = () => {
 
   const scrollToBasicOutput = () => {
     // Check if basicOutputRef exists
-    console.log("first",basicOutputRef)
+    console.log("first", basicOutputRef);
     if (basicOutputRef.current) {
       // @ts-ignore
       const scrollOptions: ScrollIntoViewOptions = {
         behavior: "smooth",
-        block: "start" // Align the top of the element with the top of the scrollable area within the viewport
+        block: "start", // Align the top of the element with the top of the scrollable area within the viewport
       };
 
       // Calculate the offset by subtracting some pixels from the top of the element
@@ -268,16 +263,16 @@ const Generate = () => {
       const element = basicOutputRef.current as HTMLElement;
 
       // Calculate the target scroll position
-      const targetScrollPosition = element.getBoundingClientRect().top + window.scrollY - offset;
+      const targetScrollPosition =
+        element.getBoundingClientRect().top + window.scrollY - offset;
 
       // Scroll to the target position
       window.scrollTo({
         top: targetScrollPosition,
-        behavior: scrollOptions.behavior
+        behavior: scrollOptions.behavior,
       });
     }
   };
-
 
   return (
     <div className="flex flex-col  gap-8 min-h-screen">
@@ -319,22 +314,27 @@ const Generate = () => {
             disabled={isLoading}
           >
             {isLoading && <Loader2 className="animate-spin w-7 h-7 " />}
-
-
             Generate
           </button>
         </>
       )}
 
       {(!!output || isLoading) && (
-        <div className="flex flex-col border xl:w-full  w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl" >
-          <div className="w-full border p-5 rounded-t-xl flex flex-row  justify-between" >
-            <h1 className="text-xl md:text-3xl font-semibold " ref={basicOutputRef}>Your Pitch</h1>
-            {output && (
-              <button onClick={handleCopy}>
-                <ClipboardList className="w-5 h-5" />
-              </button>
-            )}
+        <div className="flex flex-col border xl:w-full w-[calc(100%-40px)] mx-5 lg:mx-auto max-w-[1084px] pb-8 rounded-xl relative">
+          <div className="w-full border p-5 rounded-t-xl flex flex-row justify-between">
+            <h1
+              className="text-xl md:text-3xl font-semibold"
+              ref={basicOutputRef}
+            >
+              Your Pitch
+            </h1>
+            <div className="absolute bottom-2 right-4">
+              {output && (
+                <button onClick={handleCopy}>
+                  <ClipboardList className="w-5 h-5" />
+                </button>
+              )}
+            </div>
           </div>
           {!isLoading ? (
             <p
@@ -377,13 +377,15 @@ const Generate = () => {
       </div>
 
       <div className="flex flex-col gap-6  mt-16 w-fit mx-auto">
-        <h1 className="text-3xl text-center font-semibold">Share This Tool</h1>
+        <h1 className="text-3xl text-center font-semibold">
+          Share This Tool To Earn 50 Credits
+        </h1>
         <div
           className="elfsight-app-41c0aaf1-c9af-4d02-bf17-6ae8306f8500"
           data-elfsight-app-lazy
         ></div>
       </div>
-      
+
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">
         <h1 className="text-3xl text-center font-semibold my-6">
           Everything you need to know
