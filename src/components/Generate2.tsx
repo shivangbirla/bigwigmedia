@@ -110,6 +110,7 @@ const Generate = () => {
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
   const basicOutputRef = useRef(null);
+  const [isGenerated, setIsGenerated] = useState(false);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -203,6 +204,7 @@ const Generate = () => {
       );
 
       if (res.status === 200) {
+        setIsGenerated(true);
         setIsLoading(false);
         const formatted = extractJSON(res.data.data);
         const json = JSON.parse(formatted.replace("</p>", "</p><br/>"));
@@ -217,6 +219,11 @@ const Generate = () => {
       toast.error(error.response.data.error);
       setIsLoading(false);
     }
+  };
+
+  const handleRegenerate = () => {
+    setOutput(undefined);
+    setIsGenerated(false);
   };
 
   const handleCopy = () => {
@@ -314,7 +321,7 @@ const Generate = () => {
             disabled={isLoading}
           >
             {isLoading && <Loader2 className="animate-spin w-7 h-7 " />}
-            Generate
+            {isGenerated ? "Regenerate" : "Generate"}
           </button>
         </>
       )}
