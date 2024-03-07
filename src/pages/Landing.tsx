@@ -36,12 +36,13 @@ const Landing = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const mytools = urlParams.get("mytools");
 
-  const [selectedButton, setSelectedButton] =
-    useState<String>(mytools ? "My Tools" : "Article Creator");
+  const [selectedButton, setSelectedButton] = useState<String>(
+    mytools ? "My Tools" : "All Tools"
+  );
   const [cards, setCards] = useState<Card[]>([]);
   const [cardsBookmark, setCardsBookmark] = useState<Card[]>([]);
   const [search, setSearch] = useState("");
-  const [isSearched, setIsSearched] = useState<string>("")
+  const [isSearched, setIsSearched] = useState<string>("");
 
   const getButtons = async () => {
     // const
@@ -49,8 +50,7 @@ const Landing = () => {
     const bookmarked = [...res.data.message];
     if (isSignedIn) bookmarked.splice(1, 0, "My Tools");
     setButtons(bookmarked);
-    setSelectedButton(mytools && isSignedIn
-      ? "My Tools" : res.data.message[0]);
+    mytools && isSignedIn && setSelectedButton("My Tools");
   };
 
   useEffect(() => {
@@ -64,7 +64,9 @@ const Landing = () => {
       toast.error("Please sign in to view your bookmarks");
       return;
     }
-    const res = await axios.get(`${BASE_URL}/bookmarks?clerkId=${user.id}&name=${user?.fullName}&email=${user?.primaryEmailAddress?.emailAddress}&imageUrl=${user?.imageUrl}`);
+    const res = await axios.get(
+      `${BASE_URL}/bookmarks?clerkId=${user.id}&name=${user?.fullName}&email=${user?.primaryEmailAddress?.emailAddress}&imageUrl=${user?.imageUrl}`
+    );
     const cards = res.data.data.map((card: Card) => ({
       ...card,
       isBookmarked: true,
@@ -77,14 +79,12 @@ const Landing = () => {
 
   useEffect(() => {
     if (mytools) {
-      //remove from search without navigating
-      
-      setTimeout(()=>{
+      setTimeout(() => {
         searchParams.delete("mytools");
-        setSearchParams(searchParams)
-      },5000)
+        setSearchParams(searchParams);
+      }, 5000);
     }
-  }, [])
+  }, []);
 
   const getTemplates = async () => {
     let url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}`;
@@ -97,8 +97,8 @@ const Landing = () => {
   };
 
   useEffect(() => {
-    if (buttons.length === 0) return;
-    if(isSearched && selectedButton===isSearched) return;
+    // if (buttons.length === 0) return;
+    if (isSearched && selectedButton === isSearched) return;
     if (!isLoaded) return;
     setIsLoading(true);
     if (selectedButton !== "My Tools") {
@@ -120,20 +120,21 @@ const Landing = () => {
     // const res = await axios.get(
     //   `${BASE_URL}/templates/search?search=${search}`
     // );
-    setIsLoading(true)
+    setIsLoading(true);
     const res = await axios.get(`${BASE_URL2}/objects/searchObjects/${search}`);
     // console.log(res.data.message)
-    if(window.innerWidth<768){
-      if (!!isSearched) { setButtons([search, ...buttons.slice(1)]) }
-      else setButtons([search, ...buttons])
-      setSelectedButton(search)
+    if (window.innerWidth < 768) {
+      if (!!isSearched) {
+        setButtons([search, ...buttons.slice(1)]);
+      } else setButtons([search, ...buttons]);
+      setSelectedButton(search);
     }
     setCards(res.data.message);
-    setIsSearched(search)
-    setIsLoading(false)
+    setIsSearched(search);
+    setIsLoading(false);
   };
 
-  console.log(selectedButton)
+  console.log(selectedButton);
 
   return (
     <div className="bg-white dark:bg-[#1E1E1E]">

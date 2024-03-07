@@ -39,8 +39,8 @@ const ImageGenerator = (props: Props) => {
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [output, setOutput] = useState("");
-  const [number, setNumber] = useState<string>("");
-  const [quality, setQuality] = useState<string>("");
+  const [number, setNumber] = useState<string>("1");
+  const [quality, setQuality] = useState<string>("hd");
   const [selectedButton, setSelectedButton] = useState("Professional");
 
 

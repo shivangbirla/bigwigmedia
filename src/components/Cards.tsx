@@ -71,7 +71,7 @@ const CardComponent = ({
 
   return (
     <div className="flex flex-col justify-between gap-5 px-3 py-4 text-gray-700 shadow-accordian rounded-xl max-w-80 h-[234px]   bg-white dark:bg-[#262626] dark:border dark:border-gray-700 w-full">
-      <div className="flex flex-row gap-8  justify-center items-center ">
+      <div className="flex flex-row gap-8  justify-start items-center ">
         {!imageLoaded && (
           <svg
             xmlns="http://www.w3.org/2000/svg"

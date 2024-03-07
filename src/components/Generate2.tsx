@@ -41,6 +41,9 @@ import { ElementType } from "@/pages/Form";
 import { Input } from "./ui/input";
 import Audio from "./Audio";
 import AudioText from "./AudioText";
+import { RotateCw } from "lucide-react";
+
+
 
 function extractJSON(textWithJSON: string) {
   // Find the index of the first occurrence of '{'
@@ -49,6 +52,7 @@ function extractJSON(textWithJSON: string) {
   var endIndex = textWithJSON.lastIndexOf("}") + 1;
   // Extract the JSON content
   var jsonContent = textWithJSON.substring(startIndex, endIndex);
+  console.log("abcd",textWithJSON,"abcd",jsonContent)
   return jsonContent;
 }
 
@@ -167,15 +171,20 @@ const Generate = () => {
 
     let isRequiredFieldMissing = false; // Flag to track missing required fields
     const dupVal: any[] = [];
-    groups?.forEach((grp: any, index) => {
+    console.log("first")
+    groups?.reverse().forEach((grp: any, index) => {
       dupVal.push([]);
-      grp?.forEach((ele: any) => {
+      grp?.reverse().forEach((ele: any) => {
+        console.log("two")
         if (
           ele.required &&
           !(ele.type === "switch" || ele.type === "checkbox") &&
           !val[ele.in]
         ) {
-          toast.error(`${ele.text} is required`);
+        console.log("three");
+
+          console.log(ele.placeholder)
+          toast.error(`${ele.placeholder} is required`);
           isRequiredFieldMissing = true; // Set flag to true if a required field is missing
         }
         if (ele.type === "switch") {
@@ -301,7 +310,7 @@ const Generate = () => {
       ) : id === "65cb886ebd2f462c896d46b3" ? (
         <AudioText />
       ) : (
-        <>
+        <>  
           <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-8">
             {groups.map((grp: any, index: number) => (
               <div
