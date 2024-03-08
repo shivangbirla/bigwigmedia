@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast } from "sonner";
 import { BASE_URL2 } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
+const key = "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";
+
 const Audio = () => {
   const [file, setfile] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +34,7 @@ const Audio = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
+            Authorization: `Bearer ${key}`,
             "Content-Type": "multipart/form-data",
           },
         }
