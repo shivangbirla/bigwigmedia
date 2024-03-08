@@ -37,6 +37,8 @@ const AudioText = () => {
   const [audioBuffer, setAudioBuffer] = useState<string>("");
   const [tone, setTone] = useState < WordOptions>(WordOptions.ALLOY);
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
+console.log(key);
+
 
   const ref = useRef(null);
   const handleTranscribe = async (e: any) => {
