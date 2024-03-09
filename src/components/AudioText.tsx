@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { BASE_URL2 } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-const key = "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";
+const key = import.meta.env.VITE_OPEN_API_KEY_AUDIO as string;
 import {
   Select,
   SelectContent,
@@ -37,7 +37,7 @@ const AudioText = () => {
   const [audioBuffer, setAudioBuffer] = useState<string>("");
   const [tone, setTone] = useState < WordOptions>(WordOptions.ALLOY);
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
-// console.log(key);
+console.log(key);
 
 
   const ref = useRef(null);

@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { BASE_URL2 } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-const key = "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";
+const key = import.meta.env.VITE_OPEN_API_KEY_AUDIO as string;
 
 const Audio = () => {
   const [file, setfile] = useState();

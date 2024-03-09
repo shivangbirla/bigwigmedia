@@ -11,13 +11,36 @@ import { Card } from "@/pages/Landing";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 // import { Plan, arr } from "@/utils/plans";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer"
+import { Button } from "@/components/ui/button";
+import Transaction from './Transaction';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 
 const Profile = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [bookmarks, setbookmarks] = useState([]);
+  const [history, setHistory] = useState([])
   const [credits, setCredits] = useState<{
     current_limit: number;
     max_limit: number;
@@ -57,6 +80,7 @@ const Profile = () => {
     }
     isSignedIn && getBookMarks();
     isSignedIn && getCredits();
+    isSignedIn && handleTransaction();
   }, [isLoaded, isSignedIn]);
 
   const handleBookmarkToggle = async (id: string) => {
@@ -73,6 +97,18 @@ const Profile = () => {
       const arr = bookmarks.filter((b: any) => b._id !== id);
       setbookmarks(arr);
     }
+  };
+
+  const handleTransaction = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL2}/plans/history?clerkId=${user!.id}`);
+      if (res.status === 200) {
+        console.log(res.data.data,"transaction")
+        setHistory(res.data.data);
+      } else {
+        toast.error("Error Occured activating account");
+      }
+    } catch (error) {}
   };
 
   return (
@@ -235,6 +271,57 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="mt-10" variant="outline">
+              Transaction History
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Transaction History</DialogTitle>
+              <DialogDescription>
+                All the history of your Transaction Lies here.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <Table>
+                <TableCaption>A list of your recent invoices.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Invoice</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Method</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {/* {invoices.map((invoice) => (
+                    <TableRow key={invoice.invoice}>
+                      <TableCell className="font-medium">
+                        {invoice.invoice}
+                      </TableCell>
+                      <TableCell>{invoice.paymentStatus}</TableCell>
+                      <TableCell>{invoice.paymentMethod}</TableCell>
+                      <TableCell className="text-right">
+                        {invoice.totalAmount}
+                      </TableCell>
+                    </TableRow>
+                  ))} */}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TableCell colSpan={3}>Total</TableCell>
+                    <TableCell className="text-right">$2,500.00</TableCell>
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </div>
+            {/* <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter> */}
+          </DialogContent>
+        </Dialog>
       </div>
       <Footer />
     </>

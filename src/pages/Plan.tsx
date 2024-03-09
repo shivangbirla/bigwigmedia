@@ -34,6 +34,7 @@ import { PlanProps } from "@/utils/plans";
 import { toast } from "sonner";
 import Footer from "@/components/Footer";
 
+
 type Props = {};
 
 const Plan = (props: Props) => {
@@ -75,12 +76,20 @@ const Plan = (props: Props) => {
   }, []);
 
   const getPlans = async () => {
-    console.log("hello");
     try {
       const res = await axios.get(`${BASE_URL2}/plans?clerkId=${userId}`);
       if (res.status === 200) {
         console.log(res)
-        setplans(Object.values(res.data.data));
+        // @ts-ignore
+        if (res.showTop){
+              const arr = res.data.data;
+              setplans([arr.TOPUP, arr.YEARLY]);
+        }
+        else{
+          const arr = res.data.data
+          setplans([arr.MONTHLY,arr.YEARLY]);
+        }
+        //  setplans(Object.values(res.data.data));
       } else {
         toast.error("Error Occured activating account");
       }
@@ -103,7 +112,7 @@ const Plan = (props: Props) => {
   //   "pk_live_51OnzNaSDyCQHDHHU8Ppp4kpMRyHHLZqRapD6xZRjBVexHGwbuz02217MQHQcKCI4o5MrJvdQPgYjiUmgvYJ0p4iX00y0uK6Qdz";
 
   const key =
-    "pk_test_51OlEIaSJPPZBVJVhKaCppMHaZwrYDNOTp2O0r8M9FglSb3b6Bbwq7QrwTi2KCqHelPjV7dH2yCF35111y5lzqeKb00Eud5RUFh";
+    "pk_live_51OnzNaSDyCQHDHHU8Ppp4kpMRyHHLZqRapD6xZRjBVexHGwbuz02217MQHQcKCI4o5MrJvdQPgYjiUmgvYJ0p4iX00y0uK6Qdz";
 
   const buyPlan = async (index: any) => {
     try {
@@ -277,10 +286,10 @@ const Plan = (props: Props) => {
               plans.map((ite, index) => (
                 <div
                   className="flex border-gradient-2 dark:bg-[#262626
-] z-10 w-[200px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
+] z-10 w-[200px] h-[320px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
                 >
                   <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
-                    <span className="capitalize">{ite.expairy}</span>
+                    <span className="capitalize">{ite.expairy} days</span>
                   </div>
                   <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
                     <div className="w-full flex flex-col gap-3">
@@ -304,6 +313,7 @@ const Plan = (props: Props) => {
               ))}
             -
           </div>
+          
         </div>
         <Footer />
       </div>
