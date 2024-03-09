@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { BASE_URL2 } from "@/utils/funcitons";
 import { useAuth } from "@clerk/clerk-react";
-const key = import.meta.env.VITE_OPEN_API_KEY_AUDIO as string;
+
 
 const Audio = () => {
   const [file, setfile] = useState();
@@ -27,6 +27,7 @@ const Audio = () => {
     formData.append("model", "whisper-1");
 
     // const openaiApiKey = "YOUR_OPENAI_API_KEY"; // Replace with your OpenAI API key
+    const key = import.meta.env.VITE_OPEN_API_KEY_AUDIO as string;
 
     try {
       const response = await axios.post(
