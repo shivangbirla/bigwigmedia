@@ -6,7 +6,9 @@ import { Select, SelectItem, select } from "@nextui-org/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { get } from "react-scroll/modules/mixins/scroller";
 import { toast } from "sonner";
+import Cards from '../components/Cards';
 
 export interface ElementType {
   text: string;
@@ -31,6 +33,7 @@ const Form = () => {
   const [selectedLabel, setSelectedLabel] = useState([]);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [access, setAccess] = useState(false)
+  const [cards, setCards] = useState([])
   const [labels, setLabels] = useState<string[]>([
     "All Tools",
     "In Demand Tools",
@@ -84,10 +87,11 @@ const Form = () => {
   const urlParams = new URLSearchParams(window.location.search);
 
   const id = urlParams.get("id");
-
+console.log(cards)
 
   useEffect(() => {
     document.documentElement.classList.remove("dark");
+    getTemplates();
   }, []);
 
   useEffect(() => {
@@ -138,6 +142,17 @@ const Form = () => {
     getData();
   }, [id]);
 
+  const getTemplates = async () => {
+    const selectedButton = "All Tools"
+    let url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}`;
+
+    if (isSignedIn)
+      url = `${BASE_URL2}/objects/getObjectByLabel/${selectedButton}?clerkId=${user.id}&name=${user?.fullName}&email=${user?.primaryEmailAddress?.emailAddress}&imageUrl=${user?.imageUrl}`;
+    const res = await axios.get(url);
+    setCards(res.data.message);
+    // setIsLoading(false);
+  };
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -154,6 +169,8 @@ const Form = () => {
     });
 
 
+    
+    
     try {
       let url = `https://social-media-ai-content-api.onrender.com/api/v2/objects/addObjectOnce`;
       let res
@@ -194,6 +211,10 @@ const Form = () => {
     } catch (error) {
       console.error("Error making POST request:", error);
     }
+  };
+  const handeIdChange = (e:string) => {
+    //set e as id in query param
+    navigate(`/form?id=${e}`,{replace:true})
   };
 
   const handleDelete = async () => {
@@ -291,382 +312,398 @@ const Form = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      {access && <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            Acco Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            placeholder="Name"
-            value={accoName}
-            onChange={(e) => setaccoName(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="description"
-          >
-            Description
-          </label>
-          <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="description"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="template"
-          >
-            Tagline
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="template"
-            type="text"
-            placeholder="Template"
-            value={template}
-            onChange={(e) => setTemplate(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="label"
-          >
-            Select Label
-          </label>
-          <MultiSelect
-            placeholder="Select Label"
-            options={labels}
-            chips={selectedLabel}
-            //@ts-ignore
-            setChips={setSelectedLabel}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="image"
-          >
-            Select Image
-          </label>
-          <Select
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="image"
-            value={selectedImage}
-            selectionMode="single"
-            onSelectionChange={(e: any) => {
-              // console.log(e)
-              setSelectedImage(e.currentKey);
-            }}
-          // label="Select Image"
-          >
+    <div className="max-w-md mx-auto flex flex-col gap-3">
+      {access && (
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="name"
+            >
+              Acco Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="Name"
+              value={accoName}
+              onChange={(e) => setaccoName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
+              Description
+            </label>
+            <textarea
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="template"
+            >
+              Tagline
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="template"
+              type="text"
+              placeholder="Template"
+              value={template}
+              onChange={(e) => setTemplate(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="label"
+            >
+              Select Label
+            </label>
+            <MultiSelect
+              placeholder="Select Label"
+              options={labels}
+              chips={selectedLabel}
+              //@ts-ignore
+              setChips={setSelectedLabel}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="image"
+            >
+              Select Image
+            </label>
+            <Select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="image"
+              value={selectedImage}
+              selectionMode="single"
+              onSelectionChange={(e: any) => {
+                // console.log(e)
+                setSelectedImage(e.currentKey);
+              }}
+              // label="Select Image"
+            >
+              {/* @ts-ignore */}
+              {/* Dropdown options for images */}
+              {images.map((image, index) => (
+                <SelectItem key={image} value={image}>
+                  <img src={image} />
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="image"
+            >
+              GroupBy
+            </label>
+            <Select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="image"
+              value={groupBy}
+              selectionMode="single"
+              onSelectionChange={(e: any) => {
+                // console.log(e)
+                setgroupBy(e.currentKey);
+              }}
+              // label="Select Image"
+            >
+              {/* @ts-ignore */}
+              {/* Dropdown options for images */}
+              {selectedLabel.map((label, index) => (
+                <SelectItem key={label} value={label}>
+                  {label}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="image"
+            >
+              Or Add New Image Url
+            </label>
             {/* @ts-ignore */}
-            {/* Dropdown options for images */}
-            {images.map((image, index) => (
-              <SelectItem key={image} value={image}>
-                <img src={image} />
-              </SelectItem>
-            ))}
-          </Select>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="image"
-          >
-            GroupBy
-          </label>
-          <Select
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="image"
-            value={groupBy}
-            selectionMode="single"
-            onSelectionChange={(e: any) => {
-              // console.log(e)
-              setgroupBy(e.currentKey);
-            }}
-          // label="Select Image"
-          >
-            {/* @ts-ignore */}
-            {/* Dropdown options for images */}
-            {selectedLabel.map((label, index) => (
-              <SelectItem key={label} value={label}>
-                {label}
-              </SelectItem>
-            ))}
-          </Select>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="image"
-          >
-            Or Add New Image Url
-          </label>
-          {/* @ts-ignore */}
-          <input
-            type="text"
-            value={newLink as string}
-            onChange={(e) => setNewLink(e.target.value)}
-            className="bg-gray-100 p-2"
-          />
-          <button
-            className="bg-blue-400 p-1 text-white rounded-lg ml-2"
-            onClick={() => {
-              {
-                /* @ts-ignore */
-              }
-              setSelectedImage(newLink as string);
-              {
-                /* @ts-ignore */
-              }
-              setImages([...images, newLink as string]);
-            }}
-          >
-            Add
-          </button>
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            FAQs
-          </label>
-          {faqs.map((faq: any, index) => (
-            <div key={index} className="mb-2">
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Question"
-                value={faq.question}
-                onChange={(e) =>
-                  handleFaqChange(index, "question", e.target.value)
+            <input
+              type="text"
+              value={newLink as string}
+              onChange={(e) => setNewLink(e.target.value)}
+              className="bg-gray-100 p-2"
+            />
+            <button
+              className="bg-blue-400 p-1 text-white rounded-lg ml-2"
+              onClick={() => {
+                {
+                  /* @ts-ignore */
                 }
-              />
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Answer"
-                value={faq.answer}
-                onChange={(e) =>
-                  handleFaqChange(index, "answer", e.target.value)
+                setSelectedImage(newLink as string);
+                {
+                  /* @ts-ignore */
                 }
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveFaq(index)}
-                className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleAddFaq}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Add FAQ
-          </button>
-        </div>
+                setImages([...images, newLink as string]);
+              }}
+            >
+              Add
+            </button>
+          </div>
 
-        <div className="flex flex-col gap-4 w-full my-4">
-          {groups.map((group, index) => (
-            <div className="flex flex-col gap-4 w-full rounded-md border border-black p-2">
-              <h1>Group:{index + 1}</h1>
-              {group.map((element, elementIndex) => (
-                <div className="flex flex-col gap-4 w-full border border-black p-2 rounded-3">
-                  <h1>Element:{elementIndex + 1}</h1>
-                  <label htmlFor={`text-${index}-${elementIndex}`}>Text:</label>
-                  <input
-                    id={`text-${index}-${elementIndex}`}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Text"
-                    value={element.text}
-                    onChange={(e) =>
-                      handleChange(index, elementIndex, "text", e.target.value)
-                    }
-                  />
-                  <label htmlFor={`placeholder-${index}-${elementIndex}`}>
-                    Placeholder:
-                  </label>
-                  <input
-                    id={`placeholder-${index}-${elementIndex}`}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Placeholder"
-                    value={element.placeholder}
-                    onChange={(e) =>
-                      handleChange(
-                        index,
-                        elementIndex,
-                        "placeholder",
-                        e.target.value
-                      )
-                    }
-                  />
-                  <label htmlFor={`gpt-${index}-${elementIndex}`}>GPT:</label>
-                  <input
-                    id={`gpt-${index}-${elementIndex}`}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="GPT"
-                    value={element.gpt}
-                    onChange={(e) =>
-                      handleChange(index, elementIndex, "gpt", e.target.value)
-                    }
-                  />
-                  <label htmlFor={`type-${index}-${elementIndex}`}>Type:</label>
-                  <select
-                    id={`type-${index}-${elementIndex}`}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={element.type}
-                    onChange={(e) =>
-                      handleChange(index, elementIndex, "type", e.target.value)
-                    }
-                  >
-                    <option value="text">Text</option>
-                    <option value="select">Select</option>
-                    <option value="textarea">Textarea</option>
-                    <option value="switch">switch</option>
-                    <option value="input">input</option>
-                    <option value="tone">tone</option>
-                    <option value="other">Other</option>
-                  </select>
-                  {element.type === "other" && (
-                    <textarea
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              FAQs
+            </label>
+            {faqs.map((faq: any, index) => (
+              <div key={index} className="mb-2">
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Question"
+                  value={faq.question}
+                  onChange={(e) =>
+                    handleFaqChange(index, "question", e.target.value)
+                  }
+                />
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Answer"
+                  value={faq.answer}
+                  onChange={(e) =>
+                    handleFaqChange(index, "answer", e.target.value)
+                  }
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveFaq(index)}
+                  className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={handleAddFaq}
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Add FAQ
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-4 w-full my-4">
+            {groups.map((group, index) => (
+              <div className="flex flex-col gap-4 w-full rounded-md border border-black p-2">
+                <h1>Group:{index + 1}</h1>
+                {group.map((element, elementIndex) => (
+                  <div className="flex flex-col gap-4 w-full border border-black p-2 rounded-3">
+                    <h1>Element:{elementIndex + 1}</h1>
+                    <label htmlFor={`text-${index}-${elementIndex}`}>
+                      Text:
+                    </label>
+                    <input
+                      id={`text-${index}-${elementIndex}`}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Type"
-                      value={element.otherType} // Use a separate value for the text area
-                      onChange={
-                        (e) =>
-                          handleChange(
-                            index,
-                            elementIndex,
-                            "otherType",
-                            e.target.value
-                          ) // Update otherType instead of type
+                      placeholder="Text"
+                      value={element.text}
+                      onChange={(e) =>
+                        handleChange(
+                          index,
+                          elementIndex,
+                          "text",
+                          e.target.value
+                        )
                       }
                     />
-                  )}
-
-                  <div className="flex flex-col gap-4 w-full">
-                    <h1>options:</h1>
-                    {element.options.map((option, optionIndex) => (
-                      <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Option"
-                        value={option}
-                        onChange={(e) =>
-                          handleOptionChange(
-                            index,
-                            elementIndex,
-                            optionIndex,
-                            e.target.value
-                          )
-                        }
-                      />
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => addOptions(index, elementIndex)}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Add Option
-                    </button>
-
-                    <div className="flex flex-row justify-start gap-2">
-                      <label htmlFor={`required-${index}-${elementIndex}`}>
-                        Required:
-                      </label>
-                      <input
-                        type="checkbox"
-                        id={`required-${index}-${elementIndex}`}
-                        checked={element.required}
-                        onChange={() =>
-                          handleChange(
-                            index,
-                            elementIndex,
-                            "required",
-                            !element.required
-                          )
-                        }
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        removeElementFromGroup(index, elementIndex)
+                    <label htmlFor={`placeholder-${index}-${elementIndex}`}>
+                      Placeholder:
+                    </label>
+                    <input
+                      id={`placeholder-${index}-${elementIndex}`}
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="Placeholder"
+                      value={element.placeholder}
+                      onChange={(e) =>
+                        handleChange(
+                          index,
+                          elementIndex,
+                          "placeholder",
+                          e.target.value
+                        )
                       }
-                      className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    />
+                    <label htmlFor={`gpt-${index}-${elementIndex}`}>GPT:</label>
+                    <input
+                      id={`gpt-${index}-${elementIndex}`}
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="GPT"
+                      value={element.gpt}
+                      onChange={(e) =>
+                        handleChange(index, elementIndex, "gpt", e.target.value)
+                      }
+                    />
+                    <label htmlFor={`type-${index}-${elementIndex}`}>
+                      Type:
+                    </label>
+                    <select
+                      id={`type-${index}-${elementIndex}`}
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      value={element.type}
+                      onChange={(e) =>
+                        handleChange(
+                          index,
+                          elementIndex,
+                          "type",
+                          e.target.value
+                        )
+                      }
                     >
-                      Remove Element
-                    </button>
+                      <option value="text">Text</option>
+                      <option value="select">Select</option>
+                      <option value="textarea">Textarea</option>
+                      <option value="switch">switch</option>
+                      <option value="input">input</option>
+                      <option value="tone">tone</option>
+                      <option value="other">Other</option>
+                    </select>
+                    {element.type === "other" && (
+                      <textarea
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Type"
+                        value={element.otherType} // Use a separate value for the text area
+                        onChange={
+                          (e) =>
+                            handleChange(
+                              index,
+                              elementIndex,
+                              "otherType",
+                              e.target.value
+                            ) // Update otherType instead of type
+                        }
+                      />
+                    )}
+
+                    <div className="flex flex-col gap-4 w-full">
+                      <h1>options:</h1>
+                      {element.options.map((option, optionIndex) => (
+                        <input
+                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="Option"
+                          value={option}
+                          onChange={(e) =>
+                            handleOptionChange(
+                              index,
+                              elementIndex,
+                              optionIndex,
+                              e.target.value
+                            )
+                          }
+                        />
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => addOptions(index, elementIndex)}
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Add Option
+                      </button>
+
+                      <div className="flex flex-row justify-start gap-2">
+                        <label htmlFor={`required-${index}-${elementIndex}`}>
+                          Required:
+                        </label>
+                        <input
+                          type="checkbox"
+                          id={`required-${index}-${elementIndex}`}
+                          checked={element.required}
+                          onChange={() =>
+                            handleChange(
+                              index,
+                              elementIndex,
+                              "required",
+                              !element.required
+                            )
+                          }
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          removeElementFromGroup(index, elementIndex)
+                        }
+                        className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Remove Element
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => addElementToGroup(index)}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Add Element
-              </button>
-              <button
-                type="button"
-                onClick={() => removeGroup(index)}
-                className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Remove Group
-              </button>
-            </div>
-          ))}
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addElementToGroup(index)}
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Add Element
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeGroup(index)}
+                  className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Remove Group
+                </button>
+              </div>
+            ))}
 
-          <button
-            type="button"
-            onClick={handleAddGroup}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Add Group
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={handleAddGroup}
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Add Group
+            </button>
+          </div>
 
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Submit
-          </button>
-        </div>
-      </form>}
+          <div className="flex items-center justify-between">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      )}
       {access && id && (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -676,6 +713,46 @@ const Form = () => {
           Delete
         </button>
       )}
+
+      {/* <Select onValueChange={(e) => handeIdChange(e)}>
+        <SelectTrigger
+          className="capitalize self-start min-w-[300px] max-w-[844px] "
+          value={id ?? undefined}
+          // @ts-ignore
+        >
+          <SelectValue placeholder={"Select Tone "} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>{"Choose a Tone"}</SelectLabel>
+            {cards.map((option: { _id: string; name: string }) => (
+              <SelectItem value={option._id} className="capitalize">
+                {option.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select> */}
+
+      <Select
+        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="image"
+        value={id ?? undefined}
+        selectionMode="single"
+        onSelectionChange={(e: any) => {
+          // console.log(e)
+          handeIdChange(e.currentKey);
+        }}
+        // label="Select Image"
+      >
+        {/* @ts-ignore */}
+        {/* Dropdown options for images */}
+        {cards.map((option: { _id: string; name: string }) => (
+          <SelectItem key={option._id} value={option._id} className="capitalize">
+            {option.name}
+          </SelectItem>
+        ))}
+      </Select>
     </div>
   );
 };

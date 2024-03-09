@@ -10,4 +10,7 @@ export default defineConfig({
     },
   },
   build: { chunkSizeWarningLimit: 3600 },
+  optimizeDeps: {
+    exclude: ["js-big-decimal"],
+  },
 });

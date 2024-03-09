@@ -42,6 +42,8 @@ import { Input } from "./ui/input";
 import Audio from "./Audio";
 import AudioText from "./AudioText";
 import { RotateCw } from "lucide-react";
+import Share from "./Share";
+// import { ShareSocial } from "react-share-social"; 
 
 
 
@@ -310,7 +312,7 @@ const Generate = () => {
       ) : id === "65cb886ebd2f462c896d46b3" ? (
         <AudioText />
       ) : (
-        <>  
+        <>
           <div className="flex justify-center px-5 max-w-[1084px] w-full mx-auto items-center flex-col gap-8">
             {groups.map((grp: any, index: number) => (
               <div
@@ -396,10 +398,16 @@ const Generate = () => {
         <h1 className="text-3xl text-center font-semibold">
           Share This Tool To Earn 50 Credits
         </h1>
-        <div
+        {/* <div
           className="elfsight-app-41c0aaf1-c9af-4d02-bf17-6ae8306f8500"
           data-elfsight-app-lazy
-        ></div>
+        ></div> */}
+
+        {/* <ShareSocial
+          url="url_to_share.com"
+          socialTypes={["facebook", "twitter", "reddit", "linkedin"]}
+        /> */}
+        <Share url={window.location.href}/>
       </div>
 
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">
