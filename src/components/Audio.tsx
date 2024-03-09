@@ -26,7 +26,7 @@ const Audio = () => {
     formData.append("file", file);
     formData.append("model", "whisper-1");
 
-    const openaiApiKey = "YOUR_OPENAI_API_KEY"; // Replace with your OpenAI API key
+    // const openaiApiKey = "YOUR_OPENAI_API_KEY"; // Replace with your OpenAI API key
 
     try {
       const response = await axios.post(

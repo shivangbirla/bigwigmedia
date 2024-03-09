@@ -19,7 +19,7 @@ import {
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 
-const openai = new OpenAI({ apiKey: key, dangerouslyAllowBrowser: true });
+
 
 enum WordOptions {
   ALLOY = "alloy",
@@ -38,6 +38,7 @@ const AudioText = () => {
   const [tone, setTone] = useState < WordOptions>(WordOptions.ALLOY);
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
 console.log(key);
+const openai = new OpenAI({ apiKey: key, dangerouslyAllowBrowser: true });
 
 
   const ref = useRef(null);
