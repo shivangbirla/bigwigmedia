@@ -11,7 +11,7 @@ import { Card } from "@/pages/Landing";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Plan, arr } from "@/utils/plans";
+// import { Plan, arr } from "@/utils/plans";
 import Footer from "@/components/Footer";
 
 const Profile = () => {

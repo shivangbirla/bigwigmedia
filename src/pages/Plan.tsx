@@ -30,7 +30,7 @@ import {
   useAuth,
   SignedOut,
 } from "@clerk/clerk-react";
-import { arr } from "@/utils/plans";
+import { PlanProps } from "@/utils/plans";
 import { toast } from "sonner";
 import Footer from "@/components/Footer";
 
@@ -40,13 +40,14 @@ const Plan = (props: Props) => {
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
   const [isScroll, setIsScroll] = useState(false);
+  const [plans, setplans] = useState<PlanProps[]>([]);
 
   const [credits, setCredits] = useState<{
     current_limit: number;
     max_limit: number;
     plan: string;
   } | null>();
-  let plansToShow = [];
+  // let plansToShow = [];
 
   const ref = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -73,29 +74,58 @@ const Plan = (props: Props) => {
     };
   }, []);
 
-  if (credits && credits?.plan === "free") {
-    plansToShow = arr.filter((p) => p.duration !== "Topup");
-  } else {
-    plansToShow = arr.filter((p) => p.duration === "Topup");
-  }
+  const getPlans = async () => {
+    console.log("hello");
+    try {
+      const res = await axios.get(`${BASE_URL2}/plans?clerkId=${userId}`);
+      if (res.status === 200) {
+        console.log(res)
+        setplans(Object.values(res.data.data));
+      } else {
+        toast.error("Error Occured activating account");
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (isLoaded ) {
+      if(isSignedIn){
+
+        getPlans();
+      }
+      else{
+        navigate("/login")
+      }
+    }
+  }, [isLoaded]);
+
+  // const key =
+  //   "pk_live_51OnzNaSDyCQHDHHU8Ppp4kpMRyHHLZqRapD6xZRjBVexHGwbuz02217MQHQcKCI4o5MrJvdQPgYjiUmgvYJ0p4iX00y0uK6Qdz";
+
+  const key =
+    "pk_test_51OlEIaSJPPZBVJVhKaCppMHaZwrYDNOTp2O0r8M9FglSb3b6Bbwq7QrwTi2KCqHelPjV7dH2yCF35111y5lzqeKb00Eud5RUFh";
 
   const buyPlan = async (index: any) => {
     try {
-      const obj = arr[index];
-      const stripe = await loadStripe(
-        "pk_live_51OnzNaSDyCQHDHHU8Ppp4kpMRyHHLZqRapD6xZRjBVexHGwbuz02217MQHQcKCI4o5MrJvdQPgYjiUmgvYJ0p4iX00y0uK6Qdz"
-      );
+      const obj = plans[index];
+      const stripe = await loadStripe(key);
 
       const resp = await axios.post(
-        `${BASE_URL2}/payment/create-checkout-session`,
+        `${BASE_URL2}/payment/create-checkout-session?clerkId=${userId}`,
         {
           product: {
-            name: obj.duration,
-            price: obj.price,
-            quantity: 1,
+            ...obj,
           },
         }
       );
+      //  console.log( resp.data.id);
+          // const link = document.createElement("a");
+          // link.href = resp.data.id;
+          // // link.target = "_blank";
+          // // link.download = "image.jpg"; // You can customize the downloaded filename here
+          // document.body.appendChild(link);
+          // link.click();
+          // document.body.removeChild(link);
 
       stripe?.redirectToCheckout({
         sessionId: resp.data.id,
@@ -243,34 +273,35 @@ const Plan = (props: Props) => {
                 "overflow-x-scroll  snap-x px-5 justify-start scroll-smooth snap-mandatory 	"
             )}
           >
-            {plansToShow.map((ite, index) => (
-              <div
-                className="flex border-gradient-2 dark:bg-[#262626
+            {isLoaded &&
+              plans.map((ite, index) => (
+                <div
+                  className="flex border-gradient-2 dark:bg-[#262626
 ] z-10 w-[200px] h-[388px] flex-col justify-between p-[23px] gap-[10px] shrink-0 border-2 "
-              >
-                <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
-                  <span className="capitalize">{ite.duration}</span>
-                </div>
-                <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
-                  <div className="w-full flex flex-col gap-3">
-                    <div className="text-black dark:text-white font-Outfit text-5xl font-medium leading-normal text-center">
-                      ${ite.price}
-                    </div>
-                    <div className="text-black dark:text-white font-Outfit text-3xl font-medium leading-normal text-center">
-                      {ite.creadits} Credits
+                >
+                  <div className="text-black dark:text-white font-Outfit text-lg font-semibold leading-normal">
+                    <span className="capitalize">{ite.expairy}</span>
+                  </div>
+                  <div className="text-black dark:text-white font-Outfit text-sm font-medium leading-normal">
+                    <div className="w-full flex flex-col gap-3">
+                      <div className="text-black dark:text-white font-Outfit text-5xl font-medium leading-normal text-center">
+                        ${ite.price}
+                      </div>
+                      <div className="text-black dark:text-white font-Outfit text-3xl font-medium leading-normal text-center">
+                        {ite.limit} Credits
+                      </div>
                     </div>
                   </div>
+                  <button
+                    className=" z-50 w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer"
+                    onClick={() => buyPlan(index)}
+                  >
+                    Buy
+                  </button>
+                  <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
+                  <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
                 </div>
-                <button
-                  className=" z-50 w-full h-[40px] inline-flex p-[2px] items-center justify-center gap-[4px] rounded-[32px] bt-gradient text-white font-Outfit text-sm font-medium leading-normal cursor-pointer"
-                  onClick={() => buyPlan(index)}
-                >
-                  Buy
-                </button>
-                <div className="absolute w-full h-full rounded-[13px]  background-gradient  -z-10 top-1 left-1"></div>
-                <div className="absolute w-full h-full rounded-[13px] dark:bg-[#262626] bg-white -z-[5] top-0 left-0"></div>
-              </div>
-            ))}
+              ))}
             -
           </div>
         </div>

@@ -17,6 +17,10 @@ import { useAuth } from "@clerk/clerk-react";
 const Login = () => {
 
   const { userId } = useAuth();
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect = urlParams.get("redirect") ??"";
+    const url = window.location.origin + redirect;
+    console.log("redirect", url);
   return (
     <div className="flex  gap-2 w-screen h-screen bg-black">
       <img
@@ -36,7 +40,7 @@ const Login = () => {
       />
  
       <div className="absolute bg-white rounded-lg top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 items-center gap-4 cursor-pointer">
-        <SignIn />
+        <SignIn redirectUrl={redirect} />
       </div>
     </div>
   );

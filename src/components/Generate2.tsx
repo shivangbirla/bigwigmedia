@@ -43,6 +43,7 @@ import Audio from "./Audio";
 import AudioText from "./AudioText";
 import { RotateCw } from "lucide-react";
 import Share from "./Share";
+import { set } from "react-ga";
 // import { ShareSocial } from "react-share-social"; 
 
 
@@ -108,6 +109,7 @@ const Generate = () => {
   const [icons, setIcons] = useState(true);
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
+  const reffered = urlParams.get("reffered");
   const { getToken, isLoaded, isSignedIn, userId } = useAuth();
   const [selectedButton, setSelectedButton] = useState("Professional");
   const [isLoading, setIsLoading] = useState(false);
@@ -117,14 +119,28 @@ const Generate = () => {
   const navigate = useNavigate();
   const basicOutputRef = useRef(null);
   const [isGenerated, setIsGenerated] = useState(false);
+  const [generatedInput, setGeneratedInput] = useState<any[]>()
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
-      navigate("/login");
+      navigate({
+        pathname: "/login",
+        search: `?redirect=${window.location.pathname}${window.location.search}`,
+      });
       toast.error("Please Signin to continue");
       return;
     }
-  }, [isLoaded]);
+
+    const handleReffer = async()=>{
+      const res = await axios.get(
+        `${BASE_URL2}/limits/?limit=${userId}&reffered=${reffered}`,
+        
+      );
+    }
+    if(isLoaded&&isSignedIn&&reffered){
+       handleReffer()
+    }
+  }, [isLoaded, reffered]);
   const handleButtonClick = (selected: string) => {
     setSelectedButton(selected);
   };
@@ -166,7 +182,10 @@ const Generate = () => {
     setIsLoading(true);
     e.preventDefault();
     if (!isSignedIn) {
-      navigate("/login");
+      navigate({
+        pathname: "/login",
+        search: `?redirect=${window.location.pathname}`,
+      });
       toast.error("Please Signin to continue");
       return;
     }
@@ -221,6 +240,54 @@ const Generate = () => {
         const json = JSON.parse(formatted.replace("</p>", "</p><br/>"));
         console.log(json);
         setOutput(json);
+        setGeneratedInput(dupVal);
+      } else {
+        toast.error(res.data.error);
+        setIsLoading(false);
+      }
+    } catch (error: any) {
+      // toast.error(error);
+      toast.error(error.response.data.error);
+      setIsLoading(false);
+    }
+  };
+  const handleReSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    //@ts-ignore
+    setIsLoading(true);
+    e.preventDefault();
+    if (!isSignedIn) {
+      navigate({
+        pathname: "/login",
+        search: `?redirect=${window.location.pathname}`,
+      });
+      toast.error("Please Signin to continue");
+      return;
+    }
+
+    let isRequiredFieldMissing = false; // Flag to track missing required fields
+    
+
+    setTimeout(() => {
+      scrollToBasicOutput();
+    }, 10);
+    try {
+      const res = await axios.post(
+        `${BASE_URL2}/objects/getResponseOfObject/${id}?clerkId=${userId}`,
+        {
+          groups: generatedInput,
+        }
+      );
+
+      if (res.status === 200) {
+        setIsGenerated(true);
+        setIsLoading(false);
+        const formatted = extractJSON(res.data.data);
+        const json = JSON.parse(formatted.replace("</p>", "</p><br/>"));
+        console.log(json);
+        setOutput(json);
+        // setGeneratedInput(dupVal);
       } else {
         toast.error(res.data.error);
         setIsLoading(false);
@@ -395,19 +462,11 @@ const Generate = () => {
       </div>
 
       <div className="flex flex-col gap-6  mt-16 w-fit mx-auto">
-        <h1 className="text-3xl text-center font-semibold">
+        <h1 className="text-3xl text-center px-3 font-semibold">
           Share This Tool To Earn 50 Credits
         </h1>
-        {/* <div
-          className="elfsight-app-41c0aaf1-c9af-4d02-bf17-6ae8306f8500"
-          data-elfsight-app-lazy
-        ></div> */}
 
-        {/* <ShareSocial
-          url="url_to_share.com"
-          socialTypes={["facebook", "twitter", "reddit", "linkedin"]}
-        /> */}
-        <Share url={window.location.href}/>
+        <Share url={window.location.href + "&reffered="+userId} />
       </div>
 
       <div className="flex  flex-col px-5 gap-6 max-w-[1084px] w-full mx-auto">

@@ -43,7 +43,7 @@ const App = () => {
         <Route path="/generate" element={<Generate2 />} />
         <Route path="/form" element={<Form />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/failed" element={<Failed />} />
+        <Route path="/cancel" element={<Failed />} />
         <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
         <Route path="/plan" element={<Plan />} />
