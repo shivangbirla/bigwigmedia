@@ -137,9 +137,9 @@ const Admin = (props: Props) => {
                   ).value;
                   const res = await axios.post(
                     `${BASE_URL2}/admin/addCreditManual`,
-                    { userId: selectedUser, credit, days }
+                    { userId: selectedUser,credit: parseInt(credit), days:parseInt(days) }
                   );
-                  if (res.data.success) {
+                  if (res.status===200) {
                     setOpen(false);
                     getUsers();
                     toast.success("Added Credits");
